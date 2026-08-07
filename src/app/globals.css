@@ -1,0 +1,492 @@
+/* ==========================================================================
+   globals.css — Navjyoti Foundation
+   Longevity base – Alpha V1 → MVP
+   ========================================================================== */
+
+@import "tailwindcss";
+
+/* --------------------------------------------------------------------------
+      1. DESIGN TOKENS (CSS Variables)
+      -------------------------------------------------------------------------- */
+
+:root {
+  /* ---------- Color Palette ---------- */
+  --background: 40 33% 97%;
+  /* warm cream #F8F4EF */
+  --foreground: 160 15% 12%;
+  /* charcoal */
+
+  --primary: 158 42% 18%;
+  /* deep forest green */
+  --primary-foreground: 40 33% 97%;
+
+  --secondary: 40 20% 94%;
+  --secondary-foreground: 160 15% 12%;
+
+  --accent: 28 85% 52%;
+  /* warm orange */
+  --accent-foreground: 0 0% 100%;
+
+  --muted: 40 15% 92%;
+  --muted-foreground: 160 8% 42%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 160 15% 12%;
+
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+
+  --border: 40 15% 88%;
+  --input: 40 15% 88%;
+  --ring: 28 85% 52%;
+
+  /* ---------- Typography ---------- */
+  /* FIX: Removed circular self-references. @theme inline reads these directly. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale (mobile → desktop) */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 0.9375rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
+  --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
+  --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.25rem);
+  --text-4xl: clamp(2.25rem, 1.8rem + 2vw, 3rem);
+  --text-5xl: clamp(2.75rem, 2.1rem + 2.8vw, 3.75rem);
+  --text-6xl: clamp(3.25rem, 2.4rem + 3.5vw, 4.5rem);
+
+  /* ---------- Spacing (semantic + fluid) ---------- */
+  --space-1: 0.25rem;
+  /* 4px  */
+  --space-2: 0.5rem;
+  /* 8px  */
+  --space-3: 0.75rem;
+  /* 12px */
+  --space-4: 1rem;
+  /* 16px */
+  --space-5: 1.25rem;
+  /* 20px */
+  --space-6: 1.5rem;
+  /* 24px */
+  --space-8: 2rem;
+  /* 32px */
+  --space-10: 2.5rem;
+  /* 40px */
+  --space-12: 3rem;
+  /* 48px */
+  --space-16: 4rem;
+  /* 64px */
+  --space-20: 5rem;
+  /* 80px */
+  --space-24: 6rem;
+  /* 96px */
+
+  /* Responsive semantic spacing */
+  --space-mob: clamp(1rem, 4vw, 1.5rem);
+  /* ~16–24px */
+  --space-tab: clamp(1.5rem, 5vw, 2.5rem);
+  /* ~24–40px */
+  --space-dsk: clamp(2rem, 6vw, 4rem);
+  /* ~32–64px */
+
+  /* Section vertical padding */
+  --section-y-mob: clamp(3rem, 10vw, 4rem);
+  --section-y-tab: clamp(4rem, 8vw, 5.5rem);
+  --section-y-dsk: clamp(5rem, 7vw, 7.5rem);
+
+  /* Horizontal page padding */
+  --page-x-mob: clamp(1rem, 5vw, 1.5rem);
+  --page-x-tab: clamp(1.5rem, 4vw, 2.5rem);
+  --page-x-dsk: clamp(2rem, 5vw, 4rem);
+
+  /* ---------- Radius ---------- */
+  --radius-sm: 0.375rem;
+  --radius: 0.75rem;
+  /* default – matches cards */
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* ---------- Shadows ---------- */
+  /* FIX: Renamed --shadow → --shadow-base to avoid circular reference in @theme. */
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.04);
+  --shadow-base: 0 4px 12px -2px rgb(0 0 0 / 0.06);
+  --shadow-md: 0 8px 24px -4px rgb(0 0 0 / 0.08);
+  --shadow-lg: 0 16px 40px -8px rgb(0 0 0 / 0.1);
+
+  /* ---------- Layout ---------- */
+  --container-max: 72rem;
+  /* 1152px */
+  --container-narrow: 42rem;
+  /* for text-heavy sections */
+  --header-height: 4.5rem;
+}
+
+/* --------------------------------------------------------------------------
+      2. TAILWIND v4 THEME MAPPING
+      -------------------------------------------------------------------------- */
+
+@theme inline {
+  /* Colors */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  /* Fonts — assigned directly; @theme inline cannot use var() on its own tokens */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radius — --radius-md maps to the base --radius token */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius);
+  /* intentional alias: base token is --radius */
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  /* Shadows — use --shadow-base (renamed from --shadow to avoid circular ref) */
+  --shadow-sm: var(--shadow-sm);
+  --shadow: var(--shadow-base);
+  /* Tailwind's canonical name kept as --shadow */
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+/* --------------------------------------------------------------------------
+      3. BASE STYLES
+      -------------------------------------------------------------------------- */
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: hsl(var(--foreground));
+  }
+
+  h1 {
+    font-size: var(--text-5xl);
+  }
+
+  h2 {
+    font-size: var(--text-4xl);
+  }
+
+  h3 {
+    font-size: var(--text-3xl);
+  }
+
+  h4 {
+    font-size: var(--text-2xl);
+  }
+
+  h5 {
+    font-size: var(--text-xl);
+  }
+
+  h6 {
+    font-size: var(--text-lg);
+  }
+
+  p {
+    font-size: var(--text-base);
+    line-height: 1.7;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  /* Focus ring – always visible for accessibility */
+  :focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: hsl(var(--accent) / 0.25);
+    color: hsl(var(--foreground));
+  }
+}
+
+/* --------------------------------------------------------------------------
+      4. CUSTOM UTILITIES
+      -------------------------------------------------------------------------- */
+
+@layer utilities {
+  /* ===== Fluid Typography ===== */
+  .text-fluid-xs {
+    font-size: var(--text-xs);
+  }
+
+  .text-fluid-sm {
+    font-size: var(--text-sm);
+  }
+
+  .text-fluid-base {
+    font-size: var(--text-base);
+  }
+
+  .text-fluid-lg {
+    font-size: var(--text-lg);
+  }
+
+  .text-fluid-xl {
+    font-size: var(--text-xl);
+  }
+
+  .text-fluid-2xl {
+    font-size: var(--text-2xl);
+  }
+
+  .text-fluid-3xl {
+    font-size: var(--text-3xl);
+  }
+
+  .text-fluid-4xl {
+    font-size: var(--text-4xl);
+  }
+
+  .text-fluid-5xl {
+    font-size: var(--text-5xl);
+  }
+
+  .text-fluid-6xl {
+    font-size: var(--text-6xl);
+  }
+
+  /* ===== Semantic Responsive Spacing ===== */
+  .p-mob {
+    padding: var(--space-mob);
+  }
+
+  .p-tab {
+    padding: var(--space-tab);
+  }
+
+  .p-dsk {
+    padding: var(--space-dsk);
+  }
+
+  .px-mob {
+    padding-left: var(--space-mob);
+    padding-right: var(--space-mob);
+  }
+
+  .px-tab {
+    padding-left: var(--space-tab);
+    padding-right: var(--space-tab);
+  }
+
+  .px-dsk {
+    padding-left: var(--space-dsk);
+    padding-right: var(--space-dsk);
+  }
+
+  .py-mob {
+    padding-top: var(--space-mob);
+    padding-bottom: var(--space-mob);
+  }
+
+  .py-tab {
+    padding-top: var(--space-tab);
+    padding-bottom: var(--space-tab);
+  }
+
+  .py-dsk {
+    padding-top: var(--space-dsk);
+    padding-bottom: var(--space-dsk);
+  }
+
+  /* Page horizontal padding */
+  .px-page {
+    padding-left: var(--page-x-mob);
+    padding-right: var(--page-x-mob);
+  }
+
+  @media (min-width: 768px) {
+    .px-page {
+      padding-left: var(--page-x-tab);
+      padding-right: var(--page-x-tab);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .px-page {
+      padding-left: var(--page-x-dsk);
+      padding-right: var(--page-x-dsk);
+    }
+  }
+
+  /* Section vertical padding */
+  .py-section {
+    padding-top: var(--section-y-mob);
+    padding-bottom: var(--section-y-mob);
+  }
+
+  @media (min-width: 768px) {
+    .py-section {
+      padding-top: var(--section-y-tab);
+      padding-bottom: var(--section-y-tab);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .py-section {
+      padding-top: var(--section-y-dsk);
+      padding-bottom: var(--section-y-dsk);
+    }
+  }
+
+  /* Gaps */
+  .gap-mob {
+    gap: var(--space-mob);
+  }
+
+  .gap-tab {
+    gap: var(--space-tab);
+  }
+
+  .gap-dsk {
+    gap: var(--space-dsk);
+  }
+
+  /* ===== Layout helpers ===== */
+  .container-site {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container-narrow {
+    width: 100%;
+    max-width: var(--container-narrow);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ===== Visual utilities ===== */
+  .card-soft {
+    background-color: hsl(var(--card));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-base);
+    /* FIX: was var(--shadow) — now matches renamed token */
+  }
+
+  .card-dark {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border-radius: var(--radius);
+    padding: var(--space-6);
+    /* FIX: added padding — was visually broken without it */
+  }
+
+  /* FIX: Added padding to button utilities — they were non-functional without it */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-6);
+    background-color: hsl(var(--accent));
+    color: hsl(var(--accent-foreground));
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover {
+    filter: brightness(1.08);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-3) var(--space-6);
+    background-color: hsl(var(--secondary));
+    color: hsl(var(--foreground));
+    border: 1.5px solid hsl(var(--border));
+    border-radius: var(--radius-full);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .btn-secondary:hover {
+    background-color: hsl(var(--border));
+  }
+}
+
+/* --------------------------------------------------------------------------
+      5. ACCESSIBILITY & MOTION
+      -------------------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+      6. OPTIONAL – Prose (for long-form content later)
+      -------------------------------------------------------------------------- */
+
+.prose {
+  --tw-prose-body: hsl(var(--foreground));
+  --tw-prose-headings: hsl(var(--foreground));
+  --tw-prose-links: hsl(var(--accent));
+  max-width: 65ch;
+}
