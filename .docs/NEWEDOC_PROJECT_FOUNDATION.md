@@ -110,7 +110,7 @@ Initialize Husky + lint-staged immediately so every commit is clean from day 1.
 ├── lib/
 │   ├── utils.ts                    # cn() helper, etc.
 │   └── constants.ts                # Hardcoded Alpha content can start here
-├── features/feature-name
+├── features/
 │   ├── layout/
 │   ├── components/
 │   ├── lib/

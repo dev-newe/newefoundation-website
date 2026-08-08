@@ -1,3 +1,3 @@
-# newefoundation-website
+# Navjyoti Education and Women Empowerment Foundation Website
 
-Website for Navjyoti Education and Women Empowerment Foundation
+Built with 💖 by Team Overclock
