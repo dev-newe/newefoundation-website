@@ -1,6 +1,7 @@
 import { v2 as cloudinary, type UploadApiResponse } from "cloudinary";
 import type { HandleUpload } from "@payloadcms/plugin-cloud-storage/types";
 import path from "path";
+import crypto from "crypto";
 import type { CloudinaryAdapterOptions, CloudinaryData } from "./types";
 
 const getResourceType = (mimeType: string): "image" | "video" | "raw" => {
@@ -22,11 +23,14 @@ export const getHandleUpload = ({ folder }: CloudinaryAdapterOptions = {}): Hand
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           folder,
-          public_id: resourceType === "raw" ? file.filename : parsed.name,
+          public_id:
+            resourceType === "raw"
+              ? `${parsed.name}-${crypto.randomUUID()}${parsed.ext}`
+              : `${parsed.name}-${crypto.randomUUID()}`,
           resource_type: resourceType,
           use_filename: true,
-          unique_filename: false,
-          overwrite: true,
+          unique_filename: true,
+          overwrite: false,
         },
         (error, result) => {
           if (error || !result) {

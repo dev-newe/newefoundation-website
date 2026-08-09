@@ -2,15 +2,15 @@ import type { GenerateURL } from "@payloadcms/plugin-cloud-storage/types";
 import path from "path";
 import type { CloudinaryAdapterOptions, CloudinaryData } from "./types";
 
-const getResourceTypeFromExt = (filename: string): string => {
+const getResourceTypeFromExt = (filename: string): "image" | "video" | "raw" => {
   const ext = path.extname(filename).toLowerCase();
   if ([".mp4", ".webm", ".mov", ".mp3", ".wav"].includes(ext)) {
     return "video";
   }
-  if (![".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"].includes(ext)) {
-    return "raw";
+  if ([".jpg", ".jpeg", ".png", ".webp", ".gif", ".svg", ".avif"].includes(ext)) {
+    return "image";
   }
-  return "image";
+  return "raw";
 };
 
 export const getGenerateURL = ({ folder }: CloudinaryAdapterOptions = {}): GenerateURL => {
@@ -23,10 +23,11 @@ export const getGenerateURL = ({ folder }: CloudinaryAdapterOptions = {}): Gener
     }
 
     // Fallback: dynamically pick resource_type if data.url is missing
-    const cloudName = process.env.CLOUDINARY_CLOUD_NAME || "";
+    const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
     const resourceType = mediaData?.cloudinaryResourceType || getResourceTypeFromExt(filename);
 
-    const finalUrl = `https://res.cloudinary.com/${cloudName}/${resourceType}/upload/${folder}/${filename}`;
+    const assetPath = mediaData?.cloudinaryPublicId || `${folder}/${filename}`;
+    const finalUrl = `https://res.cloudinary.com/${cloudName}/${resourceType}/upload/${assetPath}`;
 
     return finalUrl;
   };

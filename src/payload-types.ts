@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    "cloudinary-cleanup-jobs": CloudinaryCleanupJob;
     "payload-kv": PayloadKv;
     "payload-locked-documents": PayloadLockedDocument;
     "payload-preferences": PayloadPreference;
@@ -78,6 +79,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    "cloudinary-cleanup-jobs":
+      CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
     "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
     "payload-locked-documents":
       PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -199,6 +202,21 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cloudinary-cleanup-jobs".
+ */
+export interface CloudinaryCleanupJob {
+  id: string;
+  publicId: string;
+  resourceType: string;
+  filename: string;
+  errorDetails?: string | null;
+  status?: ("pending" | "failed" | "completed") | null;
+  attempts?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -228,6 +246,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: "media";
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: "cloudinary-cleanup-jobs";
+        value: string | CloudinaryCleanupJob;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -350,6 +372,20 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "cloudinary-cleanup-jobs_select".
+ */
+export interface CloudinaryCleanupJobsSelect<T extends boolean = true> {
+  publicId?: T;
+  resourceType?: T;
+  filename?: T;
+  errorDetails?: T;
+  status?: T;
+  attempts?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

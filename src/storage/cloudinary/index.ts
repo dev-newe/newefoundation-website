@@ -15,6 +15,15 @@ import { getStaticHandler } from "./staticHandler";
 import type { CloudinaryAdapterOptions } from "./types";
 
 export const cloudinaryAdapter = (options: CloudinaryAdapterOptions = {}): Adapter => {
+  if (
+    !process.env.CLOUDINARY_CLOUD_NAME ||
+    !process.env.CLOUDINARY_API_KEY ||
+    !process.env.CLOUDINARY_API_SECRET ||
+    !process.env.CLOUDINARY_FOLDER
+  ) {
+    throw new Error("Missing required ENV vars for Cloudinary Adapter");
+  }
+
   const folder = options.folder || process.env.CLOUDINARY_FOLDER || "org-website";
 
   cloudinary.config({
