@@ -4,16 +4,17 @@ import Hero from "@/features/home/components/Hero";
 import Mission from "@/features/home/components/Mission";
 import OurWork from "@/features/home/components/OurWork";
 import Team from "@/features/home/components/Team";
+import { home } from "@/assets/data/pages/Home";
 
 export default function Home() {
   return (
     <div className="">
-      <Hero />
-      <About />
-      <Mission />
-      <OurWork />
-      <Team />
-      <CTA />
+      <Hero data={home.hero} />
+      <About data={home.missionVision} />
+      <Mission data={home.missionVision} />
+      <OurWork data={home.ourWork} />
+      <Team data={home.team} />
+      <CTA data={home.cta} />
     </div>
   );
 }
