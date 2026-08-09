@@ -1,0 +1,19 @@
+# See https://docs.coderabbit.ai/for details
+
+language: "en-US"
+
+reviews:
+  profile: "assertive"
+  collapse_draft_pr_comments: true
+  auto_review:
+    enabled: true
+    drafts: false
+
+chat:
+  enabled: true
+
+path_filters:
+  - "!node_modules/**"
+  - "!.next/**"
+  - "!src/app/(payload)/admin/importMap.js"
+  - "!payload-types.ts"
