@@ -4,9 +4,9 @@ import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
 import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
-import { Users } from "@/collections/Users";
-import { Media } from "@/collections/Media";
-import { CloudinaryCleanupJobs } from "@/collections/CloudinaryCleanupJobs";
+import { Users } from "@/db/collections/Users";
+import { Media } from "@/db/collections/Media";
+import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
@@ -41,7 +41,7 @@ export default buildConfig({
   }),
   email: resendAdapter({
     defaultFromAddress: process.env.EMAIL_FROM,
-    defaultFromName: "Navojyoti Foundation",
+    defaultFromName: "Navjyoti Foundation",
     apiKey: process.env.RESEND_API_KEY,
   }),
   plugins: [

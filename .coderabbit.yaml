@@ -3,15 +3,16 @@
 language: "en-US"
 
 reviews:
-    profile: "chill"
-    request_changes_workflow: false
-    high_level_summary: true
-    poem: true
-    review_status: true
-    review_details: false
-    auto_review:
-      enabled: true
-      drafts: false
+  profile: "chill"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: true
+  review_status: true
+  review_details: false
+
+  auto_review:
+    enabled: true
+    drafts: false
     path_filters:
       - "!node_modules/**"
       - "!.next/**"
@@ -21,6 +22,3 @@ reviews:
 chat:
   enabled: true
   auto_reply: true
-
-
-  
