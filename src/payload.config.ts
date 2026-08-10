@@ -6,7 +6,7 @@ import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
-import { CloudinaryCleanupJobs } from "@/db/globals/CloudinaryCleanupJobs";
+import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
