@@ -14,6 +14,7 @@ const eslintConfig = defineConfig([
     "build/**",
     "payload-types.ts",
     "next-env.d.ts",
+    ".archive/**",
   ]),
 
   prettier,
