@@ -165,6 +165,20 @@
   /* Tailwind's canonical name kept as --shadow */
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
+
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    50% {
+      transform: translateX(100%);
+    }
+
+    100% {
+      transform: translateX(200%);
+    }
+  }
 }
 
 /* --------------------------------------------------------------------------
