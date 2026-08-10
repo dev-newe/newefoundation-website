@@ -7,8 +7,7 @@
 <!-- Why are we doing this? One sentence is enough. -->
 
 > [!NOTE]
-
-<!-- Anything future us should know (edge cases, temporary decisions, follow-ups) -->
+> <!-- Anything future us should know (edge cases, temporary decisions, follow-ups) -->
 
 Closes #
 
