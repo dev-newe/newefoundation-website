@@ -1,6 +1,10 @@
 export default function Loading() {
   return (
-    <main className="px-page flex min-h-[80vh] items-center justify-center" aria-label="Loading">
+    <main
+      className="px-page flex min-h-[80vh] items-center justify-center"
+      aria-label="Loading"
+      role="status"
+    >
       <div className="flex flex-col items-center gap-6 text-center">
         <div className="space-y-1">
           <p className="text-fluid-sm text-muted-foreground">Please wait a moment...</p>

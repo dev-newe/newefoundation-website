@@ -1,14 +1,16 @@
 import type { MetadataRoute } from "next";
 
-import config from "@/payload.config";
-import { getPayload } from "payload";
+// import config from "@/payload.config";
+// import { getPayload } from "payload";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL!;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const payload = await getPayload({
+  // TODO: Uncomment this when payload collections are setup
+
+  /*const payload = await getPayload({
     config,
-  });
+  });*/
 
   // TODO: Uncomment this when payload collections are setup
   /*const [media] = await Promise.all([
@@ -27,7 +29,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: SITE_URL,
-      lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
