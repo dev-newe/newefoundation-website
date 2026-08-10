@@ -6,13 +6,15 @@ labels: "enhancement"
 assignees: ""
 ---
 
-### Objective
+## Objective
 
-### Tasks
+<!-- Purpose of the ticket in 1-2 sentences -->
+
+## Tasks
 
 - [ ] List
 - [ ] of
 - [ ] Tasks
 
 > [!NOTE]
-> If Any
+> <!-- If anything to look out for -->
