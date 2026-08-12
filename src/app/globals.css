@@ -129,8 +129,6 @@
   --container-narrow: 42rem;
   /* for text-heavy sections */
   --header-height: 4.5rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --chart-1: oklch(0.87 0 0);
@@ -507,7 +505,7 @@
   }
 
   /* FIX: Added padding to button utilities — they were non-functional without it */
-  .btn-primary {
+  /* .btn-primary {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -540,7 +538,7 @@
 
   .btn-secondary:hover {
     background-color: hsl(var(--border));
-  }
+  } */
 }
 
 /* --------------------------------------------------------------------------
