@@ -3,11 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-import { siteMetadata } from "@/lib/seo";
 import "@/app/globals.css";
-import Navbar from "@/components/shared/navbar/Navbar";
-import Footer from "@/components/shared/footer/Footer";
 import { organizationSchema } from "@/lib/json-ld";
+import { siteMetadata } from "@/lib/seo";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,9 +28,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
 
-        <Navbar />
         {children}
-        <Footer />
 
         <Analytics />
         <SpeedInsights />
