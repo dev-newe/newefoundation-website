@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { RefreshCw, Home } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type ErrorProps = {
   error: Error & { digest?: string };
@@ -29,12 +31,22 @@ export default function Error({ error, reset }: ErrorProps) {
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row">
-          <button onClick={reset} className="btn-primary gap-2">
+          <Button
+            onClick={reset}
+            variant="default"
+            className="h-auto gap-2 rounded-full px-6 py-3 text-sm"
+          >
             <RefreshCw className="h-4 w-4" aria-hidden="true" />
             <span>Try again</span>
-          </button>
+          </Button>
 
-          <Link href="/" className="btn-secondary gap-2">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-auto gap-2 rounded-full px-6 py-3 text-sm"
+            )}
+          >
             <Home className="h-4 w-4" aria-hidden="true" />
             <span>Back to home</span>
           </Link>

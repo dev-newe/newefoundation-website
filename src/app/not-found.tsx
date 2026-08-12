@@ -1,7 +1,7 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowLeft, HeartHandshake } from "lucide-react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import "@/app/globals.css";
 
 export default function NotFound() {
@@ -22,12 +22,24 @@ export default function NotFound() {
         </p>
 
         <div className="flex flex-col gap-4 sm:flex-row">
-          <Link href="/" className="btn-primary gap-2">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: "default" }),
+              "h-auto gap-2 rounded-full px-6 py-3 text-sm"
+            )}
+          >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             <span>Back to home</span>
           </Link>
 
-          <Link href="/#become-a-member" className="btn-secondary gap-2">
+          <Link
+            href="/become-a-member"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-auto gap-2 rounded-full px-6 py-3 text-sm"
+            )}
+          >
             <HeartHandshake className="h-4 w-4" aria-hidden="true" />
             <span>Support the mission</span>
           </Link>

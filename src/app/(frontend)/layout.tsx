@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/app/globals.css";
 import { organizationSchema } from "@/lib/json-ld";
 import { siteMetadata } from "@/lib/seo";
+import ScrollProvider from "@/components/providers/ScrollProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
 
-        {children}
+        <ScrollProvider>{children}</ScrollProvider>
 
         <Analytics />
         <SpeedInsights />
