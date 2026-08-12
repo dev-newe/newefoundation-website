@@ -2,11 +2,20 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
 import path from "path";
+import dns from "node:dns";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
+
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch {
+  // Fallback ignored if DNS modification isn't permitted in runtime environment
+}
+
 import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
+import { HomePage } from "@/db/globals/HomePage";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
@@ -34,6 +43,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, CloudinaryCleanupJobs],
+  globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({

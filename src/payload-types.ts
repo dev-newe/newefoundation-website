@@ -91,8 +91,12 @@ export interface Config {
     defaultIDType: string;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    app_homepage: AppHomepage;
+  };
+  globalsSelect: {
+    app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -426,6 +430,429 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_homepage".
+ */
+export interface AppHomepage {
+  id: string;
+  header: {
+    brand: {
+      name: string;
+      icon: string;
+    };
+    navItems?:
+      | {
+          label: string;
+          href: string;
+          isActive?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    ctaButton: {
+      label: string;
+      href?: string | null;
+      className?: string | null;
+      icon?: string | null;
+      id?: string | null;
+    };
+  };
+  hero: {
+    badge: {
+      text: string;
+    };
+    title: {
+      main: string;
+      highlight: string;
+    };
+    description: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    image?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+  };
+  pillars?:
+    | {
+        id: string;
+        icon: string;
+        title: string;
+        description: string;
+        stat: string;
+        highlighted?: boolean | null;
+      }[]
+    | null;
+  missionVision: {
+    mission: {
+      title: string;
+      description: string;
+      stat: {
+        value: string;
+        label: string;
+      };
+    };
+    vision: {
+      title: string;
+      description: string;
+    };
+    images?: {
+      primary?: {
+        /**
+         * Select or upload an image from Payload Media Library
+         */
+        media?: (string | null) | Media;
+        /**
+         * External image URL (used if no Media asset is attached)
+         */
+        src?: string | null;
+        /**
+         * Accessibility alt text
+         */
+        alt?: string | null;
+      };
+      secondary?: {
+        /**
+         * Select or upload an image from Payload Media Library
+         */
+        media?: (string | null) | Media;
+        /**
+         * External image URL (used if no Media asset is attached)
+         */
+        src?: string | null;
+        /**
+         * Accessibility alt text
+         */
+        alt?: string | null;
+      };
+    };
+  };
+  ourWork: {
+    title: string;
+    subtitle: string;
+    featuredProject: {
+      category: string;
+      title: string;
+      description: string;
+      image?: {
+        /**
+         * Select or upload an image from Payload Media Library
+         */
+        media?: (string | null) | Media;
+        /**
+         * External image URL (used if no Media asset is attached)
+         */
+        src?: string | null;
+        /**
+         * Accessibility alt text
+         */
+        alt?: string | null;
+      };
+    };
+    campaigns?:
+      | {
+          id: string;
+          title: string;
+          description: string;
+          fundedPercentage: number;
+          raisedAmount: string;
+          targetAmount: string;
+          buttonLabel: string;
+        }[]
+      | null;
+  };
+  team: {
+    title: string;
+    members?:
+      | {
+          id: string;
+          name: string;
+          role: string;
+          image?: {
+            /**
+             * Select or upload an image from Payload Media Library
+             */
+            media?: (string | null) | Media;
+            /**
+             * External image URL (used if no Media asset is attached)
+             */
+            src?: string | null;
+            /**
+             * Accessibility alt text
+             */
+            alt?: string | null;
+          };
+        }[]
+      | null;
+  };
+  cta: {
+    title: string;
+    highlight: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  footer: {
+    brand: {
+      name: string;
+      icon: string;
+      address: string;
+      phone: string;
+      email: string;
+    };
+    linkGroups?:
+      | {
+          title: string;
+          links?:
+            | {
+                label: string;
+                href: string;
+                isActive?: boolean | null;
+                id?: string | null;
+              }[]
+            | null;
+          id?: string | null;
+        }[]
+      | null;
+    copyright: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_homepage_select".
+ */
+export interface AppHomepageSelect<T extends boolean = true> {
+  header?:
+    | T
+    | {
+        brand?:
+          | T
+          | {
+              name?: T;
+              icon?: T;
+            };
+        navItems?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              isActive?: T;
+              id?: T;
+            };
+        ctaButton?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  hero?:
+    | T
+    | {
+        badge?:
+          | T
+          | {
+              text?: T;
+            };
+        title?:
+          | T
+          | {
+              main?: T;
+              highlight?: T;
+            };
+        description?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+        image?:
+          | T
+          | {
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+      };
+  pillars?:
+    | T
+    | {
+        id?: T;
+        icon?: T;
+        title?: T;
+        description?: T;
+        stat?: T;
+        highlighted?: T;
+      };
+  missionVision?:
+    | T
+    | {
+        mission?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              stat?:
+                | T
+                | {
+                    value?: T;
+                    label?: T;
+                  };
+            };
+        vision?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+            };
+        images?:
+          | T
+          | {
+              primary?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+              secondary?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+            };
+      };
+  ourWork?:
+    | T
+    | {
+        title?: T;
+        subtitle?: T;
+        featuredProject?:
+          | T
+          | {
+              category?: T;
+              title?: T;
+              description?: T;
+              image?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+            };
+        campaigns?:
+          | T
+          | {
+              id?: T;
+              title?: T;
+              description?: T;
+              fundedPercentage?: T;
+              raisedAmount?: T;
+              targetAmount?: T;
+              buttonLabel?: T;
+            };
+      };
+  team?:
+    | T
+    | {
+        title?: T;
+        members?:
+          | T
+          | {
+              id?: T;
+              name?: T;
+              role?: T;
+              image?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        highlight?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  footer?:
+    | T
+    | {
+        brand?:
+          | T
+          | {
+              name?: T;
+              icon?: T;
+              address?: T;
+              phone?: T;
+              email?: T;
+            };
+        linkGroups?:
+          | T
+          | {
+              title?: T;
+              links?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    isActive?: T;
+                    id?: T;
+                  };
+              id?: T;
+            };
+        copyright?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
