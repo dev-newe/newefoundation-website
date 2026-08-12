@@ -8,6 +8,7 @@ import "@/app/globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/footer/Footer";
 import { organizationSchema } from "@/lib/json-ld";
+import ScrollProvider from "@/components/providers/ScrollProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,10 +30,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-
-        <Navbar />
-        {children}
-        <Footer />
+        <ScrollProvider>
+          <Navbar />
+          {children}
+          <Footer />
+        </ScrollProvider>
 
         <Analytics />
         <SpeedInsights />
