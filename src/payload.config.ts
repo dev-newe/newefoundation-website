@@ -31,14 +31,13 @@ if (
   !process.env.PAYLOAD_SECRET ||
   !process.env.DATABASE_URI ||
   !process.env.RESEND_API_KEY ||
-  !process.env.EMAIL_FROM ||
-  !process.env.NEXT_PUBLIC_SITE_URL
+  !process.env.EMAIL_FROM
 ) {
   throw new Error("Missing required ENV vars for Payload Config");
 }
 
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SITE_URL,
+  serverURL: process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}`,
   sharp,
   admin: {
     user: "users",
