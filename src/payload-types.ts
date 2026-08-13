@@ -438,15 +438,48 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface AppHomepage {
   id: string;
   header: {
-    brand: {
-      name: string;
-      icon: string;
+    logo?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+    brandName: {
+      text: string;
     };
     navItems?:
       | {
           label: string;
           href: string;
-          isActive?: boolean | null;
+          isDropdown?: boolean | null;
+          groupA?: {
+            title?: string | null;
+            items?:
+              | {
+                  label: string;
+                  href: string;
+                  id?: string | null;
+                }[]
+              | null;
+          };
+          groupB?: {
+            title?: string | null;
+            items?:
+              | {
+                  label: string;
+                  href: string;
+                  id?: string | null;
+                }[]
+              | null;
+          };
           id?: string | null;
         }[]
       | null;
@@ -491,14 +524,14 @@ export interface AppHomepage {
       alt?: string | null;
     };
   };
-  pillars?:
+  aboutCards?:
     | {
-        id: string;
         icon: string;
         title: string;
         description: string;
         stat: string;
         highlighted?: boolean | null;
+        id?: string | null;
       }[]
     | null;
   missionVision: {
@@ -569,13 +602,13 @@ export interface AppHomepage {
     };
     campaigns?:
       | {
-          id: string;
           title: string;
           description: string;
           fundedPercentage: number;
           raisedAmount: string;
           targetAmount: string;
           buttonLabel: string;
+          id?: string | null;
         }[]
       | null;
   };
@@ -583,7 +616,6 @@ export interface AppHomepage {
     title: string;
     members?:
       | {
-          id: string;
           name: string;
           role: string;
           image?: {
@@ -600,6 +632,7 @@ export interface AppHomepage {
              */
             alt?: string | null;
           };
+          id?: string | null;
         }[]
       | null;
   };
@@ -651,18 +684,48 @@ export interface AppHomepageSelect<T extends boolean = true> {
   header?:
     | T
     | {
-        brand?:
+        logo?:
           | T
           | {
-              name?: T;
-              icon?: T;
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+        brandName?:
+          | T
+          | {
+              text?: T;
             };
         navItems?:
           | T
           | {
               label?: T;
               href?: T;
-              isActive?: T;
+              isDropdown?: T;
+              groupA?:
+                | T
+                | {
+                    title?: T;
+                    items?:
+                      | T
+                      | {
+                          label?: T;
+                          href?: T;
+                          id?: T;
+                        };
+                  };
+              groupB?:
+                | T
+                | {
+                    title?: T;
+                    items?:
+                      | T
+                      | {
+                          label?: T;
+                          href?: T;
+                          id?: T;
+                        };
+                  };
               id?: T;
             };
         ctaButton?:
@@ -707,15 +770,15 @@ export interface AppHomepageSelect<T extends boolean = true> {
               alt?: T;
             };
       };
-  pillars?:
+  aboutCards?:
     | T
     | {
-        id?: T;
         icon?: T;
         title?: T;
         description?: T;
         stat?: T;
         highlighted?: T;
+        id?: T;
       };
   missionVision?:
     | T
@@ -779,13 +842,13 @@ export interface AppHomepageSelect<T extends boolean = true> {
         campaigns?:
           | T
           | {
-              id?: T;
               title?: T;
               description?: T;
               fundedPercentage?: T;
               raisedAmount?: T;
               targetAmount?: T;
               buttonLabel?: T;
+              id?: T;
             };
       };
   team?:
@@ -795,7 +858,6 @@ export interface AppHomepageSelect<T extends boolean = true> {
         members?:
           | T
           | {
-              id?: T;
               name?: T;
               role?: T;
               image?:
@@ -805,6 +867,7 @@ export interface AppHomepageSelect<T extends boolean = true> {
                     src?: T;
                     alt?: T;
                   };
+              id?: T;
             };
       };
   cta?:

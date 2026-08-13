@@ -6,10 +6,12 @@ import dns from "node:dns";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
-try {
-  dns.setServers(["8.8.8.8", "1.1.1.1"]);
-} catch {
-  // Fallback ignored if DNS modification isn't permitted in runtime environment
+if (process.env.NODE_ENV === "development") {
+  try {
+    dns.setServers(["8.8.8.8", "1.1.1.1"]);
+  } catch {
+    // Fallback ignored if DNS modification isn't permitted in runtime environment
+  }
 }
 
 import { Users } from "@/db/collections/Users";
