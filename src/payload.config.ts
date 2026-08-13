@@ -2,17 +2,30 @@ import { mongooseAdapter } from "@payloadcms/db-mongodb";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
 import path from "path";
+import dns from "node:dns";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
+
 import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
+import { HomePage } from "@/db/globals/HomePage";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+// Opt-in workaround for environments whose resolver cannot complete the
+// MongoDB Atlas SRV lookup. Set DNS_SERVERS to a comma-separated list.
+if (process.env.DNS_SERVERS) {
+  try {
+    dns.setServers(process.env.DNS_SERVERS.split(",").map((s) => s.trim()));
+  } catch (error) {
+    console.warn("Invalid DNS_SERVERS value; keeping the system resolver.", error);
+  }
+}
 
 if (
   !process.env.PAYLOAD_SECRET ||
@@ -34,6 +47,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, CloudinaryCleanupJobs],
+  globals: [HomePage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({
