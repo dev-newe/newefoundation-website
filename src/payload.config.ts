@@ -17,11 +17,13 @@ import sharp from "sharp";
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-if (process.env.NODE_ENV === "development") {
+// Opt-in workaround for environments whose resolver cannot complete the
+// MongoDB Atlas SRV lookup. Set DNS_SERVERS to a comma-separated list.
+if (process.env.DNS_SERVERS) {
   try {
-    dns.setServers(["8.8.8.8", "1.1.1.1"]);
-  } catch {
-    // Fallback ignored if DNS modification isn't permitted in runtime environment
+    dns.setServers(process.env.DNS_SERVERS.split(",").map((s) => s.trim()));
+  } catch (error) {
+    console.warn("Invalid DNS_SERVERS value; keeping the system resolver.", error);
   }
 }
 
