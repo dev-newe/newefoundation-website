@@ -6,14 +6,6 @@ import dns from "node:dns";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
-if (process.env.NODE_ENV === "development") {
-  try {
-    dns.setServers(["8.8.8.8", "1.1.1.1"]);
-  } catch {
-    // Fallback ignored if DNS modification isn't permitted in runtime environment
-  }
-}
-
 import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
@@ -24,6 +16,14 @@ import sharp from "sharp";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+if (process.env.NODE_ENV === "development") {
+  try {
+    dns.setServers(["8.8.8.8", "1.1.1.1"]);
+  } catch {
+    // Fallback ignored if DNS modification isn't permitted in runtime environment
+  }
+}
 
 if (
   !process.env.PAYLOAD_SECRET ||
