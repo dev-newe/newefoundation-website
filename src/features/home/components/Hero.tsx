@@ -4,6 +4,8 @@ import config from "@payload-config";
 import { getPayload } from "payload";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const iconMap: Record<string, LucideIcon> = {
   ArrowRight,
@@ -18,19 +20,20 @@ export default async function Hero() {
 
   const homepage = await payload.findGlobal({
     slug: "app_homepage",
-    depth: 1,
   });
 
   const hero = homepage?.hero || {};
 
   const heroImage =
-    typeof hero.image === "object" && hero.image !== null
+    typeof hero?.image === "object" && hero.image !== null
       ? typeof hero.image.media === "string"
         ? hero.image.media
-        : hero.image.media?.url
+        : hero.image.media?.url || hero.image.src || "/navjyoti.png"
       : "/navjyoti.png";
 
-  const PrimaryIcon = hero.buttons?.[0]?.icon ? iconMap[hero.buttons[0].icon] : ArrowRight;
+  const iconName = hero.buttons?.[0]?.icon;
+
+  const PrimaryIcon = iconName ? (iconMap[iconName] ?? ArrowRight) : ArrowRight;
 
   return (
     <section className="bg-background relative overflow-hidden">
@@ -41,37 +44,50 @@ export default async function Hero() {
             {/* Status */}
             <div className="text-primary border-primary/30 mb-7 inline-flex items-center gap-2 rounded-full border bg-[#eeece5] px-3.5 py-1.5 text-xs font-medium">
               <span className="bg-accent h-1.5 w-1.5 rounded-full" />
-              {hero.badge.text ?? "Creating lasting change"}
+              {hero?.badge?.text ?? "Creating lasting change"}
             </div>
 
             {/* Heading */}
             <h1 className="text-primary font-sans text-5xl font-semibold xl:text-7xl">
-              {hero.title.main ?? "Your help will change a life - Inspire hope, Empower futures"}
+              {hero?.title?.main ?? "Your help will change a life - Inspire hope, Empower futures"}
             </h1>
 
             {/* Description */}
             <p className="mt-7 max-w-147.5 text-base leading-6 text-[#5d625e] sm:text-[17px] sm:leading-7">
               {hero.description ??
-                "Building an India where every individual has the power to thrive. Navjyoti Educationand Women Empowerment foundation works to uplift underprivileged communities through education, skill development, and social awareness."}
+                "Building an India where every individual has the power to thrive. Navjyoti Education and Women Empowerment foundation works to uplift underprivileged communities through education, skill development, and social awareness."}
             </p>
 
             {/* Actions */}
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <Button
-                size="lg"
-                className="bg-accent hover:bg-accent/90 h-12 cursor-pointer rounded-lg px-6 font-semibold text-white transition-all"
-              >
-                {hero.buttons?.[0]?.label ?? "Become a Hero"}
-                <PrimaryIcon className="ml-2 size-4" />
-              </Button>
+              {/* Primary CTA */}
+              <Link href={hero.buttons?.[0]?.href ?? "#"}>
+                <Button
+                  size="lg"
+                  className={cn(
+                    "bg-accent hover:bg-accent/90 h-12 rounded-lg px-6 font-semibold text-white",
+                    hero.buttons?.[0]?.className
+                  )}
+                >
+                  {hero.buttons?.[0]?.label ?? "Become a Hero"}
 
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary/70 text-primary hover:bg-primary/5 hover:text-primary/90 h-12 cursor-pointer rounded-lg px-6 font-medium"
-              >
-                {hero.buttons?.[1]?.label ?? "Our Impact"}
-              </Button>
+                  <PrimaryIcon className="ml-2 size-4" />
+                </Button>
+              </Link>
+
+              {/* Secondary CTA */}
+              <Link href={hero.buttons?.[1]?.href ?? "#"}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className={cn(
+                    "border-primary/70 text-primary hover:bg-primary/5 hover:text-primary/90 h-12 cursor-pointer rounded-lg px-6 font-medium",
+                    hero.buttons?.[1]?.className
+                  )}
+                >
+                  {hero.buttons?.[1]?.label ?? "Our Impact"}
+                </Button>
+              </Link>
             </div>
           </div>
 
@@ -82,7 +98,9 @@ export default async function Hero() {
             <div
               className="h-150 w-full bg-cover bg-center"
               style={{
-                backgroundImage: `url(${heroImage})`,
+                backgroundImage: `url("${encodeURI(heroImage)}")`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
                 maskImage: `url(${indiaSvg.src})`,
                 WebkitMaskImage: `url(${indiaSvg.src})`,
 
