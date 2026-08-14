@@ -20,7 +20,7 @@ export default async function Hero() {
     slug: "app_homepage",
     depth: 1,
   });
-  console.log("Data", homepage);
+
   const hero = homepage?.hero || {};
 
   const heroImage =
@@ -28,7 +28,7 @@ export default async function Hero() {
       ? typeof hero.image.media === "string"
         ? hero.image.media
         : hero.image.media?.url
-      : "https://t4.ftcdn.net/jpg/03/66/93/09/360_F_366930992_lpEooegUOMr9hly265hvcNtx60z656Qh.jpg";
+      : "/navjyoti.png";
 
   const PrimaryIcon = hero.buttons?.[0]?.icon ? iconMap[hero.buttons[0].icon] : ArrowRight;
 
