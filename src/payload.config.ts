@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
-import { HomePage } from "@/db/globals/HomePage";
+import { HomePage } from "@/db/pages/HomePage";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
