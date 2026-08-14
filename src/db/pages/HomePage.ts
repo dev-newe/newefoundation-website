@@ -1,54 +1,6 @@
 import type { GlobalConfig } from "payload";
-
-const imageFieldGroup = (name: string, label: string) => ({
-  name,
-  label,
-  type: "group" as const,
-  fields: [
-    {
-      name: "media",
-      type: "upload" as const,
-      relationTo: "media" as const,
-      admin: {
-        description: "Select or upload an image from Payload Media Library",
-      },
-    },
-    {
-      name: "src",
-      type: "text" as const,
-      admin: {
-        description: "External image URL (used if no Media asset is attached)",
-      },
-    },
-    {
-      name: "alt",
-      type: "text" as const,
-      admin: {
-        description: "Accessibility alt text",
-      },
-    },
-  ],
-});
-
-const buttonActionFields = [
-  {
-    name: "label",
-    type: "text" as const,
-    required: true,
-  },
-  {
-    name: "href",
-    type: "text" as const,
-  },
-  {
-    name: "className",
-    type: "text" as const,
-  },
-  {
-    name: "icon",
-    type: "text" as const,
-  },
-];
+import { imageFieldGroup } from "../globals/ImageField";
+import { buttonActionFields } from "../globals/ButtonAction";
 
 export const HomePage: GlobalConfig = {
   slug: "app_homepage",
