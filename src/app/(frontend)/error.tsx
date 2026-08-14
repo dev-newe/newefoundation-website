@@ -43,7 +43,7 @@ export default function Error({ error, reset }: ErrorProps) {
           <Link
             href="/"
             className={cn(
-              buttonVariants({ variant: "outline" }),
+              buttonVariants({ variant: "muted" }),
               "h-auto gap-2 rounded-full px-6 py-3 text-sm"
             )}
           >

@@ -11,13 +11,13 @@ export default async function Home() {
   const homepage = await getGlobal("app_homepage");
 
   return (
-    <div className="gap-section flex flex-col">
+    <main className="gap-section flex flex-col">
       <Hero data={homepage.hero} />
       <About />
       <Mission />
       <OurWork />
       <Team />
       <CTA />
-    </div>
+    </main>
   );
 }
