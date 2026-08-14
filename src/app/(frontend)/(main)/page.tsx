@@ -5,10 +5,14 @@ import Mission from "@/features/home/components/Mission";
 import OurWork from "@/features/home/components/OurWork";
 import Team from "@/features/home/components/Team";
 
-export default function Home() {
+import { getGlobal } from "@/services/payload";
+
+export default async function Home() {
+  const homepage = await getGlobal("app_homepage");
+
   return (
     <div className="gap-section flex flex-col">
-      <Hero />
+      <Hero data={homepage.hero} />
       <About />
       <Mission />
       <OurWork />

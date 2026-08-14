@@ -1,6 +1,10 @@
-import React from "react";
+import { AppHomepage } from "@/payload-types";
 
-const Hero = () => {
+type HeroProps = {
+  data: AppHomepage["hero"];
+};
+
+const Hero = ({ data }: HeroProps) => {
   return <div>Hero</div>;
 };
 
