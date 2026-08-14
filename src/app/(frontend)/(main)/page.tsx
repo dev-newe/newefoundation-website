@@ -7,7 +7,7 @@ import Team from "@/features/home/components/Team";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="gap-section flex flex-col">
       <Hero />
       <About />
       <Mission />
