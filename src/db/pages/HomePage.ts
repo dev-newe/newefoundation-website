@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
-import { imageFieldGroup } from "../globals/ImageField";
-import { buttonActionFields } from "../globals/ButtonAction";
+import { ImageFieldGroup } from "@/db/globals/ImageField";
+import { ButtonActionFields } from "@/db/globals/ButtonAction";
 
 export const HomePage: GlobalConfig = {
   slug: "app_homepage",
@@ -14,7 +14,7 @@ export const HomePage: GlobalConfig = {
       name: "header",
       type: "group",
       fields: [
-        imageFieldGroup("logo", "Brand Logo"),
+        ImageFieldGroup("logo", "Brand Logo"),
         {
           name: "brandName",
           type: "group",
@@ -68,7 +68,7 @@ export const HomePage: GlobalConfig = {
         {
           name: "ctaButton",
           type: "group",
-          fields: buttonActionFields,
+          fields: ButtonActionFields,
         },
       ],
     },
@@ -99,9 +99,9 @@ export const HomePage: GlobalConfig = {
         {
           name: "buttons",
           type: "array",
-          fields: buttonActionFields,
+          fields: ButtonActionFields,
         },
-        imageFieldGroup("image", "Hero Image"),
+        ImageFieldGroup("image", "Hero Image"),
       ],
     },
 
@@ -162,8 +162,8 @@ export const HomePage: GlobalConfig = {
           name: "images",
           type: "group",
           fields: [
-            imageFieldGroup("primary", "Primary Image"),
-            imageFieldGroup("secondary", "Secondary Image"),
+            ImageFieldGroup("primary", "Primary Image"),
+            ImageFieldGroup("secondary", "Secondary Image"),
           ],
         },
       ],
@@ -183,7 +183,7 @@ export const HomePage: GlobalConfig = {
             { name: "category", type: "text", required: true },
             { name: "title", type: "text", required: true },
             { name: "description", type: "textarea", required: true },
-            imageFieldGroup("image", "Featured Project Image"),
+            ImageFieldGroup("image", "Featured Project Image"),
           ],
         },
         {
@@ -215,7 +215,7 @@ export const HomePage: GlobalConfig = {
             // { name: "id", type: "text", required: true },
             { name: "name", type: "text", required: true },
             { name: "role", type: "text", required: true },
-            imageFieldGroup("image", "Member Photo"),
+            ImageFieldGroup("image", "Member Photo"),
           ],
         },
       ],
@@ -231,7 +231,7 @@ export const HomePage: GlobalConfig = {
         {
           name: "buttons",
           type: "array",
-          fields: buttonActionFields,
+          fields: ButtonActionFields,
         },
       ],
     },

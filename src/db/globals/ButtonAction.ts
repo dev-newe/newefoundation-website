@@ -1,4 +1,4 @@
-export const buttonActionFields = [
+export const ButtonActionFields = [
   {
     name: "label",
     type: "text" as const,
