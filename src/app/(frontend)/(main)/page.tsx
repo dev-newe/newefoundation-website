@@ -5,15 +5,19 @@ import Mission from "@/features/home/components/Mission";
 import OurWork from "@/features/home/components/OurWork";
 import Team from "@/features/home/components/Team";
 
-export default function Home() {
+import { getGlobal } from "@/services/payload";
+
+export default async function Home() {
+  const homepage = await getGlobal("app_homepage");
+
   return (
-    <div className="">
-      <Hero />
+    <main>
+      <Hero data={homepage.hero} />
       <About />
       <Mission />
       <OurWork />
       <Team />
       <CTA />
-    </div>
+    </main>
   );
 }

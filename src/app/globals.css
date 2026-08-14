@@ -18,27 +18,23 @@
 
 :root {
   /* ---------- Color Palette ---------- */
-  --background: 40 33% 97%;
-  /* warm cream #F8F4EF */
-  --foreground: 160 15% 12%;
-  /* charcoal */
+  --background: 40 33% 97%; /* Warm Cream (#F8F4EF) - primary page bg */
+  --foreground: 160 15% 12%; /* Deep Charcoal (#1A2420) - readable body text */
 
-  --primary: 158 42% 18%;
-  /* deep forest green */
-  --primary-foreground: 40 33% 97%;
+  --primary: 158 42% 18%; /* Forest Green (#1B4132) */
+  --primary-foreground: var(--background); /* Cream text on green bg */
 
-  --secondary: 40 20% 94%;
-  --secondary-foreground: 160 15% 12%;
+  --secondary: 25 100% 88%; /* Soft Beige (#FFDCC3) */
+  --secondary-foreground: var(--foreground); /* Cream text on green bg */
 
-  --accent: 28 85% 52%;
-  /* warm orange */
-  --accent-foreground: 0 0% 100%;
+  --accent: 28 85% 52%; /* Warm Orange (#F07119) */
+  --accent-foreground: var(--background); /* Cream text on orange button */
 
   --muted: 40 15% 92%;
   --muted-foreground: 160 8% 42%;
 
   --card: 0 0% 100%;
-  --card-foreground: 160 15% 12%;
+  --card-foreground: var(--foreground);
 
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
@@ -101,7 +97,7 @@
   /* Section vertical padding */
   --section-y-mob: clamp(3rem, 10vw, 4rem);
   --section-y-tab: clamp(4rem, 8vw, 5.5rem);
-  --section-y-dsk: clamp(5rem, 7vw, 7.5rem);
+  --section-y-dsk: clamp(2rem, 5vw, 4rem);
 
   /* Horizontal page padding */
   --page-x-mob: clamp(1rem, 5vw, 1.5rem);
@@ -124,10 +120,9 @@
   --shadow-lg: 0 16px 40px -8px rgb(0 0 0 / 0.1);
 
   /* ---------- Layout ---------- */
-  --container-max: 72rem;
-  /* 1152px */
-  --container-narrow: 42rem;
-  /* for text-heavy sections */
+  --container-wide: 1920px;
+  --container-max: 72rem; /* 1152px */
+  --container-narrow: 42rem; /* for text-heavy sections */
   --header-height: 4.5rem;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
