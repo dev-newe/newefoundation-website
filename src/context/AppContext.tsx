@@ -1,14 +1,14 @@
 "use client";
 
-import { AppHomepage, Navigation, Footer } from "@/payload-types";
+import { AppHomepage, AppNavigation, AppFooter } from "@/payload-types";
 import { createContext, useContext } from "react";
 
 interface AppContextType {
   data: AppHomepage | null;
-  navigation: Navigation | null;
-  footer: Footer | null;
+  navigation: AppNavigation | null;
+  footer: AppFooter | null;
   /** Backward compatibility property */
-  header?: Navigation | null;
+  header?: AppNavigation | null;
 }
 
 const AppContext = createContext<AppContextType>({
@@ -25,8 +25,8 @@ export default function AppProvider({
 }: {
   children: React.ReactNode;
   data: AppHomepage | null;
-  navigation?: Navigation | null;
-  footer?: Footer | null;
+  navigation?: AppNavigation | null;
+  footer?: AppFooter | null;
 }) {
   return (
     <AppContext.Provider
