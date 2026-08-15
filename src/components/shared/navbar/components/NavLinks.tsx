@@ -1,10 +1,10 @@
 "use client";
 
-import { Navigation } from "@/payload-types";
+import { AppNavigation } from "@/payload-types";
 import Link from "next/link";
 
 interface NavLinkProps {
-  navItems?: Navigation["navItems"];
+  navItems?: AppNavigation["navItems"];
 }
 
 const NavLinks = ({ navItems }: NavLinkProps) => {

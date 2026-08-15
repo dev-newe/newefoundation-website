@@ -2,12 +2,12 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { AppHomepage, Navigation, Footer } from "@/payload-types";
+import { AppHomepage, AppNavigation, AppFooter } from "@/payload-types";
 
 type GlobalMap = {
   app_homepage: AppHomepage;
-  navigation: Navigation;
-  footer: Footer;
+  app_navigation: AppNavigation;
+  app_footer: AppFooter;
 };
 
 /**

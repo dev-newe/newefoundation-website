@@ -4,12 +4,12 @@ import { useAppContext } from "@/context/AppContext";
 import BrandLogo from "@/components/shared/navbar/components/BrandLogo";
 import DesktopNav from "@/components/shared/navbar/components/DesktopNav";
 import MobileNav from "@/components/shared/navbar/components/MobileNav";
-import { Navigation } from "@/payload-types";
+import { AppNavigation } from "@/payload-types";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 
 interface NavbarProps {
-  data?: Navigation | null;
+  data?: AppNavigation | null;
 }
 
 const Navbar = ({ data }: NavbarProps) => {

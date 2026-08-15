@@ -3,7 +3,7 @@ import { ImageFieldGroup } from "@/db/globals/ImageField";
 import { ButtonActionFields } from "@/db/globals/ButtonAction";
 
 export const Navigation: GlobalConfig = {
-  slug: "navigation",
+  slug: "app_navigation",
   label: "Navigation",
   access: {
     read: () => true,

@@ -1,6 +1,6 @@
 import { getGlobal } from "@/services/payload";
-import type { Navigation } from "@/payload-types";
+import type { AppNavigation } from "@/payload-types";
 
-export async function getNavigationData(): Promise<Navigation | null> {
-  return getGlobal("navigation");
+export async function getNavigationData(): Promise<AppNavigation | null> {
+  return getGlobal("app_navigation");
 }
