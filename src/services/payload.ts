@@ -19,33 +19,30 @@ type GlobalMap = {
 /**
  * Low-level global configuration fetcher from Payload CMS with safe depth & error boundary.
  */
-async function fetchGlobalFromPayload<T extends keyof GlobalMap>(
+const fetchGlobalFromPayload = async <T extends keyof GlobalMap>(
   slug: T
-): Promise<GlobalMap[T] | null> {
-  try {
-    const payload = await getPayload({ config });
-    const data = await payload.findGlobal({
-      slug,
-      depth: 1,
-      overrideAccess: true,
-    });
-    return (data as GlobalMap[T]) ?? null;
-  } catch (error) {
-    console.error(`[Payload] Error fetching global '${slug}':`, error);
-    return null;
+): Promise<GlobalMap[T]> => {
+  const payload = await getPayload({ config });
+
+  const data = await payload.findGlobal({ slug, depth: 1, overrideAccess: true });
+
+  if (!data) {
+    throw new Error(`Global '${slug}' returned no data`);
   }
-}
+
+  return data as GlobalMap[T];
+};
 
 /**
  * Next.js Data Cache wrapper - caches database responses across server requests
  * with tag-based revalidation and 60-second background revalidation.
  */
-function getCachedGlobalFetcher<T extends keyof GlobalMap>(slug: T) {
+const getCachedGlobalFetcher = <T extends keyof GlobalMap>(slug: T) => {
   return unstable_cache(async () => fetchGlobalFromPayload(slug), [`payload_global_${slug}`], {
     revalidate: 60,
     tags: [`payload_global_${slug}`, slug],
   });
-}
+};
 
 /**
  * Loads the entire global configuration from Payload CMS.
@@ -55,9 +52,7 @@ function getCachedGlobalFetcher<T extends keyof GlobalMap>(slug: T) {
 export const getGlobal = cache(
   async <T extends keyof GlobalMap>(slug: T): Promise<GlobalMap[T] | null> => {
     try {
-      const cachedFetcher = getCachedGlobalFetcher(slug);
-      const data = await cachedFetcher();
-      return data;
+      return getCachedGlobalFetcher(slug)();
     } catch (error) {
       console.error(`[Payload] Cache retrieval failed for global '${slug}':`, error);
       return null;
@@ -82,10 +77,10 @@ export type PayloadImageField = {
  * Handles both populated Media objects, string IDs, external src links, and fallback values.
  * This guarantees a valid string URL is returned, preventing Next.js Image component from crashing on empty src.
  */
-export function resolvePayloadImage(
+export const resolvePayloadImage = (
   imageField: PayloadImageField | undefined,
   fallbackUrl: string = "/placeholder.png"
-): { url: string; alt: string } {
+): { url: string; alt: string } => {
   if (!imageField || typeof imageField !== "object") {
     return { url: fallbackUrl, alt: "" };
   }
@@ -100,4 +95,4 @@ export function resolvePayloadImage(
       fallbackUrl,
     alt: imageField.alt || media?.alt || "",
   };
-}
+};
