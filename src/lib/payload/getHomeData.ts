@@ -1,11 +1,6 @@
-// lib/payload/getAppData.ts
-import { getPayload } from "payload";
-import config from "@/payload.config";
+import { getGlobal } from "@/services/payload";
+import type { AppHomepage } from "@/payload-types";
 
-export async function getHomeData() {
-  const payload = await getPayload({ config });
-
-  return payload.findGlobal({
-    slug: "app_homepage",
-  });
+export async function getHomeData(): Promise<AppHomepage | null> {
+  return getGlobal("app_homepage");
 }

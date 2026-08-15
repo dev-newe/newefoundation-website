@@ -2,6 +2,7 @@
 
 import { AppHomepage } from "@/payload-types";
 import Image from "next/image";
+import Link from "next/link";
 
 interface BrandLogoProps {
   content?: AppHomepage["header"]["brandName"];
@@ -16,17 +17,14 @@ const BrandLogo = ({ content, logo }: BrandLogoProps) => {
   const media = typeof logo?.media === "object" && logo?.media !== null ? logo.media : null;
 
   return (
-    <div>
-      {media?.url && (
-        <Image
-          src={media.url}
-          alt={media.alt || content.text || "Logo"}
-          width={media.width || 100}
-          height={media.height || 40}
-        />
-      )}
-      <p>{content.text}</p>
-    </div>
+    <Link href="/">
+      <div className="flex w-fit items-center gap-2 overflow-hidden rounded-lg">
+        {media?.url && (
+          <Image src={media.url} alt={media.alt || content.text || "Logo"} width={48} height={48} />
+        )}
+        <h3 className="text-lg font-semibold md:text-xl">{content.text}</h3>
+      </div>
+    </Link>
   );
 };
 

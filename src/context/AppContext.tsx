@@ -10,7 +10,7 @@ export default function AppProvider({
   data,
 }: {
   children: React.ReactNode;
-  data: AppHomepage;
+  data: AppHomepage | null;
 }) {
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;
 }
