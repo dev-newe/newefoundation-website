@@ -42,7 +42,9 @@ const DetailedWork = ({
           {detailWorkData.category}
         </div>
 
-        <h3 className="text-2xl leading-tight font-medium sm:text-3xl">{detailWorkData.title}</h3>
+        <h3 className="font-serif text-2xl leading-tight font-medium sm:text-3xl">
+          {detailWorkData.title}
+        </h3>
 
         <p className="mt-7 text-justify text-base leading-7 whitespace-pre-line sm:text-lg">
           {detailWorkData.description}

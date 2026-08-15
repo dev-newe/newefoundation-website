@@ -18,7 +18,9 @@ const OurWork = ({ data }: WorkProps) => {
       <div className="">
         {/* Section heading */}
         <div className="text-center">
-          <h2 className="text-primary text-5xl font-medium lg:text-6xl">{ourWorkData.title}</h2>
+          <h2 className="text-primary font-serif text-5xl font-medium lg:text-6xl">
+            {ourWorkData.title}
+          </h2>
 
           <p className="mx-auto mt-2 max-w-xl text-lg">{ourWorkData.description}</p>
         </div>
