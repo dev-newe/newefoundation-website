@@ -52,7 +52,7 @@ const getCachedGlobalFetcher = <T extends keyof GlobalMap>(slug: T) => {
 export const getGlobal = cache(
   async <T extends keyof GlobalMap>(slug: T): Promise<GlobalMap[T] | null> => {
     try {
-      return getCachedGlobalFetcher(slug)();
+      return await getCachedGlobalFetcher(slug)();
     } catch (error) {
       console.error(`[Payload] Cache retrieval failed for global '${slug}':`, error);
       return null;
@@ -93,6 +93,6 @@ export const resolvePayloadImage = (
       (typeof imageField.media === "string" ? imageField.media : undefined) ??
       imageField.src ??
       fallbackUrl,
-    alt: imageField.alt || media?.alt || "",
+    alt: imageField.alt ?? media?.alt ?? "",
   };
 };
