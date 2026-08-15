@@ -27,7 +27,6 @@ const Hero = ({ data }: HeroProps) => {
       main: data?.title?.main ?? "Your help will change a life - Inspire hope, Empower futures",
       highlight: data?.title?.highlight,
     },
-
     buttons: data?.buttons,
     description:
       data?.description ??
@@ -52,8 +51,8 @@ const Hero = ({ data }: HeroProps) => {
             </div>
 
             {/* Heading */}
-            <h1 className="text-primary font-sans text-5xl font-semibold xl:text-7xl">
-              {hero?.title?.main}
+            <h1 className="text-primary font-serif text-5xl font-semibold xl:text-7xl">
+              {hero?.title?.main} <span className="text-accent">{hero?.title?.highlight}</span>
             </h1>
 
             {/* Description */}
