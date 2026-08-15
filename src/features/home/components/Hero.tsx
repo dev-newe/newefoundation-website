@@ -1,11 +1,15 @@
 import indiaSvg from "@/assets/svgs/india.svg";
 import { ArrowRight, Heart, HandHeart, LucideIcon } from "lucide-react";
-import config from "@payload-config";
-import { getPayload } from "payload";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+
+import { AppHomepage } from "@/payload-types";
+
+type HeroProps = {
+  data: AppHomepage["hero"];
+};
 
 const iconMap: Record<string, LucideIcon> = {
   ArrowRight,
@@ -13,17 +17,7 @@ const iconMap: Record<string, LucideIcon> = {
   HandHeart,
 };
 
-export default async function Hero() {
-  const payload = await getPayload({
-    config,
-  });
-
-  const homepage = await payload.findGlobal({
-    slug: "app_homepage",
-  });
-
-  const hero = homepage?.hero || {};
-
+const Hero = ({ data: hero }: HeroProps) => {
   const heroImage =
     typeof hero?.image === "object" && hero.image !== null
       ? typeof hero.image.media === "string"
@@ -119,4 +113,6 @@ export default async function Hero() {
       </div>
     </section>
   );
-}
+};
+
+export default Hero;
