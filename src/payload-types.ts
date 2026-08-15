@@ -684,8 +684,7 @@ export interface AppContactpage {
       | {
           fieldName: string;
           fieldLabel: string;
-          fieldType:
-            "text" | "email" | "tel" | "textarea" | "select" | "checkbox" | "radio" | "file";
+          fieldType: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'file';
           selectOptions?:
             | {
                 label: string;
@@ -703,12 +702,12 @@ export interface AppContactpage {
             | null;
           fileTypes?:
             | {
-                type: "pdf" | "image" | "document" | "video" | "audio" | "other";
+                type: 'pdf' | 'image' | 'document' | 'video' | 'audio' | 'other';
                 id?: string | null;
               }[]
             | null;
           fieldPlaceholder: string;
-          width?: ("full" | "half") | null;
+          width?: ('full' | 'half') | null;
           regexValidation?: string | null;
           className?: string | null;
           fieldRequired?: boolean | null;
