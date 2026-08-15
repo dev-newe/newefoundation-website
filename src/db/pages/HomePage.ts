@@ -1,54 +1,6 @@
 import type { GlobalConfig } from "payload";
-
-const imageFieldGroup = (name: string, label: string) => ({
-  name,
-  label,
-  type: "group" as const,
-  fields: [
-    {
-      name: "media",
-      type: "upload" as const,
-      relationTo: "media" as const,
-      admin: {
-        description: "Select or upload an image from Payload Media Library",
-      },
-    },
-    {
-      name: "src",
-      type: "text" as const,
-      admin: {
-        description: "External image URL (used if no Media asset is attached)",
-      },
-    },
-    {
-      name: "alt",
-      type: "text" as const,
-      admin: {
-        description: "Accessibility alt text",
-      },
-    },
-  ],
-});
-
-const buttonActionFields = [
-  {
-    name: "label",
-    type: "text" as const,
-    required: true,
-  },
-  {
-    name: "href",
-    type: "text" as const,
-  },
-  {
-    name: "className",
-    type: "text" as const,
-  },
-  {
-    name: "icon",
-    type: "text" as const,
-  },
-];
+import { ImageFieldGroup } from "@/db/globals/ImageField";
+import { ButtonActionFields } from "@/db/globals/ButtonAction";
 
 export const HomePage: GlobalConfig = {
   slug: "app_homepage",
@@ -62,7 +14,7 @@ export const HomePage: GlobalConfig = {
       name: "header",
       type: "group",
       fields: [
-        imageFieldGroup("logo", "Brand Logo"),
+        ImageFieldGroup("logo", "Brand Logo"),
         {
           name: "brandName",
           type: "group",
@@ -116,7 +68,7 @@ export const HomePage: GlobalConfig = {
         {
           name: "ctaButton",
           type: "group",
-          fields: buttonActionFields,
+          fields: ButtonActionFields,
         },
       ],
     },
@@ -147,9 +99,9 @@ export const HomePage: GlobalConfig = {
         {
           name: "buttons",
           type: "array",
-          fields: buttonActionFields,
+          fields: ButtonActionFields,
         },
-        imageFieldGroup("image", "Hero Image"),
+        ImageFieldGroup("image", "Hero Image"),
       ],
     },
 
@@ -210,8 +162,8 @@ export const HomePage: GlobalConfig = {
           name: "images",
           type: "group",
           fields: [
-            imageFieldGroup("primary", "Primary Image"),
-            imageFieldGroup("secondary", "Secondary Image"),
+            ImageFieldGroup("primary", "Primary Image"),
+            ImageFieldGroup("secondary", "Secondary Image"),
           ],
         },
       ],
@@ -231,7 +183,7 @@ export const HomePage: GlobalConfig = {
             { name: "category", type: "text", required: true },
             { name: "title", type: "text", required: true },
             { name: "description", type: "textarea", required: true },
-            imageFieldGroup("image", "Featured Project Image"),
+            ImageFieldGroup("image", "Featured Project Image"),
           ],
         },
         {
@@ -263,7 +215,7 @@ export const HomePage: GlobalConfig = {
             // { name: "id", type: "text", required: true },
             { name: "name", type: "text", required: true },
             { name: "role", type: "text", required: true },
-            imageFieldGroup("image", "Member Photo"),
+            ImageFieldGroup("image", "Member Photo"),
           ],
         },
       ],
@@ -279,7 +231,7 @@ export const HomePage: GlobalConfig = {
         {
           name: "buttons",
           type: "array",
-          fields: buttonActionFields,
+          fields: ButtonActionFields,
         },
       ],
     },
