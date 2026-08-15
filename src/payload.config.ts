@@ -10,6 +10,8 @@ import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
 import { HomePage } from "@/db/pages/HomePage";
+import { Navigation } from "@/db/globals/Navigation";
+import { Footer } from "@/db/globals/Footer";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
@@ -46,11 +48,16 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, CloudinaryCleanupJobs],
-  globals: [HomePage],
+  globals: [HomePage, Navigation, Footer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
+    connectOptions: {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
+    },
   }),
   email: resendAdapter({
     defaultFromAddress: process.env.EMAIL_FROM,

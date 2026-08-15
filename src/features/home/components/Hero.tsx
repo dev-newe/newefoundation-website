@@ -8,7 +8,7 @@ import Link from "next/link";
 import { AppHomepage } from "@/payload-types";
 
 type HeroProps = {
-  data: AppHomepage["hero"];
+  data?: AppHomepage["hero"];
 };
 
 const iconMap: Record<string, LucideIcon> = {
@@ -19,13 +19,13 @@ const iconMap: Record<string, LucideIcon> = {
 
 const Hero = ({ data: hero }: HeroProps) => {
   const heroImage =
-    typeof hero?.image === "object" && hero.image !== null
-      ? typeof hero.image.media === "string"
-        ? hero.image.media
-        : hero.image.media?.url || hero.image.src || "/navjyoti.png"
+    typeof hero?.image === "object" && hero?.image !== null
+      ? typeof hero?.image.media === "string"
+        ? hero?.image.media
+        : hero?.image.media?.url || hero?.image.src || "/navjyoti.png"
       : "/navjyoti.png";
 
-  const iconName = hero.buttons?.[0]?.icon;
+  const iconName = hero?.buttons?.[0]?.icon;
 
   const PrimaryIcon = iconName ? (iconMap[iconName] ?? ArrowRight) : ArrowRight;
 
@@ -48,38 +48,38 @@ const Hero = ({ data: hero }: HeroProps) => {
 
             {/* Description */}
             <p className="mt-7 max-w-147.5 text-base leading-6 text-[#5d625e] sm:text-[17px] sm:leading-7">
-              {hero.description ??
+              {hero?.description ??
                 "Building an India where every individual has the power to thrive. Navjyoti Education and Women Empowerment foundation works to uplift underprivileged communities through education, skill development, and social awareness."}
             </p>
 
             {/* Actions */}
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               {/* Primary CTA */}
-              <Link href={hero.buttons?.[0]?.href ?? "#"}>
+              <Link href={hero?.buttons?.[0]?.href ?? "#"}>
                 <Button
                   size="lg"
                   className={cn(
                     "bg-accent hover:bg-accent/90 h-12 rounded-lg px-6 font-semibold text-white",
-                    hero.buttons?.[0]?.className
+                    hero?.buttons?.[0]?.className
                   )}
                 >
-                  {hero.buttons?.[0]?.label ?? "Become a Hero"}
+                  {hero?.buttons?.[0]?.label ?? "Become a Hero"}
 
                   <PrimaryIcon className="ml-2 size-4" />
                 </Button>
               </Link>
 
               {/* Secondary CTA */}
-              <Link href={hero.buttons?.[1]?.href ?? "#"}>
+              <Link href={hero?.buttons?.[1]?.href ?? "#"}>
                 <Button
                   size="lg"
                   variant="outline"
                   className={cn(
                     "border-primary/70 text-primary hover:bg-primary/5 hover:text-primary/90 h-12 cursor-pointer rounded-lg px-6 font-medium",
-                    hero.buttons?.[1]?.className
+                    hero?.buttons?.[1]?.className
                   )}
                 >
-                  {hero.buttons?.[1]?.label ?? "Our Impact"}
+                  {hero?.buttons?.[1]?.label ?? "Our Impact"}
                 </Button>
               </Link>
             </div>

@@ -12,11 +12,11 @@ export default async function Home() {
 
   return (
     <main>
-      <Hero data={homepage.hero} />
+      <Hero data={homepage?.hero} />
       <About />
       <Mission />
       <OurWork />
-      <Team />
+      <Team data={homepage?.team} />
       <CTA data={homepage?.cta} />
     </main>
   );

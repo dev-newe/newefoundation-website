@@ -91,9 +91,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     app_homepage: AppHomepage;
+    app_navigation: AppNavigation;
+    app_footer: AppFooter;
   };
   globalsSelect: {
     app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
+    app_navigation: AppNavigationSelect<false> | AppNavigationSelect<true>;
+    app_footer: AppFooterSelect<false> | AppFooterSelect<true>;
   };
   locale: null;
   widgets: {
@@ -435,60 +439,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface AppHomepage {
   id: string;
-  header: {
-    logo?: {
-      /**
-       * Select or upload an image from Payload Media Library
-       */
-      media?: (string | null) | Media;
-      /**
-       * External image URL (used if no Media asset is attached)
-       */
-      src?: string | null;
-      /**
-       * Accessibility alt text
-       */
-      alt?: string | null;
-    };
-    brandName: {
-      text: string;
-    };
-    navItems?:
-      | {
-          label: string;
-          href: string;
-          isDropdown?: boolean | null;
-          groupA?: {
-            title?: string | null;
-            items?:
-              | {
-                  label: string;
-                  href: string;
-                  id?: string | null;
-                }[]
-              | null;
-          };
-          groupB?: {
-            title?: string | null;
-            items?:
-              | {
-                  label: string;
-                  href: string;
-                  id?: string | null;
-                }[]
-              | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    ctaButton: {
-      label: string;
-      href?: string | null;
-      className?: string | null;
-      icon?: string | null;
-      id?: string | null;
-    };
-  };
   hero: {
     badge: {
       text: string;
@@ -522,16 +472,21 @@ export interface AppHomepage {
       alt?: string | null;
     };
   };
-  aboutCards?:
-    | {
-        icon: string;
-        title: string;
-        description: string;
-        stat: string;
-        highlighted?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
+  aboutUs: {
+    badge: string;
+    title: string;
+    description: string;
+    sections?:
+      | {
+          icon: string;
+          title: string;
+          description: string;
+          stat: string;
+          highlighted?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   missionVision: {
     mission: {
       title: string;
@@ -576,6 +531,31 @@ export interface AppHomepage {
       };
     };
   };
+  ourPartners: {
+    title: string;
+    description: string;
+    partners?:
+      | {
+          logo?: {
+            /**
+             * Select or upload an image from Payload Media Library
+             */
+            media?: (string | null) | Media;
+            /**
+             * External image URL (used if no Media asset is attached)
+             */
+            src?: string | null;
+            /**
+             * Accessibility alt text
+             */
+            alt?: string | null;
+          };
+          name?: string | null;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   ourWork: {
     title: string;
     subtitle: string;
@@ -583,32 +563,26 @@ export interface AppHomepage {
       category: string;
       title: string;
       description: string;
-      image?: {
-        /**
-         * Select or upload an image from Payload Media Library
-         */
-        media?: (string | null) | Media;
-        /**
-         * External image URL (used if no Media asset is attached)
-         */
-        src?: string | null;
-        /**
-         * Accessibility alt text
-         */
-        alt?: string | null;
-      };
+      images?:
+        | {
+            img?: {
+              /**
+               * Select or upload an image from Payload Media Library
+               */
+              media?: (string | null) | Media;
+              /**
+               * External image URL (used if no Media asset is attached)
+               */
+              src?: string | null;
+              /**
+               * Accessibility alt text
+               */
+              alt?: string | null;
+            };
+            id?: string | null;
+          }[]
+        | null;
     };
-    campaigns?:
-      | {
-          title: string;
-          description: string;
-          fundedPercentage: number;
-          raisedAmount: string;
-          targetAmount: string;
-          buttonLabel: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   team: {
     title: string;
@@ -647,30 +621,98 @@ export interface AppHomepage {
         }[]
       | null;
   };
-  footer: {
-    brand: {
-      name: string;
-      icon: string;
-      address: string;
-      phone: string;
-      email: string;
-    };
-    linkGroups?:
-      | {
-          title: string;
-          links?:
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_navigation".
+ */
+export interface AppNavigation {
+  id: string;
+  logo?: {
+    /**
+     * Select or upload an image from Payload Media Library
+     */
+    media?: (string | null) | Media;
+    /**
+     * External image URL (used if no Media asset is attached)
+     */
+    src?: string | null;
+    /**
+     * Accessibility alt text
+     */
+    alt?: string | null;
+  };
+  brandName: {
+    text: string;
+  };
+  navItems?:
+    | {
+        label: string;
+        href: string;
+        isDropdown?: boolean | null;
+        groupA?: {
+          title?: string | null;
+          items?:
             | {
                 label: string;
                 href: string;
-                isActive?: boolean | null;
                 id?: string | null;
               }[]
             | null;
-          id?: string | null;
-        }[]
-      | null;
-    copyright: string;
+        };
+        groupB?: {
+          title?: string | null;
+          items?:
+            | {
+                label: string;
+                href: string;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton: {
+    label: string;
+    href?: string | null;
+    className?: string | null;
+    icon?: string | null;
+    id?: string | null;
   };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_footer".
+ */
+export interface AppFooter {
+  id: string;
+  brand: {
+    name: string;
+    icon: string;
+    address: string;
+    phone: string;
+    email: string;
+  };
+  linkGroups?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              isActive?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyright: string;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -679,63 +721,6 @@ export interface AppHomepage {
  * via the `definition` "app_homepage_select".
  */
 export interface AppHomepageSelect<T extends boolean = true> {
-  header?:
-    | T
-    | {
-        logo?:
-          | T
-          | {
-              media?: T;
-              src?: T;
-              alt?: T;
-            };
-        brandName?:
-          | T
-          | {
-              text?: T;
-            };
-        navItems?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-              isDropdown?: T;
-              groupA?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          label?: T;
-                          href?: T;
-                          id?: T;
-                        };
-                  };
-              groupB?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          label?: T;
-                          href?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-            };
-        ctaButton?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-              className?: T;
-              icon?: T;
-              id?: T;
-            };
-      };
   hero?:
     | T
     | {
@@ -768,15 +753,22 @@ export interface AppHomepageSelect<T extends boolean = true> {
               alt?: T;
             };
       };
-  aboutCards?:
+  aboutUs?:
     | T
     | {
-        icon?: T;
+        badge?: T;
         title?: T;
         description?: T;
-        stat?: T;
-        highlighted?: T;
-        id?: T;
+        sections?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              stat?: T;
+              highlighted?: T;
+              id?: T;
+            };
       };
   missionVision?:
     | T
@@ -818,6 +810,26 @@ export interface AppHomepageSelect<T extends boolean = true> {
                   };
             };
       };
+  ourPartners?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        partners?:
+          | T
+          | {
+              logo?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+              name?: T;
+              url?: T;
+              id?: T;
+            };
+      };
   ourWork?:
     | T
     | {
@@ -829,24 +841,18 @@ export interface AppHomepageSelect<T extends boolean = true> {
               category?: T;
               title?: T;
               description?: T;
-              image?:
+              images?:
                 | T
                 | {
-                    media?: T;
-                    src?: T;
-                    alt?: T;
+                    img?:
+                      | T
+                      | {
+                          media?: T;
+                          src?: T;
+                          alt?: T;
+                        };
+                    id?: T;
                   };
-            };
-        campaigns?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              fundedPercentage?: T;
-              raisedAmount?: T;
-              targetAmount?: T;
-              buttonLabel?: T;
-              id?: T;
             };
       };
   team?:
@@ -883,34 +889,101 @@ export interface AppHomepageSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  footer?:
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_navigation_select".
+ */
+export interface AppNavigationSelect<T extends boolean = true> {
+  logo?:
     | T
     | {
-        brand?:
-          | T
-          | {
-              name?: T;
-              icon?: T;
-              address?: T;
-              phone?: T;
-              email?: T;
-            };
-        linkGroups?:
+        media?: T;
+        src?: T;
+        alt?: T;
+      };
+  brandName?:
+    | T
+    | {
+        text?: T;
+      };
+  navItems?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        isDropdown?: T;
+        groupA?:
           | T
           | {
               title?: T;
-              links?:
+              items?:
                 | T
                 | {
                     label?: T;
                     href?: T;
-                    isActive?: T;
                     id?: T;
                   };
+            };
+        groupB?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+            };
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        className?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_footer_select".
+ */
+export interface AppFooterSelect<T extends boolean = true> {
+  brand?:
+    | T
+    | {
+        name?: T;
+        icon?: T;
+        address?: T;
+        phone?: T;
+        email?: T;
+      };
+  linkGroups?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              isActive?: T;
               id?: T;
             };
-        copyright?: T;
+        id?: T;
       };
+  copyright?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

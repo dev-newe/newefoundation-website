@@ -10,7 +10,7 @@ type ErrorProps = {
   reset: () => void;
 };
 
-export default function Error({ error, reset }: ErrorProps) {
+export default function Error({ error: _error, reset }: ErrorProps) {
   return (
     <main
       className="px-page py-section flex h-screen flex-col items-center justify-center text-center"
