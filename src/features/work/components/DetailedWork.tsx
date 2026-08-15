@@ -1,6 +1,7 @@
 import { AppHomepage } from "@/payload-types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { resolvePayloadImage } from "@/services/payload";
 
 type FeaturedProps = {
   data?: AppHomepage["ourWork"]["featuredProject"];
@@ -19,15 +20,11 @@ const DetailedWork = ({
     category: data?.category ?? "Placeholder Category",
     images:
       data?.images && data.images.length > 0
-        ? data.images
-        : [
-            { img: { media: "/navjyoti.png" }, alt: "Placeholder Image 1" },
-            { img: { media: "/navjyoti.png" }, alt: "Placeholder Image 2" },
-            { img: { media: "/navjyoti.png" }, alt: "Placeholder Image 3" },
-          ],
+        ? data.images.map((image) => resolvePayloadImage(image.img, "/navjyoti.png"))
+        : [],
   };
 
-  const workImages = detailWorkData.images.filter((image) => image?.img?.media);
+  const workImages = detailWorkData.images.filter((image) => image.url);
   const imageCount = workImages.length;
 
   return (
@@ -38,6 +35,7 @@ const DetailedWork = ({
         reversed && "lg:grid-cols-[1fr_1.1fr]",
         className
       )}
+      id="featured-work"
     >
       <div className={cn("order-1 mt-auto mb-0 p-8", reversed ? "lg:order-1" : "lg:order-2")}>
         <div className="border-accent/30 bg-accent/10 text-accent mb-4 w-fit rounded-2xl border px-3 py-1 text-sm font-medium">
@@ -101,16 +99,8 @@ const DetailedWork = ({
               )}
             >
               <Image
-                src={
-                  typeof image?.img?.media === "string"
-                    ? image.img.media
-                    : (image.img?.media?.url ?? "/images/placeholder1.jpg")
-                }
-                alt={
-                  typeof image?.img?.media === "string"
-                    ? "Featured Work"
-                    : (image.img?.media?.alt ?? "Featured Work")
-                }
+                src={image.url}
+                alt={image.alt}
                 fill
                 sizes={
                   imageCount === 3

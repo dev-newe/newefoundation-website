@@ -6,7 +6,6 @@ type WorkProps = {
 };
 
 const OurWork = ({ data }: WorkProps) => {
-  console.log("OurWork data:", data); // Debugging line to check the data being passed
   const ourWorkData = {
     title: data?.title ?? "Our Work",
     description:
@@ -15,7 +14,7 @@ const OurWork = ({ data }: WorkProps) => {
     images: data?.featuredProject?.images ?? [],
   };
   return (
-    <section className="px-4 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:px-20">
+    <section className="px-4 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:px-20" id="our-work">
       <div className="">
         {/* Section heading */}
         <div className="text-center">
