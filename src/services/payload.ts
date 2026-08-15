@@ -2,7 +2,13 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { AppHomepage, AppNavigation, AppFooter } from "@/payload-types";
+import { AppHomepage, AppNavigation, AppFooter, Media } from "@/payload-types";
+
+/**
+ * ——————————————————————————————————————————————————————————————————————————————————————————————————
+ **   PAYLOAD GLOBAL DATA FETCH
+ * ——————————————————————————————————————————————————————————————————————————————————————————————————
+ */
 
 type GlobalMap = {
   app_homepage: AppHomepage;
@@ -58,3 +64,40 @@ export const getGlobal = cache(
     }
   }
 );
+
+/**
+ * ——————————————————————————————————————————————————————————————————————————————————————————————————
+ **   PAYLOAD IMAGE RESOLVE
+ * ——————————————————————————————————————————————————————————————————————————————————————————————————
+ */
+
+export type PayloadImageField = {
+  media?: string | Media | null;
+  src?: string | null;
+  alt?: string | null;
+} | null;
+
+/**
+ * Resolves a Payload CMS image group to a clean, usable image URL and alt text.
+ * Handles both populated Media objects, string IDs, external src links, and fallback values.
+ * This guarantees a valid string URL is returned, preventing Next.js Image component from crashing on empty src.
+ */
+export function resolvePayloadImage(
+  imageField: PayloadImageField | undefined,
+  fallbackUrl: string = "/placeholder.png"
+): { url: string; alt: string } {
+  if (!imageField || typeof imageField !== "object") {
+    return { url: fallbackUrl, alt: "" };
+  }
+
+  const media = typeof imageField.media === "object" ? imageField.media : undefined;
+
+  return {
+    url:
+      media?.url ??
+      (typeof imageField.media === "string" ? imageField.media : undefined) ??
+      imageField.src ??
+      fallbackUrl,
+    alt: imageField.alt || media?.alt || "",
+  };
+}
