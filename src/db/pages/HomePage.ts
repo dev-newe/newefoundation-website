@@ -9,70 +9,6 @@ export const HomePage: GlobalConfig = {
     read: () => true,
   },
   fields: [
-    // Header Section
-    {
-      name: "header",
-      type: "group",
-      fields: [
-        ImageFieldGroup("logo", "Brand Logo"),
-        {
-          name: "brandName",
-          type: "group",
-          fields: [{ name: "text", type: "text", required: true }],
-        },
-        {
-          name: "navItems",
-          type: "array",
-          fields: [
-            { name: "label", type: "text", required: true },
-            { name: "href", type: "text", required: true },
-            { name: "isDropdown", type: "checkbox", defaultValue: false },
-            {
-              name: "groupA",
-              type: "group",
-              admin: {
-                condition: (data, siblingData) => Boolean(siblingData?.isDropdown),
-              },
-              fields: [
-                { name: "title", type: "text" },
-                {
-                  name: "items",
-                  type: "array",
-                  fields: [
-                    { name: "label", type: "text", required: true },
-                    { name: "href", type: "text", required: true },
-                  ],
-                },
-              ],
-            },
-            {
-              name: "groupB",
-              type: "group",
-              admin: {
-                condition: (data, siblingData) => Boolean(siblingData?.isDropdown),
-              },
-              fields: [
-                { name: "title", type: "text" },
-                {
-                  name: "items",
-                  type: "array",
-                  fields: [
-                    { name: "label", type: "text", required: true },
-                    { name: "href", type: "text", required: true },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-        {
-          name: "ctaButton",
-          type: "group",
-          fields: ButtonActionFields,
-        },
-      ],
-    },
-
     // Hero Section
     {
       name: "hero",
@@ -105,27 +41,26 @@ export const HomePage: GlobalConfig = {
       ],
     },
 
-    // {
-    //   name: "about",
-    //   type: "group",
-    //   fields: [
-    //     { name: "title", type: "text", required: true },
-    //     { name: "description", type: "textarea", required: true },
-    //     { name: "highlighted", type: "checkbox", defaultValue: false },
-    //   ],
-    // },
-
     // Pillars Section
     {
-      name: "aboutCards",
-      type: "array",
+      name: "aboutUs",
+      type: "group",
       fields: [
-        // { name: "id", type: "text", required: true },
-        { name: "icon", type: "text", required: true },
+        { name: "badge", type: "text", required: true },
         { name: "title", type: "text", required: true },
         { name: "description", type: "textarea", required: true },
-        { name: "stat", type: "text", required: true },
-        { name: "highlighted", type: "checkbox", defaultValue: false },
+        {
+          name: "sections",
+          type: "array",
+          fields: [
+            // { name: "id", type: "text", required: true },
+            { name: "icon", type: "text", required: true },
+            { name: "title", type: "text", required: true },
+            { name: "description", type: "textarea", required: true },
+            { name: "stat", type: "text", required: true },
+            { name: "highlighted", type: "checkbox", defaultValue: false },
+          ],
+        },
       ],
     },
 
@@ -169,6 +104,25 @@ export const HomePage: GlobalConfig = {
       ],
     },
 
+    // Our Partners Section
+    {
+      name: "ourPartners",
+      type: "group",
+      fields: [
+        { name: "title", type: "text", required: true },
+        { name: "description", type: "textarea", required: true },
+        {
+          name: "partners",
+          type: "array",
+          fields: [
+            ImageFieldGroup("logo", "Partner Logo"),
+            { name: "name", type: "text" },
+            { name: "url", type: "text" },
+          ],
+        },
+      ],
+    },
+
     // Our Work Section
     {
       name: "ourWork",
@@ -183,20 +137,11 @@ export const HomePage: GlobalConfig = {
             { name: "category", type: "text", required: true },
             { name: "title", type: "text", required: true },
             { name: "description", type: "textarea", required: true },
-            ImageFieldGroup("image", "Featured Project Image"),
-          ],
-        },
-        {
-          name: "campaigns",
-          type: "array",
-          fields: [
-            // { name: "id", type: "text", required: true },
-            { name: "title", type: "text", required: true },
-            { name: "description", type: "textarea", required: true },
-            { name: "fundedPercentage", type: "number", required: true, min: 0, max: 100 },
-            { name: "raisedAmount", type: "text", required: true },
-            { name: "targetAmount", type: "text", required: true },
-            { name: "buttonLabel", type: "text", required: true },
+            {
+              name: "images",
+              type: "array",
+              fields: [ImageFieldGroup("img", "Work Image")],
+            },
           ],
         },
       ],
@@ -233,42 +178,6 @@ export const HomePage: GlobalConfig = {
           type: "array",
           fields: ButtonActionFields,
         },
-      ],
-    },
-
-    // Footer Section
-    {
-      name: "footer",
-      type: "group",
-      fields: [
-        {
-          name: "brand",
-          type: "group",
-          fields: [
-            { name: "name", type: "text", required: true },
-            { name: "icon", type: "text", required: true },
-            { name: "address", type: "textarea", required: true },
-            { name: "phone", type: "text", required: true },
-            { name: "email", type: "text", required: true },
-          ],
-        },
-        {
-          name: "linkGroups",
-          type: "array",
-          fields: [
-            { name: "title", type: "text", required: true },
-            {
-              name: "links",
-              type: "array",
-              fields: [
-                { name: "label", type: "text", required: true },
-                { name: "href", type: "text", required: true },
-                { name: "isActive", type: "checkbox", defaultValue: false },
-              ],
-            },
-          ],
-        },
-        { name: "copyright", type: "text", required: true },
       ],
     },
   ],

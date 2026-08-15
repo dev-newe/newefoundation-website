@@ -1,10 +1,10 @@
 import { AppHomepage } from "@/payload-types";
 
 type HeroProps = {
-  data: AppHomepage["hero"];
+  data?: AppHomepage["hero"];
 };
 
-const Hero = ({ data }: HeroProps) => {
+const Hero = ({ data: _data }: HeroProps) => {
   return <div>Hero</div>;
 };
 
