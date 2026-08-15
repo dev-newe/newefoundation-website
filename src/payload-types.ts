@@ -13,53 +13,53 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Brisbane'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | "Pacific/Midway"
+  | "Pacific/Niue"
+  | "Pacific/Honolulu"
+  | "Pacific/Rarotonga"
+  | "America/Anchorage"
+  | "Pacific/Gambier"
+  | "America/Los_Angeles"
+  | "America/Tijuana"
+  | "America/Denver"
+  | "America/Phoenix"
+  | "America/Chicago"
+  | "America/Guatemala"
+  | "America/New_York"
+  | "America/Bogota"
+  | "America/Caracas"
+  | "America/Santiago"
+  | "America/Buenos_Aires"
+  | "America/Sao_Paulo"
+  | "Atlantic/South_Georgia"
+  | "Atlantic/Azores"
+  | "Atlantic/Cape_Verde"
+  | "Europe/London"
+  | "Europe/Berlin"
+  | "Africa/Lagos"
+  | "Europe/Athens"
+  | "Africa/Cairo"
+  | "Europe/Moscow"
+  | "Asia/Riyadh"
+  | "Asia/Dubai"
+  | "Asia/Baku"
+  | "Asia/Karachi"
+  | "Asia/Tashkent"
+  | "Asia/Calcutta"
+  | "Asia/Dhaka"
+  | "Asia/Almaty"
+  | "Asia/Jakarta"
+  | "Asia/Bangkok"
+  | "Asia/Shanghai"
+  | "Asia/Singapore"
+  | "Asia/Tokyo"
+  | "Asia/Seoul"
+  | "Australia/Brisbane"
+  | "Australia/Sydney"
+  | "Pacific/Guam"
+  | "Pacific/Noumea"
+  | "Pacific/Auckland"
+  | "Pacific/Fiji";
 
 export interface Config {
   auth: {
@@ -69,21 +69,23 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    'cloudinary-cleanup-jobs': CloudinaryCleanupJob;
-    'payload-kv': PayloadKv;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
+    "cloudinary-cleanup-jobs": CloudinaryCleanupJob;
+    "payload-kv": PayloadKv;
+    "payload-locked-documents": PayloadLockedDocument;
+    "payload-preferences": PayloadPreference;
+    "payload-migrations": PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'cloudinary-cleanup-jobs': CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    "cloudinary-cleanup-jobs":
+      CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
+    "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
+    "payload-locked-documents":
+      PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    "payload-preferences": PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    "payload-migrations": PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: string;
@@ -91,11 +93,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     app_homepage: AppHomepage;
+    app_contactpage: AppContactpage;
     app_navigation: AppNavigation;
     app_footer: AppFooter;
   };
   globalsSelect: {
     app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
+    app_contactpage: AppContactpageSelect<false> | AppContactpageSelect<true>;
     app_navigation: AppNavigationSelect<false> | AppNavigationSelect<true>;
     app_footer: AppFooterSelect<false> | AppFooterSelect<true>;
   };
@@ -151,7 +155,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
-  collection: 'users';
+  collection: "users";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -164,7 +168,7 @@ export interface Media {
    */
   alt: string;
   caption?: string | null;
-  type?: ('image' | 'video' | 'audio' | 'document' | 'dataset' | 'other') | null;
+  type?: ("image" | "video" | "audio" | "document" | "dataset" | "other") | null;
   cloudinaryPublicId?: string | null;
   cloudinaryResourceType?: string | null;
   cloudinaryFormat?: string | null;
@@ -216,7 +220,7 @@ export interface CloudinaryCleanupJob {
   resourceType: string;
   filename: string;
   errorDetails?: string | null;
-  status?: ('pending' | 'failed' | 'completed') | null;
+  status?: ("pending" | "failed" | "completed") | null;
   attempts?: number | null;
   updatedAt: string;
   createdAt: string;
@@ -246,20 +250,20 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'users';
+        relationTo: "users";
         value: string | User;
       } | null)
     | ({
-        relationTo: 'media';
+        relationTo: "media";
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'cloudinary-cleanup-jobs';
+        relationTo: "cloudinary-cleanup-jobs";
         value: string | CloudinaryCleanupJob;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: string | User;
   };
   updatedAt: string;
@@ -272,7 +276,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: string;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: string | User;
   };
   key?: string | null;
@@ -626,6 +630,130 @@ export interface AppHomepage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_contactpage".
+ */
+export interface AppContactpage {
+  id: string;
+  hero: {
+    title: string;
+    description: string;
+    image?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+  };
+  contactInfo: {
+    title: string;
+    office: {
+      title: string;
+      address: string;
+    };
+    phone: {
+      title: string;
+      numbers?:
+        | {
+            countryCode: string;
+            number: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    email: {
+      title: string;
+      addresses?:
+        | {
+            address: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  contactForm: {
+    title: string;
+    formFields?:
+      | {
+          fieldName: string;
+          fieldLabel: string;
+          fieldType:
+            "text" | "email" | "tel" | "textarea" | "select" | "checkbox" | "radio" | "file";
+          selectOptions?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          isChecked?: boolean | null;
+          radioOptions?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          fileTypes?:
+            | {
+                type: "pdf" | "image" | "document" | "video" | "audio" | "other";
+                id?: string | null;
+              }[]
+            | null;
+          fieldPlaceholder: string;
+          width?: ("full" | "half") | null;
+          regexValidation?: string | null;
+          className?: string | null;
+          fieldRequired?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    submitButtonText: string;
+  };
+  map: {
+    title: string;
+    locationText?: string | null;
+    embedUrl?: string | null;
+    mapImage?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+  };
+  cta: {
+    title: string;
+    description: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "app_navigation".
  */
 export interface AppNavigation {
@@ -895,6 +1023,131 @@ export interface AppHomepageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_contactpage_select".
+ */
+export interface AppContactpageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?:
+          | T
+          | {
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+      };
+  contactInfo?:
+    | T
+    | {
+        title?: T;
+        office?:
+          | T
+          | {
+              title?: T;
+              address?: T;
+            };
+        phone?:
+          | T
+          | {
+              title?: T;
+              numbers?:
+                | T
+                | {
+                    countryCode?: T;
+                    number?: T;
+                    id?: T;
+                  };
+            };
+        email?:
+          | T
+          | {
+              title?: T;
+              addresses?:
+                | T
+                | {
+                    address?: T;
+                    id?: T;
+                  };
+            };
+      };
+  contactForm?:
+    | T
+    | {
+        title?: T;
+        formFields?:
+          | T
+          | {
+              fieldName?: T;
+              fieldLabel?: T;
+              fieldType?: T;
+              selectOptions?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              isChecked?: T;
+              radioOptions?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              fileTypes?:
+                | T
+                | {
+                    type?: T;
+                    id?: T;
+                  };
+              fieldPlaceholder?: T;
+              width?: T;
+              regexValidation?: T;
+              className?: T;
+              fieldRequired?: T;
+              id?: T;
+            };
+        submitButtonText?: T;
+      };
+  map?:
+    | T
+    | {
+        title?: T;
+        locationText?: T;
+        embedUrl?: T;
+        mapImage?:
+          | T
+          | {
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "app_navigation_select".
  */
 export interface AppNavigationSelect<T extends boolean = true> {
@@ -996,7 +1249,7 @@ export interface CollectionsWidget {
   data?: {
     [k: string]: unknown;
   };
-  width: 'full';
+  width: "full";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1006,7 +1259,6 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-declare module 'payload' {
+declare module "payload" {
   export interface GeneratedTypes extends Config {}
 }
