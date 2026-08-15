@@ -1,11 +1,5 @@
-import { AppHomepage } from "@/payload-types";
-
-type HeroProps = {
-  data: AppHomepage["hero"];
-};
-
-const Hero = ({ data }: HeroProps) => {
-  return <div>Hero</div>;
+const Hero = () => {
+  return <div className="h-screen bg-gray-400">Hero</div>;
 };
 
 export default Hero;
