@@ -9,7 +9,7 @@ type CTAProps = {
   data?: AppHomepage["cta"];
 };
 
-const CTA = async ({ data }: CTAProps) => {
+const CTA = ({ data }: CTAProps) => {
   const cta = {
     title: data?.title ?? "Your small action creates a",
     highlight: data?.highlight ?? "ripple of real change",
@@ -23,7 +23,13 @@ const CTA = async ({ data }: CTAProps) => {
   };
 
   return (
-    <SectionWrapper as="section" size="full" className="!px-0" ariaLabelledby="data-heading">
+    <SectionWrapper
+      as="section"
+      id="cta"
+      size="full"
+      className="!px-0"
+      ariaLabelledby="data-heading"
+    >
       <RippleSurface
         className="m-3 overflow-hidden rounded-2xl"
         contentClassName="relative py-section px-page flex flex-col items-center justify-center gap-10"
