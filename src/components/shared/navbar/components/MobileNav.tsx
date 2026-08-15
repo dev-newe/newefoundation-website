@@ -4,16 +4,16 @@ import { useState, useEffect, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { Menu, X, ArrowRight, Heart, ChevronDown } from "lucide-react";
-import { AppHomepage } from "@/payload-types";
+import { Navigation } from "@/payload-types";
 import BrandLogo from "@/components/shared/navbar/components/BrandLogo";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface MobileNavProps {
-  navItems?: AppHomepage["header"]["navItems"];
-  brandName?: AppHomepage["header"]["brandName"];
-  logo?: AppHomepage["header"]["logo"];
-  ctaButton?: AppHomepage["header"]["ctaButton"];
+  navItems?: Navigation["navItems"];
+  brandName?: Navigation["brandName"];
+  logo?: Navigation["logo"];
+  ctaButton?: Navigation["ctaButton"];
 }
 
 const emptySubscribe = () => () => {};

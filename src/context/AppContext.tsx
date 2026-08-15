@@ -1,18 +1,45 @@
 "use client";
 
-import { AppHomepage } from "@/payload-types";
+import { AppHomepage, Navigation, Footer } from "@/payload-types";
 import { createContext, useContext } from "react";
 
-const AppContext = createContext<AppHomepage | null>(null);
+interface AppContextType {
+  data: AppHomepage | null;
+  navigation: Navigation | null;
+  footer: Footer | null;
+  /** Backward compatibility property */
+  header?: Navigation | null;
+}
+
+const AppContext = createContext<AppContextType>({
+  data: null,
+  navigation: null,
+  footer: null,
+});
 
 export default function AppProvider({
   children,
   data,
+  navigation = null,
+  footer = null,
 }: {
   children: React.ReactNode;
   data: AppHomepage | null;
+  navigation?: Navigation | null;
+  footer?: Footer | null;
 }) {
-  return <AppContext.Provider value={data}>{children}</AppContext.Provider>;
+  return (
+    <AppContext.Provider
+      value={{
+        data,
+        navigation,
+        footer,
+        header: navigation,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 }
 
 export function useAppContext() {

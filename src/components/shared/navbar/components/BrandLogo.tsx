@@ -1,12 +1,12 @@
 "use client";
 
-import { AppHomepage } from "@/payload-types";
+import { Navigation } from "@/payload-types";
 import Image from "next/image";
 import Link from "next/link";
 
 interface BrandLogoProps {
-  content?: AppHomepage["header"]["brandName"];
-  logo?: AppHomepage["header"]["logo"];
+  content?: Navigation["brandName"];
+  logo?: Navigation["logo"];
 }
 
 const BrandLogo = ({ content, logo }: BrandLogoProps) => {

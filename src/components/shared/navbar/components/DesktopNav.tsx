@@ -3,13 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Heart, ArrowRight } from "lucide-react";
-import { AppHomepage } from "@/payload-types";
+import { Navigation } from "@/payload-types";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 interface DesktopNavProps {
-  navItems?: AppHomepage["header"]["navItems"];
-  ctaButton?: AppHomepage["header"]["ctaButton"];
+  navItems?: Navigation["navItems"];
+  ctaButton?: Navigation["ctaButton"];
 }
 
 const DesktopNav = ({ navItems, ctaButton }: DesktopNavProps) => {
