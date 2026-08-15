@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 import { AppHomepage } from "@/payload-types";
+import { resolvePayloadImage } from "@/services/payload";
 
 type HeroProps = {
   data?: AppHomepage["hero"];
@@ -17,20 +18,29 @@ const iconMap: Record<string, LucideIcon> = {
   HandHeart,
 };
 
-const Hero = ({ data: hero }: HeroProps) => {
-  const heroImage =
-    typeof hero?.image === "object" && hero?.image !== null
-      ? typeof hero?.image.media === "string"
-        ? hero?.image.media
-        : hero?.image.media?.url || hero?.image.src || "/navjyoti.png"
-      : "/navjyoti.png";
+const Hero = ({ data }: HeroProps) => {
+  const hero = {
+    badge: {
+      text: data?.badge?.text ?? "Creating lasting change",
+    },
+    title: {
+      main: data?.title?.main ?? "Your help will change a life - Inspire hope, Empower futures",
+      highlight: data?.title?.highlight,
+    },
 
+    buttons: data?.buttons,
+    description:
+      data?.description ??
+      "Building an India where every individual has the power to thrive. Navjyoti Education and Women Empowerment foundation works to uplift underprivileged communities through education, skill development, and social awareness.",
+    image: data?.image,
+  };
+  const heroImage = resolvePayloadImage(hero?.image, "/navjyoti.png");
   const iconName = hero?.buttons?.[0]?.icon;
 
   const PrimaryIcon = iconName ? (iconMap[iconName] ?? ArrowRight) : ArrowRight;
 
   return (
-    <section className="bg-background relative overflow-hidden">
+    <section className="bg-background relative overflow-hidden" id="hero">
       <div className="mx-auto flex min-h-170 items-center px-6 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:px-20">
         <div className="grid w-full items-center gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-8">
           {/* Content */}
@@ -38,18 +48,17 @@ const Hero = ({ data: hero }: HeroProps) => {
             {/* Status */}
             <div className="text-primary border-primary/30 mb-7 inline-flex items-center gap-2 rounded-full border bg-[#eeece5] px-3.5 py-1.5 text-xs font-medium">
               <span className="bg-accent h-1.5 w-1.5 rounded-full" />
-              {hero?.badge?.text ?? "Creating lasting change"}
+              {hero?.badge?.text}
             </div>
 
             {/* Heading */}
             <h1 className="text-primary font-sans text-5xl font-semibold xl:text-7xl">
-              {hero?.title?.main ?? "Your help will change a life - Inspire hope, Empower futures"}
+              {hero?.title?.main}
             </h1>
 
             {/* Description */}
             <p className="mt-7 max-w-147.5 text-base leading-6 text-[#5d625e] sm:text-[17px] sm:leading-7">
-              {hero?.description ??
-                "Building an India where every individual has the power to thrive. Navjyoti Education and Women Empowerment foundation works to uplift underprivileged communities through education, skill development, and social awareness."}
+              {hero?.description}
             </p>
 
             {/* Actions */}
@@ -92,7 +101,7 @@ const Hero = ({ data: hero }: HeroProps) => {
             <div
               className="h-150 w-full bg-cover bg-center"
               style={{
-                backgroundImage: `url("${encodeURI(heroImage)}")`,
+                backgroundImage: `url("${encodeURI(heroImage.url)}")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 maskImage: `url(${indiaSvg.src})`,
