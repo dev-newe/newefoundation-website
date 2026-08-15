@@ -3,7 +3,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 type FeaturedProps = {
-  data: AppHomepage["ourWork"]["featuredProject"];
+  data?: AppHomepage["ourWork"]["featuredProject"];
 };
 
 const DetailedWork = ({

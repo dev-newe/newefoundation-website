@@ -18,7 +18,7 @@ export default async function Home() {
       <About />
       <Mission />
       <OurWork data={homepage?.ourWork} />
-      <Team />
+      <Team data={homepage?.team} />
       <CTA data={homepage?.cta} />
     </main>
   );

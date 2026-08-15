@@ -2,7 +2,7 @@ import DetailedWork from "@/features/work/components/DetailedWork";
 import { AppHomepage } from "@/payload-types";
 
 type WorkProps = {
-  data: AppHomepage["ourWork"];
+  data?: AppHomepage["ourWork"];
 };
 
 const OurWork = ({ data }: WorkProps) => {
