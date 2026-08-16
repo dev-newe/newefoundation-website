@@ -556,8 +556,8 @@ export interface AppHomepage {
       title: string;
       description: string;
     };
-    images?: {
-      primary?: {
+    images: {
+      primary: {
         /**
          * Select or upload an image from Payload Media Library
          */
@@ -571,7 +571,7 @@ export interface AppHomepage {
          */
         alt?: string | null;
       };
-      secondary?: {
+      secondary: {
         /**
          * Select or upload an image from Payload Media Library
          */
@@ -585,6 +585,25 @@ export interface AppHomepage {
          */
         alt?: string | null;
       };
+      additionalImages?:
+        | {
+            image?: {
+              /**
+               * Select or upload an image from Payload Media Library
+               */
+              media?: (string | null) | Media;
+              /**
+               * External image URL (used if no Media asset is attached)
+               */
+              src?: string | null;
+              /**
+               * Accessibility alt text
+               */
+              alt?: string | null;
+            };
+            id?: string | null;
+          }[]
+        | null;
     };
   };
   ourPartners: {
@@ -1059,6 +1078,18 @@ export interface AppHomepageSelect<T extends boolean = true> {
                     media?: T;
                     src?: T;
                     alt?: T;
+                  };
+              additionalImages?:
+                | T
+                | {
+                    image?:
+                      | T
+                      | {
+                          media?: T;
+                          src?: T;
+                          alt?: T;
+                        };
+                    id?: T;
                   };
             };
       };
