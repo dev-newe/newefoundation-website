@@ -4,6 +4,7 @@ import Hero from "@/features/home/components/Hero";
 import Mission from "@/features/home/components/Mission";
 import OurWork from "@/features/home/components/OurWork";
 import Team from "@/features/home/components/Team";
+import Partners from "@/features/home/components/Partners";
 
 import { getGlobal } from "@/services/payload";
 
@@ -17,6 +18,7 @@ export default async function Home() {
       <Mission />
       <OurWork />
       <Team data={homepage?.team} />
+      <Partners data={homepage?.ourPartners} />
       <CTA data={homepage?.cta} />
     </main>
   );

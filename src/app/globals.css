@@ -637,3 +637,24 @@
 
   --sidebar-ring: oklch(0.556 0 0);
 }
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 25s) linear infinite;
+}
+
+.hover-pause:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.direction-reverse {
+  animation-direction: reverse;
+}
