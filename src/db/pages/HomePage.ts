@@ -53,12 +53,12 @@ export const HomePage: GlobalConfig = {
           name: "sections",
           type: "array",
           fields: [
-            // { name: "id", type: "text", required: true },
             { name: "icon", type: "text", required: true },
             { name: "title", type: "text", required: true },
             { name: "description", type: "textarea", required: true },
             { name: "stat", type: "text", required: true },
             { name: "highlighted", type: "checkbox", defaultValue: false },
+            { name: "href", type: "text" },
           ],
         },
       ],

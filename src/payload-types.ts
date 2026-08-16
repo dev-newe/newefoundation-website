@@ -532,6 +532,7 @@ export interface AppHomepage {
           description: string;
           stat: string;
           highlighted?: boolean | null;
+          href?: string | null;
           id?: string | null;
         }[]
       | null;
@@ -940,6 +941,7 @@ export interface AppHomepageSelect<T extends boolean = true> {
               description?: T;
               stat?: T;
               highlighted?: T;
+              href?: T;
               id?: T;
             };
       };
