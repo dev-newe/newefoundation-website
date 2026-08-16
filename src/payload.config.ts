@@ -12,7 +12,7 @@ import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
 import { HomePage } from "@/db/pages/HomePage";
 import { ContactPage } from "@/db/pages/Contact";
 import { Navigation } from "@/db/globals/Navigation";
-import { Footer } from "@/db/globals/Footer";
+import { FooterSettings } from "@/db/globals/FooterSettings";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
@@ -49,7 +49,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, CloudinaryCleanupJobs],
-  globals: [HomePage, ContactPage, Navigation, Footer],
+  globals: [HomePage, ContactPage, Navigation, FooterSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({

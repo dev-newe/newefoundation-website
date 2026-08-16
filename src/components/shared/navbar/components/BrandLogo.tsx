@@ -20,7 +20,13 @@ const BrandLogo = ({ content, logo }: BrandLogoProps) => {
     <Link href="/">
       <div className="flex w-fit items-center gap-2 overflow-hidden rounded-lg">
         {media?.url && (
-          <Image src={media.url} alt={media.alt || content.text || "Logo"} width={48} height={48} />
+          <Image
+            src={media.url}
+            alt={media.alt || content.text || "Logo"}
+            width={48}
+            height={48}
+            className="size-10 object-contain"
+          />
         )}
         <h3 className="text-lg font-semibold md:text-xl">{content.text}</h3>
       </div>
