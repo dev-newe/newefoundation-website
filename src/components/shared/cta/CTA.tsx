@@ -1,12 +1,12 @@
 import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
-import { AppHomepage } from "@/payload-types";
+import { AppCta } from "@/payload-types";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import RippleSurface from "@/components/shared/cta/RippleSurface";
 import { cn } from "@/lib/utils";
 
 type CTAProps = {
-  data?: AppHomepage["cta"];
+  data?: AppCta["cta"];
 };
 
 const CTA = ({ data }: CTAProps) => {

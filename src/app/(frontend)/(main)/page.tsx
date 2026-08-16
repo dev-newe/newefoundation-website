@@ -9,7 +9,7 @@ import Partners from "@/features/home/components/Partners";
 import { getGlobal } from "@/services/payload";
 
 export default async function Home() {
-  const homepage = await getGlobal("app_homepage");
+  const [homepage, ctaData] = await Promise.all([getGlobal("app_homepage"), getGlobal("app_cta")]);
 
   return (
     <main>
@@ -19,7 +19,7 @@ export default async function Home() {
       <OurWork data={homepage?.ourWork} />
       <Team data={homepage?.team} />
       <Partners data={homepage?.ourPartners} />
-      <CTA data={homepage?.cta} />
+      <CTA data={ctaData?.cta} />
     </main>
   );
 }
