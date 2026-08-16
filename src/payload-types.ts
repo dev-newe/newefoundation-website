@@ -792,22 +792,19 @@ export interface AppContactpage {
   };
   map: {
     title: string;
-    locationText?: string | null;
+    locationBadge?: string | null;
+    locationName?: string | null;
+    address?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    /**
+     * Used for the 'Get Directions' button. Paste your Google Maps share link.
+     */
+    googleMapsUrl?: string | null;
+    /**
+     * Used for the on-page map iframe. On Google Maps desktop, click Share > 'Embed a map' > Then Copy the src url of the iframe tag and paste here. Note: Do not paste maps.app.goo.gl shortlinks here.
+     */
     embedUrl?: string | null;
-    mapImage?: {
-      /**
-       * Select or upload an image from Payload Media Library
-       */
-      media?: (string | null) | Media;
-      /**
-       * External image URL (used if no Media asset is attached)
-       */
-      src?: string | null;
-      /**
-       * Accessibility alt text
-       */
-      alt?: string | null;
-    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1276,15 +1273,13 @@ export interface AppContactpageSelect<T extends boolean = true> {
     | T
     | {
         title?: T;
-        locationText?: T;
+        locationBadge?: T;
+        locationName?: T;
+        address?: T;
+        email?: T;
+        phone?: T;
+        googleMapsUrl?: T;
         embedUrl?: T;
-        mapImage?:
-          | T
-          | {
-              media?: T;
-              src?: T;
-              alt?: T;
-            };
       };
   updatedAt?: T;
   createdAt?: T;

@@ -7,7 +7,7 @@ import { getGlobal } from "@/services/payload";
 
 const Contact = async () => {
   const contactpage = await getGlobal("app_contactpage");
-  console.log({ contactpage });
+  // console.log({ contactpage });
   return (
     <div>
       <Hero />
@@ -15,7 +15,7 @@ const Contact = async () => {
         <Information data={contactpage?.contactInfo} />
         <MessageForm data={contactpage?.contactForm} />
       </div>
-      <Map />
+      <Map data={contactpage?.map} />
       <CTA />
     </div>
   );
