@@ -12,7 +12,7 @@ export const ContactFormResponses: CollectionConfig = {
     description: "Responses from the contact form. Read-only for admins.",
   },
   access: {
-    create: () => true,
+    create: () => false,
     read: ({ req: { user } }) => Boolean(user),
     update: () => false,
     delete: () => false,

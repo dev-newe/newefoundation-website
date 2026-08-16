@@ -45,7 +45,7 @@ const Information = ({ data }: InfoProps) => {
           <div>
             <h3 className="text-[16px] font-medium text-[#272727]">{infoData.office.title}</h3>
 
-            <p className="mt-2 max-w-87.5 text-[15px] leading-[1.8] text-[#555550]">
+            <p className="text-primary/80 mt-2 max-w-87.5 text-[15px] leading-[1.8]">
               {infoData.office.address}
             </p>
           </div>
@@ -58,7 +58,7 @@ const Information = ({ data }: InfoProps) => {
           <div>
             <h3 className="text-[16px] font-medium text-[#272727]">{infoData.phone.title}</h3>
 
-            <div className="mt-2 space-y-1 text-[15px] text-[#555550]">
+            <div className="text-primary/80 mt-2 space-y-1 text-[15px]">
               {infoData.phone.numbers.map((n, i) => (
                 <p key={`${n.number}-${i}`}>
                   {n.countryCode} {n.number}
@@ -75,11 +75,11 @@ const Information = ({ data }: InfoProps) => {
           <div>
             <h3 className="text-[16px] font-medium text-[#272727]">{infoData.email.title}</h3>
 
-            <div className="mt-2 space-y-1 text-[15px] text-[#555550]">
+            <div className="text-primary/80 mt-2 space-y-1 text-[15px] whitespace-pre-line">
               {infoData.email.addresses.map((addr, i) => (
                 <a
                   href={`mailto:${addr.address}`}
-                  className="mt-2 block text-[15px] text-[#555550] transition-colors hover:text-[#48675d]"
+                  className="text-primary/80 mt-2 block text-[15px] transition-colors hover:text-[#48675d]"
                   key={`${addr.address}-${i}`}
                 >
                   {addr.address}

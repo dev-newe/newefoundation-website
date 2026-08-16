@@ -94,9 +94,10 @@ function buildZodSchema(fields: PayloadFormField[]) {
         : z.boolean();
     } else if (type === "select") {
       const values = (field.selectOptions ?? []).map((o) => o.value);
-      const base =
-        values.length > 0 ? (z.enum(values as [string, ...string[]]) as z.ZodTypeAny) : z.string();
-      schema = field.fieldRequired ? base : base.optional();
+
+      const base = values.length > 0 ? z.enum(values as [string, ...string[]]) : z.string();
+
+      schema = field.fieldRequired ? base : z.union([base, z.literal("")]).optional();
     } else {
       // text | email | tel | textarea
       let str = z.string();
@@ -319,7 +320,7 @@ const MessageForm = ({ data: formData }: FormProps) => {
             setTouched((prev) => ({ ...prev, [field.fieldName]: true }));
           }}
         >
-          <SelectTrigger className={cn(inputBase, "w-full", errorRing)}>
+          <SelectTrigger className={cn(inputBase, "w-full", errorRing)} id={field.fieldName}>
             <SelectValue placeholder={field.fieldPlaceholder ?? "Select an option"} />
           </SelectTrigger>
           <SelectContent className="rounded-xl border-0 bg-[#ECEAE3] shadow-lg">
