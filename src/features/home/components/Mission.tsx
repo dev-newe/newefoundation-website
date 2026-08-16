@@ -125,8 +125,8 @@ const Mission = ({ data }: MissionProps) => {
             </p>
           </div>
 
-          {/* Stat Block */}
-          <div className="flex flex-col items-start gap-1 sm:ml-8 lg:ml-12">
+          {/* Stat Block - Left Aligned with Mission */}
+          <div className="flex flex-col items-start gap-1">
             <span className="text-accent font-serif text-4xl leading-none font-bold tracking-tight sm:text-[44px]">
               {mission.stat.value}
             </span>
@@ -136,7 +136,7 @@ const Mission = ({ data }: MissionProps) => {
           </div>
 
           {/* Vision Block - Staggered / Shifted Right */}
-          <div className="max-w-lg space-y-3 border-l-[3px] border-[#9fe3c1] pl-5 sm:ml-14 sm:space-y-4 sm:pl-6 lg:ml-20 dark:border-emerald-400">
+          <div className="max-w-lg space-y-3 border-l-[3px] border-[#9fe3c1] pl-5 sm:ml-8 sm:space-y-4 sm:pl-6 lg:ml-12 dark:border-emerald-400">
             <h2 className="text-primary font-serif text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-[42px] dark:text-emerald-100">
               {vision.title}
             </h2>

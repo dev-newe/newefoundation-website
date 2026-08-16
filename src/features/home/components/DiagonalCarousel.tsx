@@ -187,7 +187,7 @@ export default function DiagonalCarousel({
                 duration: 0.55,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="relative isolate h-full w-full overflow-hidden rounded-[24px] border border-white/40 shadow-[0_15px_35px_-8px_rgba(0,0,0,0.35)] transition-all duration-300 hover:brightness-105 sm:rounded-[32px] dark:border-white/10"
+              className="relative isolate h-full w-full overflow-hidden rounded-[24px] border border-white/40 shadow-[0_8px_20px_-6px_rgba(0,0,0,0.18)] transition-all duration-300 hover:brightness-105 sm:rounded-[32px] dark:border-white/10"
             >
               <Image
                 src={backSrc}
@@ -242,7 +242,7 @@ export default function DiagonalCarousel({
                 duration: 0.55,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="border-background relative isolate h-full w-full overflow-hidden rounded-[24px] border-[4px] shadow-[0_25px_50px_-12px_rgba(0,0,0,0.38),0_12px_24px_-8px_rgba(0,0,0,0.2)] sm:rounded-[30px] sm:border-[5px] dark:border-stone-900"
+              className="border-background relative isolate h-full w-full overflow-hidden rounded-[24px] border-2 shadow-[0_12px_28px_-8px_rgba(0,0,0,0.18),0_4px_10px_-4px_rgba(0,0,0,0.08)] sm:rounded-[30px] sm:border-[2.5px] dark:border-stone-900"
             >
               <Image
                 src={frontSrc}
