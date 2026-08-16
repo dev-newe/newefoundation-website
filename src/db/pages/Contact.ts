@@ -1,6 +1,7 @@
 import type { GlobalConfig } from "payload";
-import { ImageFieldGroup } from "@/db/globals/ImageField";
-import { ButtonActionFields } from "@/db/globals/ButtonAction";
+import { ImageFieldGroup } from "@/db/schemas/ImageField";
+import { ButtonActionFields } from "@/db/schemas/ButtonAction";
+import { FormInputField } from "../schemas/FormInputField";
 
 export const ContactPage: GlobalConfig = {
   slug: "app_contactpage",
@@ -15,14 +16,27 @@ export const ContactPage: GlobalConfig = {
       type: "group",
       fields: [
         {
+          name: "badge",
+          type: "group",
+          fields: [{ name: "text", type: "text", required: true }],
+        },
+        {
           name: "title",
-          type: "text",
-          required: true,
+          type: "group",
+          fields: [
+            { name: "main", type: "text", required: true },
+            { name: "highlight", type: "text", required: true },
+          ],
         },
         {
           name: "description",
           type: "textarea",
           required: true,
+        },
+        {
+          name: "buttons",
+          type: "array",
+          fields: ButtonActionFields,
         },
         ImageFieldGroup("image", "Hero Image"),
       ],
@@ -89,105 +103,7 @@ export const ContactPage: GlobalConfig = {
         {
           name: "formFields",
           type: "array",
-          fields: [
-            { name: "fieldName", type: "text", required: true },
-            { name: "fieldLabel", type: "text", required: true },
-            {
-              name: "fieldType",
-              type: "select",
-              options: [
-                { label: "Text", value: "text" },
-                { label: "Email", value: "email" },
-                { label: "Phone", value: "tel" },
-                { label: "Message", value: "textarea" },
-                { label: "Select", value: "select" },
-                { label: "Checkbox", value: "checkbox" },
-                { label: "Radio", value: "radio" },
-                { label: "File", value: "file" },
-              ],
-              defaultValue: "text",
-              required: true,
-            },
-            // if type is select - FIXED condition
-            {
-              name: "selectOptions",
-              type: "array",
-              admin: {
-                condition: (data, siblingData) => {
-                  // Check the fieldType value from sibling data
-                  return siblingData?.fieldType === "select";
-                },
-              },
-              fields: [
-                { name: "label", type: "text", required: true },
-                { name: "value", type: "text", required: true },
-              ],
-            },
-            // if type is checkbox - FIXED condition
-            {
-              name: "isChecked",
-              type: "checkbox",
-              admin: {
-                condition: (data, siblingData) => {
-                  return siblingData?.fieldType === "checkbox";
-                },
-              },
-              defaultValue: false,
-            },
-            // if type is radio - FIXED condition
-            {
-              name: "radioOptions",
-              type: "array",
-              admin: {
-                condition: (data, siblingData) => {
-                  return siblingData?.fieldType === "radio";
-                },
-              },
-              fields: [
-                { name: "label", type: "text", required: true },
-                { name: "value", type: "text", required: true },
-              ],
-            },
-            // if type is file - FIXED condition
-            {
-              name: "fileTypes",
-              type: "array",
-              admin: {
-                condition: (data, siblingData) => {
-                  return siblingData?.fieldType === "file";
-                },
-              },
-              fields: [
-                {
-                  name: "type",
-                  type: "select",
-                  options: [
-                    { label: "PDF", value: "pdf" },
-                    { label: "Image", value: "image" },
-                    { label: "Document", value: "document" },
-                    { label: "Video", value: "video" },
-                    { label: "Audio", value: "audio" },
-                    { label: "Other", value: "other" },
-                  ],
-                  defaultValue: "image",
-                  required: true,
-                },
-              ],
-            },
-            { name: "fieldPlaceholder", type: "text", required: true },
-            {
-              name: "width",
-              type: "select",
-              options: [
-                { label: "Full", value: "full" },
-                { label: "Half", value: "half" },
-              ],
-              defaultValue: "full",
-            },
-            { name: "regexValidation", type: "text" },
-            { name: "className", type: "text" },
-            { name: "fieldRequired", type: "checkbox", defaultValue: true },
-          ],
+          fields: FormInputField,
         },
         {
           name: "submitButtonText",
@@ -216,21 +132,6 @@ export const ContactPage: GlobalConfig = {
           type: "text",
         },
         ImageFieldGroup("mapImage", "Map Image"),
-      ],
-    },
-
-    // CTA Section
-    {
-      name: "cta",
-      type: "group",
-      fields: [
-        { name: "title", type: "text", required: true },
-        { name: "description", type: "textarea", required: true },
-        {
-          name: "buttons",
-          type: "array",
-          fields: ButtonActionFields,
-        },
       ],
     },
   ],

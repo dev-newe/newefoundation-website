@@ -6,17 +6,11 @@ import dns from "node:dns";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
-import { Users } from "@/db/collections/Users";
-import { Media } from "@/db/collections/Media";
-import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
-import { ContactFormResponses } from "@/db/collections/ContactFormResponses";
-import { HomePage } from "@/db/pages/HomePage";
-import { ContactPage } from "@/db/pages/Contact";
-import { Navigation } from "@/db/globals/Navigation";
-import { FooterSettings } from "@/db/globals/FooterSettings";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
+import { GlobalConfigs } from "@/lib/utils/GlobalConfigs";
+import { CollectionConfigs } from "@/lib/utils/CollectionsConfig";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -49,8 +43,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, CloudinaryCleanupJobs, ContactFormResponses],
-  globals: [HomePage, ContactPage, Navigation, FooterSettings],
+  collections: CollectionConfigs,
+  globals: GlobalConfigs,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({

@@ -29,8 +29,8 @@ const Navbar = async () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 mx-6 my-4 flex items-center justify-center overflow-hidden rounded-xl shadow-md">
-      <div className="mx-auto flex w-full items-center justify-between bg-white/60 px-4 py-2.5 shadow-xs backdrop-blur-sm dark:bg-gray-950/80">
+    <header className="sticky top-0 z-50 mx-6 my-4 flex items-center justify-center rounded-xl shadow-md">
+      <div className="mx-auto flex w-full items-center justify-between rounded-xl bg-white/60 px-4 py-2.5 shadow-xs backdrop-blur-sm dark:bg-gray-950/80">
         {/* Brand Logo */}
         <BrandLogo
           content={navData?.brandName || fallbackData.brandName}
