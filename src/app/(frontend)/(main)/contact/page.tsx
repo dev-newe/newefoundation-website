@@ -7,7 +7,7 @@ import { getGlobal } from "@/services/payload";
 
 const Contact = async () => {
   const contactpage = await getGlobal("app_contactpage");
-  console.log({ contactpage });
+
   return (
     <div>
       <Hero data={contactpage?.hero} />

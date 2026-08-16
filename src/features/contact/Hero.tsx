@@ -42,7 +42,6 @@ export default function ContactHero({ data }: ContactHeroProps) {
 
   const PrimaryIcon = iconName ? (iconMap[iconName] ?? ArrowDown) : ArrowDown;
 
-  console.log(data);
   return (
     <section className="relative h-[calc(100svh-180px)] overflow-hidden">
       <Image
@@ -68,7 +67,8 @@ export default function ContactHero({ data }: ContactHeroProps) {
             </div>
 
             <h1 className="max-w-4xl font-serif text-5xl leading-[1.02] tracking-[-0.03em] text-white sm:text-6xl lg:text-8xl">
-              {heroData.title.main} <span className="text-accent">{heroData.title.highlight}</span>
+              {heroData.title.main}{" "}
+              <span className="text-accent font-geist-sans">{heroData.title.highlight}</span>
             </h1>
 
             <p className="mt-6 max-w-xl font-serif text-base leading-7 text-white/85 sm:text-lg"></p>

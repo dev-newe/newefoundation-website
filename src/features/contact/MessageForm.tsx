@@ -261,7 +261,7 @@ const MessageForm = ({ data: formData }: FormProps) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fields: result.data }),
       });
-      console.log(result.data);
+
       const json = await res.json();
 
       if (res.ok && json.success) {
