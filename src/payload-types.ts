@@ -869,6 +869,10 @@ export interface AppFooter {
     name: string;
     icon: string;
     address: string;
+    /**
+     * Direct Maps link for the location (optional)
+     */
+    googleMapsUrl?: string | null;
     phone: string;
     email: string;
   };
@@ -886,6 +890,7 @@ export interface AppFooter {
         id?: string | null;
       }[]
     | null;
+  copyrightYear?: string | null;
   copyright: string;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1266,6 +1271,7 @@ export interface AppFooterSelect<T extends boolean = true> {
         name?: T;
         icon?: T;
         address?: T;
+        googleMapsUrl?: T;
         phone?: T;
         email?: T;
       };
@@ -1283,6 +1289,7 @@ export interface AppFooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  copyrightYear?: T;
   copyright?: T;
   updatedAt?: T;
   createdAt?: T;
