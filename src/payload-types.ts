@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     "cloudinary-cleanup-jobs": CloudinaryCleanupJob;
+    contact_form_responses: ContactFormResponse;
     "payload-kv": PayloadKv;
     "payload-locked-documents": PayloadLockedDocument;
     "payload-preferences": PayloadPreference;
@@ -81,6 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     "cloudinary-cleanup-jobs":
       CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
+    contact_form_responses: ContactFormResponsesSelect<false> | ContactFormResponsesSelect<true>;
     "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
     "payload-locked-documents":
       PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -93,11 +95,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     app_homepage: AppHomepage;
+    app_contactpage: AppContactpage;
     app_navigation: AppNavigation;
     app_footer: AppFooter;
   };
   globalsSelect: {
     app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
+    app_contactpage: AppContactpageSelect<false> | AppContactpageSelect<true>;
     app_navigation: AppNavigationSelect<false> | AppNavigationSelect<true>;
     app_footer: AppFooterSelect<false> | AppFooterSelect<true>;
   };
@@ -224,6 +228,34 @@ export interface CloudinaryCleanupJob {
   createdAt: string;
 }
 /**
+ * Responses from the contact form. Read-only for admins.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_form_responses".
+ */
+export interface ContactFormResponse {
+  id: string;
+  /**
+   * Submitter's email address
+   */
+  email: string;
+  /**
+   * Raw form field values as a JSON object
+   */
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  submittedAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -258,6 +290,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: "cloudinary-cleanup-jobs";
         value: string | CloudinaryCleanupJob;
+      } | null)
+    | ({
+        relationTo: "contact_form_responses";
+        value: string | ContactFormResponse;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -392,6 +428,17 @@ export interface CloudinaryCleanupJobsSelect<T extends boolean = true> {
   errorDetails?: T;
   status?: T;
   attempts?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_form_responses_select".
+ */
+export interface ContactFormResponsesSelect<T extends boolean = true> {
+  email?: T;
+  data?: T;
+  submittedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -614,6 +661,130 @@ export interface AppHomepage {
   cta: {
     title: string;
     highlight: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_contactpage".
+ */
+export interface AppContactpage {
+  id: string;
+  hero: {
+    title: string;
+    description: string;
+    image?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+  };
+  contactInfo: {
+    title: string;
+    office: {
+      title: string;
+      address: string;
+    };
+    phone: {
+      title: string;
+      numbers?:
+        | {
+            countryCode: string;
+            number: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    email: {
+      title: string;
+      addresses?:
+        | {
+            address: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  contactForm: {
+    title: string;
+    formFields?:
+      | {
+          fieldName: string;
+          fieldLabel: string;
+          fieldType:
+            "text" | "email" | "tel" | "textarea" | "select" | "checkbox" | "radio" | "file";
+          selectOptions?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          isChecked?: boolean | null;
+          radioOptions?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          fileTypes?:
+            | {
+                type: "pdf" | "image" | "document" | "video" | "audio" | "other";
+                id?: string | null;
+              }[]
+            | null;
+          fieldPlaceholder: string;
+          width?: ("full" | "half") | null;
+          regexValidation?: string | null;
+          className?: string | null;
+          fieldRequired?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    submitButtonText: string;
+  };
+  map: {
+    title: string;
+    locationText?: string | null;
+    embedUrl?: string | null;
+    mapImage?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+  };
+  cta: {
+    title: string;
+    description: string;
     buttons?:
       | {
           label: string;
@@ -883,6 +1054,131 @@ export interface AppHomepageSelect<T extends boolean = true> {
     | {
         title?: T;
         highlight?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_contactpage_select".
+ */
+export interface AppContactpageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?:
+          | T
+          | {
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+      };
+  contactInfo?:
+    | T
+    | {
+        title?: T;
+        office?:
+          | T
+          | {
+              title?: T;
+              address?: T;
+            };
+        phone?:
+          | T
+          | {
+              title?: T;
+              numbers?:
+                | T
+                | {
+                    countryCode?: T;
+                    number?: T;
+                    id?: T;
+                  };
+            };
+        email?:
+          | T
+          | {
+              title?: T;
+              addresses?:
+                | T
+                | {
+                    address?: T;
+                    id?: T;
+                  };
+            };
+      };
+  contactForm?:
+    | T
+    | {
+        title?: T;
+        formFields?:
+          | T
+          | {
+              fieldName?: T;
+              fieldLabel?: T;
+              fieldType?: T;
+              selectOptions?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              isChecked?: T;
+              radioOptions?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              fileTypes?:
+                | T
+                | {
+                    type?: T;
+                    id?: T;
+                  };
+              fieldPlaceholder?: T;
+              width?: T;
+              regexValidation?: T;
+              className?: T;
+              fieldRequired?: T;
+              id?: T;
+            };
+        submitButtonText?: T;
+      };
+  map?:
+    | T
+    | {
+        title?: T;
+        locationText?: T;
+        embedUrl?: T;
+        mapImage?:
+          | T
+          | {
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
         buttons?:
           | T
           | {
