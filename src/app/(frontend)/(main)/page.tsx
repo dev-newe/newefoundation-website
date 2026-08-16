@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <main>
       <Hero data={homepage?.hero} />
-      <About data={homepage?.aboutUs} />
+      <About />
       <Mission />
       <OurWork />
       <Team data={homepage?.team} />

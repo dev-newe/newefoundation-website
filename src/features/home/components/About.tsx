@@ -30,6 +30,7 @@ const defaultSections: AboutSection[] = [
       "Providing academic support, study materials, and mentorship to ensure every child has access to quality education. Our initiatives focus on reducing school dropout rates and creating a supportive learning environment for children from economically weaker sections.",
     stat: "100+ Students",
     id: "edu",
+    href: "#education",
   },
   {
     icon: "Users",
@@ -39,6 +40,7 @@ const defaultSections: AboutSection[] = [
     stat: "15+ Women",
     highlighted: true,
     id: "emp",
+    href: "#women-empowerment",
   },
   {
     icon: "FlaskConical",
@@ -47,6 +49,7 @@ const defaultSections: AboutSection[] = [
       "Equipping youth with industry-relevant skills including computer training, communication, and entrepreneurship. We aim to improve local employability, encourage self-employment, and create sustainable livelihood opportunities for underserved individuals.",
     stat: "10+ Studies",
     id: "dev",
+    href: "#/documents/moa.pdf",
   },
 ];
 
@@ -62,7 +65,7 @@ const ICON_REGISTRY: Record<string, LucideIcon> = {
 
 //TODO: Finalize the hrefs
 const defaultIcons = [GraduationCap, Users, FlaskConical];
-const defaultHrefs = ["#education", "#women-empowerment", "/documents/moa.pdf"];
+const defaultHrefs = ["#education", "#women-empowerment", "#/documents/moa.pdf"];
 
 const getAboutIcon = (iconName?: string | null, index: number = 0): LucideIcon => {
   if (iconName) {
@@ -75,57 +78,50 @@ const getAboutIcon = (iconName?: string | null, index: number = 0): LucideIcon =
 };
 
 const About = ({ data }: AboutProps) => {
-  const title = data?.title ?? "";
-  const description = data?.description ?? "";
-  const sections = data?.sections && data.sections.length > 0 ? data.sections : defaultSections;
+  const about = {
+    badge: data?.badge ?? "About Us",
+    title: data?.title ?? "Navjyoti Education and Women Empowerment Foundation",
+    description:
+      data?.description ??
+      "We are a grassroots non-profit organization based in Serampore, Hooghly, dedicated to creating sustainable and inclusive social change. We work closely with local communities to identify real needs and implement practical solutions.",
+    sections: data?.sections && data.sections.length > 0 ? data.sections : defaultSections,
+  };
 
   return (
     <SectionWrapper id="about" as="section" size="wide" className="bg-background">
       <div className="flex flex-col items-center justify-center gap-10">
-        <div
-          className={cn(
-            "flex max-w-3xl flex-col items-center text-center",
-            !title && !description && "sr-only"
-          )}
-        >
-          {data?.badge && (
-            <Badge variant="accent" className="mb-2">
-              {" "}
-              {data.badge}{" "}
-            </Badge>
-          )}
+        <div className="flex max-w-3xl flex-col items-center text-center">
+          <Badge variant="accent" className="mb-2">
+            {" "}
+            {about.badge}{" "}
+          </Badge>
 
-          <h2 id="about-heading" className="text-foreground text-fluid-5xl font-serif font-medium">
-            {title || "Our Focus Pillars"}
+          <h2 id="about-heading" className="text-foreground text-fluid-4xl font-serif font-medium">
+            {about.title}
           </h2>
 
-          {description && (
-            <p className="text-muted-foreground mt-4 text-sm leading-relaxed">{description}</p>
-          )}
+          <p className="text-muted-foreground mt-4 text-sm leading-relaxed">{about.description}</p>
         </div>
 
         {/* Responsive Grid of Cards */}
-        {sections.length > 0 && (
-          <div className="grid w-full grid-cols-1 justify-items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {sections.map((section, index) => {
-              const Icon = getAboutIcon(section?.icon, index);
-              const isDark = section?.highlighted;
-              const href = defaultHrefs[index] || "#";
+        <div className="grid w-full grid-cols-1 justify-items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {about.sections.map((section, index) => {
+            const Icon = getAboutIcon(section?.icon, index);
+            const isDark = section?.highlighted;
 
-              return (
-                <AboutCard
-                  key={section?.id || section?.title}
-                  title={section?.title ?? "Pillar"}
-                  description={section?.description ?? ""}
-                  icon={Icon}
-                  stat={section?.stat ?? ""}
-                  variant={isDark ? "dark" : "light"}
-                  href={href}
-                />
-              );
-            })}
-          </div>
-        )}
+            return (
+              <AboutCard
+                key={section?.id || section?.title}
+                title={section?.title ?? "Pillar"}
+                description={section?.description ?? ""}
+                icon={Icon}
+                stat={section?.stat ?? ""}
+                variant={isDark ? "dark" : "light"}
+                href={section?.href}
+              />
+            );
+          })}
+        </div>
       </div>
     </SectionWrapper>
   );
@@ -137,7 +133,7 @@ interface AboutCardProps {
   icon: LucideIcon;
   stat: string;
   variant?: "light" | "dark";
-  href?: string;
+  href?: string | null;
   className?: string;
 }
 
@@ -147,7 +143,7 @@ const AboutCard = ({
   icon: Icon,
   stat,
   variant = "light",
-  href = "#",
+  href,
   className,
 }: AboutCardProps) => {
   const isDark = variant === "dark";
@@ -192,20 +188,22 @@ const AboutCard = ({
           {stat}
         </span>
 
-        <Link
-          href={href}
-          className={cn(
-            buttonVariants({ variant: "ghost", size: "icon" }),
-            "rounded-full border-none transition-all duration-300 hover:scale-105 active:scale-95",
-            isDark && "hover:bg-secondary"
-          )}
-          aria-label={`Learn more about ${title}`}
-        >
-          <ArrowRight
-            className="h-4 w-4 transition-transform hover:translate-x-0.5"
-            aria-hidden="true"
-          />
-        </Link>
+        {href && (
+          <Link
+            href={href}
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "icon" }),
+              "rounded-full border-none transition-all duration-300 hover:scale-105 active:scale-95",
+              isDark && "hover:bg-secondary"
+            )}
+            aria-label={`Learn more about ${title}`}
+          >
+            <ArrowRight
+              className="h-4 w-4 transition-transform hover:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </Link>
+        )}
       </footer>
     </article>
   );
