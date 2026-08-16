@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
     const payload = await getPayload({ config: configPromise });
 
     await payload.create({
-      collection: "app_contact_form_responses",
+      collection: "contact_form_responses",
       data: {
         email: emailValue,
         data: fields,

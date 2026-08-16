@@ -70,7 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     "cloudinary-cleanup-jobs": CloudinaryCleanupJob;
-    app_contact_form_responses: AppContactFormResponse;
+    contact_form_responses: ContactFormResponse;
     "payload-kv": PayloadKv;
     "payload-locked-documents": PayloadLockedDocument;
     "payload-preferences": PayloadPreference;
@@ -82,8 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     "cloudinary-cleanup-jobs":
       CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
-    app_contact_form_responses:
-      AppContactFormResponsesSelect<false> | AppContactFormResponsesSelect<true>;
+    contact_form_responses: ContactFormResponsesSelect<false> | ContactFormResponsesSelect<true>;
     "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
     "payload-locked-documents":
       PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -232,9 +231,9 @@ export interface CloudinaryCleanupJob {
  * Responses from the contact form. Read-only for admins.
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app_contact_form_responses".
+ * via the `definition` "contact_form_responses".
  */
-export interface AppContactFormResponse {
+export interface ContactFormResponse {
   id: string;
   /**
    * Submitter's email address
@@ -293,8 +292,8 @@ export interface PayloadLockedDocument {
         value: string | CloudinaryCleanupJob;
       } | null)
     | ({
-        relationTo: "app_contact_form_responses";
-        value: string | AppContactFormResponse;
+        relationTo: "contact_form_responses";
+        value: string | ContactFormResponse;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -434,9 +433,9 @@ export interface CloudinaryCleanupJobsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app_contact_form_responses_select".
+ * via the `definition` "contact_form_responses_select".
  */
-export interface AppContactFormResponsesSelect<T extends boolean = true> {
+export interface ContactFormResponsesSelect<T extends boolean = true> {
   email?: T;
   data?: T;
   submittedAt?: T;

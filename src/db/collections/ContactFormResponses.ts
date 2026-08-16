@@ -1,7 +1,7 @@
 import type { CollectionConfig } from "payload";
 
 export const ContactFormResponses: CollectionConfig = {
-  slug: "app_contact_form_responses",
+  slug: "contact_form_responses",
   labels: {
     singular: "Contact Form Response",
     plural: "Contact Form Responses",
