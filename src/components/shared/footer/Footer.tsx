@@ -14,6 +14,8 @@ const fallbackFooterData: AppFooter = {
     icon: "logo",
     address:
       "78/89, G.T. Road West,\nSimla, Serampore,\nHooghly, West Bengal, India.\nPincode - 712203",
+    googleMapsUrl:
+      "https://www.google.com/maps/search/78%2F89,+G.T.+Road+West,+Simla,+Serampore,+Hooghly,+West+Bengal,+India.+Pincode+-+712203/@22.7515558,88.3341118,19z?authuser=0&entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D",
     phone: "9830965220, 7001166714",
     email: "info@newefoundation.org",
   },
@@ -94,7 +96,20 @@ const Footer = async ({ data: propData }: FooterProps) => {
             {/* Address & Contact Details */}
             <div className="mt-5 space-y-2.5 text-sm text-[#5d625e] dark:text-stone-300">
               {brand?.address && (
-                <p className="max-w-sm leading-relaxed whitespace-pre-line">{brand.address}</p>
+                <a
+                  href={
+                    brand.googleMapsUrl ||
+                    `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      brand.address.replace(/\n/g, " ")
+                    )}`
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-accent block transition-colors duration-150"
+                  aria-label="View address on Google Maps"
+                >
+                  <p className="max-w-sm leading-relaxed whitespace-pre-line">{brand.address}</p>
+                </a>
               )}
               {brand?.phone && (
                 <p className="leading-relaxed">
@@ -105,7 +120,7 @@ const Footer = async ({ data: propData }: FooterProps) => {
                       <span key={idx}>
                         <a
                           href={`tel:${trimmed.replace(/[^0-9+]/g, "")}`}
-                          className="hover:text-accent underline-offset-4 transition-colors duration-150 hover:underline"
+                          className="hover:text-accent transition-colors duration-150"
                         >
                           {trimmed}
                         </a>
@@ -120,7 +135,7 @@ const Footer = async ({ data: propData }: FooterProps) => {
                   <span className="text-foreground/80 font-medium">E-mail: </span>
                   <a
                     href={`mailto:${brand.email.trim()}`}
-                    className="hover:text-accent underline-offset-4 transition-colors duration-150 hover:underline"
+                    className="hover:text-accent transition-colors duration-150"
                   >
                     {brand.email.trim()}
                   </a>

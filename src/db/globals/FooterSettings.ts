@@ -35,6 +35,14 @@ export const FooterSettings: GlobalConfig = {
             "78/89, G.T. Road West,\nSimla, Serampore,\nHooghly, West Bengal, India.\nPincode - 712203",
         },
         {
+          name: "googleMapsUrl",
+          label: "Maps URL",
+          type: "text",
+          admin: {
+            description: "Direct Maps link for the location (optional)",
+          },
+        },
+        {
           name: "phone",
           label: "Contact Numbers",
           type: "text",
