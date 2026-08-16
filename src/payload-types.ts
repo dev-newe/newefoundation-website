@@ -1289,6 +1289,7 @@ export interface AppFooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  copyrightYear?: T;
   copyright?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -95,7 +95,7 @@ const Footer = async ({ data: propData }: FooterProps) => {
                   alt={brand?.name || "Logo"}
                   width={36}
                   height={36}
-                  className="size-8 rounded-md object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="group-hover size-8 rounded-md object-contain transition-transform duration-300"
                 />
                 <span className="text-primary font-serif text-xl leading-none font-bold tracking-tight sm:text-2xl">
                   {brand?.name || "Navjyoti Foundation"}
