@@ -844,6 +844,7 @@ export interface AppFooter {
         id?: string | null;
       }[]
     | null;
+  copyrightYear?: string | null;
   copyright: string;
   updatedAt?: string | null;
   createdAt?: string | null;

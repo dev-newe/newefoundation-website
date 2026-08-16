@@ -48,24 +48,34 @@ const fallbackFooterData: AppFooter = {
       ],
     },
   ],
-  copyright: "© 2026 Navjyoti Foundation. All rights reserved. Registered Charity No. 292336.",
+  copyrightYear: new Date().getFullYear().toString(),
+  copyright: "Navjyoti Foundation. All rights reserved. Registered Charity No. 292336.",
 };
 
 const Footer = async ({ data: propData }: FooterProps) => {
-  const remoteData = propData ?? (await getFooterData());
+  let remoteData = propData;
+  if (!remoteData) {
+    try {
+      remoteData = await getFooterData();
+    } catch (error) {
+      console.error("[Footer] Failed to fetch footer data from Payload:", error);
+      remoteData = null;
+    }
+  }
   const footerData = remoteData || fallbackFooterData;
 
-  const { brand, linkGroups, copyright } = footerData;
+  const { brand, linkGroups, copyright, copyrightYear } = footerData;
 
   // Split link groups: first 2 (Quick Links, Activity) and the last one (Legal & Transparency)
   const mainLinkGroups = linkGroups?.slice(0, 2) || [];
-  const legalGroup = linkGroups && linkGroups.length > 2 ? linkGroups[2] : null;
+  const legalGroup = linkGroups && linkGroups.length > 2 ? linkGroups[linkGroups.length - 1] : null;
 
-  const displayCopyright = copyright
-    ? copyright.startsWith("©")
-      ? copyright
-      : `© ${copyright}`
-    : "© 2026 Navjyoti Foundation. All rights reserved. Registered Charity No. 292336.";
+  const currentYear = new Date().getFullYear().toString();
+  const year = copyrightYear || currentYear;
+  const rawCopyright =
+    copyright || "Navjyoti Foundation. All rights reserved. Registered Charity No. 292336.";
+  const cleanedText = rawCopyright.replace(/^©\s*\d{4}\s*/, "").replace(/^©\s*/, "");
+  const displayCopyright = `© ${year} ${cleanedText}`;
 
   return (
     <footer className="bg-background border-border/40 text-foreground w-full border-t transition-colors duration-200">
@@ -170,36 +180,42 @@ const Footer = async ({ data: propData }: FooterProps) => {
           ))}
 
           {/* Column 4: Legal & Transparency + Copyright */}
-          {legalGroup && (
-            <div className="flex flex-col">
-              <div className="flex h-9 items-center">
-                <h3 className="text-primary font-sans text-xs font-bold tracking-wider uppercase dark:text-emerald-300">
-                  {legalGroup.title}
-                </h3>
-              </div>
-              <nav aria-label={legalGroup.title} className="mt-5">
-                <ul className="space-y-3">
-                  {legalGroup.links?.map((link) => (
-                    <li key={link.id || link.label}>
-                      <Link
-                        href={link.href || "#"}
-                        className="hover:text-accent inline-block text-sm text-[#5d625e] transition-colors duration-200 dark:text-stone-300 dark:hover:text-white"
-                      >
-                        {link.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+          <div className="flex flex-col">
+            {legalGroup && (
+              <>
+                <div className="flex h-9 items-center">
+                  <h3 className="text-primary font-sans text-xs font-bold tracking-wider uppercase dark:text-emerald-300">
+                    {legalGroup.title}
+                  </h3>
+                </div>
+                <nav aria-label={legalGroup.title} className="mt-5">
+                  <ul className="space-y-3">
+                    {legalGroup.links?.map((link) => (
+                      <li key={link.id || link.label}>
+                        <Link
+                          href={link.href || "#"}
+                          className="hover:text-accent inline-block text-sm text-[#5d625e] transition-colors duration-200 dark:text-stone-300 dark:hover:text-white"
+                        >
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </>
+            )}
 
-              {/* Divider & Copyright */}
-              <div className="border-border/80 mt-6 border-t pt-5 dark:border-stone-800">
-                <p className="text-xs leading-relaxed text-[#5d625e] dark:text-stone-400">
-                  {displayCopyright}
-                </p>
-              </div>
+            {/* Divider & Copyright */}
+            <div
+              className={`border-border/80 border-t pt-5 dark:border-stone-800 ${
+                legalGroup ? "mt-6" : "mt-0"
+              }`}
+            >
+              <p className="text-xs leading-relaxed text-[#5d625e] dark:text-stone-400">
+                {displayCopyright}
+              </p>
             </div>
-          )}
+          </div>
         </div>
       </div>
     </footer>

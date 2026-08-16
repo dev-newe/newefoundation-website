@@ -62,6 +62,8 @@ export const FooterSettings: GlobalConfig = {
       name: "linkGroups",
       label: "Footer Link Columns",
       type: "array",
+      minRows: 3,
+      maxRows: 3,
       labels: {
         singular: "Link Column",
         plural: "Link Columns",
@@ -105,12 +107,17 @@ export const FooterSettings: GlobalConfig = {
       ],
     },
     {
+      name: "copyrightYear",
+      label: "Copyright Year",
+      type: "text",
+      defaultValue: new Date().getFullYear().toString(),
+    },
+    {
       name: "copyright",
       label: "Copyright Notice",
       type: "text",
       required: true,
-      defaultValue:
-        "© 2026 Navjyoti Foundation. All rights reserved. Registered Charity No. 292336.",
+      defaultValue: "Navjyoti Foundation. All rights reserved. Registered Charity No. 292336.",
     },
   ],
 };
