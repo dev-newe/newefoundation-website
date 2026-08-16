@@ -56,9 +56,7 @@ const Navbar = async () => {
       <Link href={navData?.ctaButton?.href || fallbackData.ctaButton.href || "#contact"}>
         <button className="group bg-accent fixed right-0 bottom-0 z-50 m-4 flex h-12 w-12 cursor-pointer items-center justify-center gap-1.5 rounded-full p-2 text-center text-white transition-all duration-200 hover:w-28">
           <Heart className="size-5 fill-white/20 text-white" />
-          <span className="hidden transition-all duration-200 group-hover:block">
-            {navData?.ctaButton?.label || fallbackData.ctaButton.label}
-          </span>
+          <span className="hidden transition-all duration-200 group-hover:block">Donate</span>
         </button>
       </Link>
     </header>

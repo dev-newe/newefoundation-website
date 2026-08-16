@@ -10,6 +10,7 @@ import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
 import { HomePage } from "@/db/pages/HomePage";
+import { ContactPage } from "@/db/pages/Contact";
 import { Navigation } from "@/db/globals/Navigation";
 import { Footer } from "@/db/globals/Footer";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
@@ -48,7 +49,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, CloudinaryCleanupJobs],
-  globals: [HomePage, Navigation, Footer],
+  globals: [HomePage, ContactPage, Navigation, Footer],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({
