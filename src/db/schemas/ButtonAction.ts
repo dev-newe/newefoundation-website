@@ -1,4 +1,6 @@
-export const ButtonActionFields = [
+import type { Field } from "payload";
+
+export const ButtonActionFields: Field[] = [
   {
     name: "label",
     type: "text" as const,
