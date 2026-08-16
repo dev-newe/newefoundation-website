@@ -96,14 +96,20 @@ export interface Config {
   globals: {
     app_homepage: AppHomepage;
     app_contactpage: AppContactpage;
+    app_policy: AppPolicy;
+    app_terms: AppTerm;
     app_navigation: AppNavigation;
     app_footer: AppFooter;
+    app_cta: AppCta;
   };
   globalsSelect: {
     app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
     app_contactpage: AppContactpageSelect<false> | AppContactpageSelect<true>;
+    app_policy: AppPolicySelect<false> | AppPolicySelect<true>;
+    app_terms: AppTermsSelect<false> | AppTermsSelect<true>;
     app_navigation: AppNavigationSelect<false> | AppNavigationSelect<true>;
     app_footer: AppFooterSelect<false> | AppFooterSelect<true>;
+    app_cta: AppCtaSelect<false> | AppCtaSelect<true>;
   };
   locale: null;
   widgets: {
@@ -677,19 +683,6 @@ export interface AppHomepage {
         }[]
       | null;
   };
-  cta: {
-    title: string;
-    highlight: string;
-    buttons?:
-      | {
-          label: string;
-          href?: string | null;
-          className?: string | null;
-          icon?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -700,8 +693,23 @@ export interface AppHomepage {
 export interface AppContactpage {
   id: string;
   hero: {
-    title: string;
+    badge: {
+      text: string;
+    };
+    title: {
+      main: string;
+      highlight: string;
+    };
     description: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     image?: {
       /**
        * Select or upload an image from Payload Media Library
@@ -801,18 +809,60 @@ export interface AppContactpage {
       alt?: string | null;
     };
   };
-  cta: {
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_policy".
+ */
+export interface AppPolicy {
+  id: string;
+  policyList: {
     title: string;
-    description: string;
-    buttons?:
-      | {
-          label: string;
-          href?: string | null;
-          className?: string | null;
-          icon?: string | null;
-          id?: string | null;
-        }[]
-      | null;
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ("ltr" | "rtl") | null;
+        format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_terms".
+ */
+export interface AppTerm {
+  id: string;
+  termsList: {
+    title: string;
+    agreementCheckboxText?: string | null;
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ("ltr" | "rtl") | null;
+        format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
   };
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -888,6 +938,10 @@ export interface AppFooter {
     name: string;
     icon: string;
     address: string;
+    /**
+     * Direct Maps link for the location (optional)
+     */
+    googleMapsUrl?: string | null;
     phone: string;
     email: string;
   };
@@ -905,7 +959,30 @@ export interface AppFooter {
         id?: string | null;
       }[]
     | null;
+  copyrightYear?: string | null;
   copyright: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_cta".
+ */
+export interface AppCta {
+  id: string;
+  cta: {
+    title: string;
+    highlight: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1080,21 +1157,6 @@ export interface AppHomepageSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  cta?:
-    | T
-    | {
-        title?: T;
-        highlight?: T;
-        buttons?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-              className?: T;
-              icon?: T;
-              id?: T;
-            };
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -1107,8 +1169,27 @@ export interface AppContactpageSelect<T extends boolean = true> {
   hero?:
     | T
     | {
-        title?: T;
+        badge?:
+          | T
+          | {
+              text?: T;
+            };
+        title?:
+          | T
+          | {
+              main?: T;
+              highlight?: T;
+            };
         description?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
         image?:
           | T
           | {
@@ -1205,20 +1286,36 @@ export interface AppContactpageSelect<T extends boolean = true> {
               alt?: T;
             };
       };
-  cta?:
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_policy_select".
+ */
+export interface AppPolicySelect<T extends boolean = true> {
+  policyList?:
     | T
     | {
         title?: T;
         description?: T;
-        buttons?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-              className?: T;
-              icon?: T;
-              id?: T;
-            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_terms_select".
+ */
+export interface AppTermsSelect<T extends boolean = true> {
+  termsList?:
+    | T
+    | {
+        title?: T;
+        agreementCheckboxText?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1297,6 +1394,7 @@ export interface AppFooterSelect<T extends boolean = true> {
         name?: T;
         icon?: T;
         address?: T;
+        googleMapsUrl?: T;
         phone?: T;
         email?: T;
       };
@@ -1314,7 +1412,32 @@ export interface AppFooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  copyrightYear?: T;
   copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_cta_select".
+ */
+export interface AppCtaSelect<T extends boolean = true> {
+  cta?:
+    | T
+    | {
+        title?: T;
+        highlight?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

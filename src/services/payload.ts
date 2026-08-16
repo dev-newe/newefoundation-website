@@ -2,11 +2,20 @@ import { getPayload } from "payload";
 import config from "@payload-config";
 import { cache } from "react";
 import { unstable_cache } from "next/cache";
-import { AppHomepage, AppContactpage, AppNavigation, AppFooter, Media } from "@/payload-types";
+import {
+  AppHomepage,
+  AppContactpage,
+  AppNavigation,
+  AppFooter,
+  AppCta,
+  AppPolicy,
+  AppTerm,
+  Media,
+} from "@/payload-types";
 
 /**
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
- **   PAYLOAD GLOBAL DATA FETCH
+ *   PAYLOAD GLOBAL DATA FETCH
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
  */
 
@@ -15,6 +24,9 @@ type GlobalMap = {
   app_contactpage: AppContactpage;
   app_navigation: AppNavigation;
   app_footer: AppFooter;
+  app_cta: AppCta;
+  app_policy: AppPolicy;
+  app_terms: AppTerm;
 };
 
 /**

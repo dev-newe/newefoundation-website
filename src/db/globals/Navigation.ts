@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
-import { ImageFieldGroup } from "@/db/globals/ImageField";
-import { ButtonActionFields } from "@/db/globals/ButtonAction";
+import { ImageFieldGroup } from "@/db/schemas/ImageField";
+import { ButtonActionFields } from "@/db/schemas/ButtonAction";
 
 export const Navigation: GlobalConfig = {
   slug: "app_navigation",

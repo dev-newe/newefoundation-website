@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
-import { ImageFieldGroup } from "@/db/globals/ImageField";
-import { ButtonActionFields } from "@/db/globals/ButtonAction";
+import { ImageFieldGroup } from "@/db/schemas/ImageField";
+import { ButtonActionFields } from "@/db/schemas/ButtonAction";
 
 export const HomePage: GlobalConfig = {
   slug: "app_homepage",
@@ -174,21 +174,6 @@ export const HomePage: GlobalConfig = {
             { name: "role", type: "text", required: true },
             ImageFieldGroup("image", "Member Photo"),
           ],
-        },
-      ],
-    },
-
-    // CTA Section
-    {
-      name: "cta",
-      type: "group",
-      fields: [
-        { name: "title", type: "text", required: true },
-        { name: "highlight", type: "text", required: true },
-        {
-          name: "buttons",
-          type: "array",
-          fields: ButtonActionFields,
         },
       ],
     },
