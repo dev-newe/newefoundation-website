@@ -5,10 +5,15 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+export type CarouselImageItem = {
+  url: string;
+  alt?: string;
+};
+
 type DiagonalCarouselProps = {
   primarySrc?: string;
   secondarySrc?: string;
-  images?: string[];
+  images?: Array<string | CarouselImageItem>;
   alt?: string;
   className?: string;
 };
@@ -20,15 +25,30 @@ export default function DiagonalCarousel({
   alt = "Navjyoti Foundation community impact",
   className = "",
 }: DiagonalCarouselProps) {
-  const images = useMemo(() => {
-    const list = extraImages && extraImages.length > 0 ? extraImages : [primarySrc, secondarySrc];
+  const images = useMemo<CarouselImageItem[]>(() => {
+    const list: Array<string | CarouselImageItem | undefined> =
+      extraImages && extraImages.length > 0 ? extraImages : [primarySrc, secondarySrc];
 
-    const filtered = list.filter((src): src is string => {
-      return Boolean(src && typeof src === "string" && src.trim() !== "");
-    });
+    const valid: CarouselImageItem[] = [];
+    const seenUrls = new Set<string>();
 
-    const unique = Array.from(new Set(filtered));
-    return unique.length > 0 ? unique : ["/placeholder.png"];
+    for (const item of list) {
+      if (!item) {
+        continue;
+      }
+      const url = typeof item === "string" ? item.trim() : item.url?.trim();
+      const itemAlt =
+        typeof item === "object" && typeof item.alt === "string" && item.alt.trim() !== ""
+          ? item.alt.trim()
+          : undefined;
+
+      if (url && url !== "" && !seenUrls.has(url)) {
+        seenUrls.add(url);
+        valid.push({ url, alt: itemAlt });
+      }
+    }
+
+    return valid.length > 0 ? valid : [{ url: "/placeholder.png", alt: "" }];
   }, [primarySrc, secondarySrc, extraImages]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -85,15 +105,14 @@ export default function DiagonalCarousel({
   const frontIndex = total > 0 ? currentIndex % total : 0;
   const backIndex = total > 0 ? (currentIndex + 1) % total : 0;
 
-  const frontSrc =
-    typeof images[frontIndex] === "string" && images[frontIndex].trim() !== ""
-      ? images[frontIndex]
-      : "/placeholder.png";
+  const frontItem = images[frontIndex];
+  const backItem = images[backIndex] || frontItem;
 
-  const backSrc =
-    typeof images[backIndex] === "string" && images[backIndex].trim() !== ""
-      ? images[backIndex]
-      : frontSrc;
+  const frontSrc = frontItem?.url || "/placeholder.png";
+  const backSrc = backItem?.url || frontSrc;
+
+  const frontAlt = frontItem?.alt || `${alt} - Front view ${frontIndex + 1}`;
+  const backAlt = backItem?.alt || `${alt} - Back view ${backIndex + 1}`;
 
   return (
     <div
@@ -172,7 +191,7 @@ export default function DiagonalCarousel({
             >
               <Image
                 src={backSrc}
-                alt={`${alt} - Back view ${backIndex + 1}`}
+                alt={backAlt}
                 fill
                 className="rounded-[24px] object-cover sm:rounded-[32px]"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
@@ -227,7 +246,7 @@ export default function DiagonalCarousel({
             >
               <Image
                 src={frontSrc}
-                alt={`${alt} - Front view ${frontIndex + 1}`}
+                alt={frontAlt}
                 fill
                 className="rounded-[20px] object-cover transition-transform duration-500 ease-out hover:scale-[1.02] sm:rounded-[26px]"
                 sizes="(max-width: 768px) 85vw, (max-width: 1200px) 45vw, 35vw"
@@ -246,7 +265,7 @@ export default function DiagonalCarousel({
       {/* ================================================================ */}
       <div className="mt-4 flex w-full items-center justify-between px-2 sm:px-4">
         {/* Indicator dots */}
-        <div className="flex items-center gap-1.5" aria-hidden="true">
+        <div className="flex items-center gap-1.5">
           {images.map((_, idx) => {
             const isActive = idx === currentIndex;
             return (
@@ -263,6 +282,7 @@ export default function DiagonalCarousel({
                     : "bg-muted-foreground/30 hover:bg-muted-foreground/50 w-2"
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
+                aria-current={isActive ? "true" : undefined}
               />
             );
           })}

@@ -1,9 +1,14 @@
 import type { GroupField } from "payload";
 
-export const ImageFieldGroup = (name: string, label: string): GroupField => ({
+export const ImageFieldGroup = (
+  name: string,
+  label: string,
+  options?: { required?: boolean }
+): GroupField => ({
   name,
   label,
   type: "group" as const,
+  ...(options?.required !== undefined ? { required: options.required } : {}),
   fields: [
     {
       name: "media",

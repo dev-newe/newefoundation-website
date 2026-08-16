@@ -24,7 +24,12 @@ const defaultMissionVision = {
   },
 };
 
-function getMissionImages(imagesData: unknown): string[] {
+type MissionImageItem = {
+  url: string;
+  alt: string;
+};
+
+function getMissionImages(imagesData: unknown): MissionImageItem[] {
   if (!imagesData) {
     return [];
   }
@@ -37,26 +42,28 @@ function getMissionImages(imagesData: unknown): string[] {
       additionalImages?: Array<{ image?: Parameters<typeof resolvePayloadImage>[0] } | unknown>;
     };
 
-    const primaryUrl = resolvePayloadImage(imagesObj.primary, "").url;
-    const secondaryUrl = resolvePayloadImage(imagesObj.secondary, "").url;
+    const primaryResolved = resolvePayloadImage(imagesObj.primary, "");
+    const secondaryResolved = resolvePayloadImage(imagesObj.secondary, "");
 
-    const additionalUrls = Array.isArray(imagesObj.additionalImages)
+    const additionalResolved = Array.isArray(imagesObj.additionalImages)
       ? imagesObj.additionalImages
           .map((item: unknown) => {
             const imgField =
               item && typeof item === "object" && "image" in item
                 ? (item as { image?: Parameters<typeof resolvePayloadImage>[0] }).image
                 : (item as Parameters<typeof resolvePayloadImage>[0]);
-            return resolvePayloadImage(imgField, "").url;
+            return resolvePayloadImage(imgField, "");
           })
-          .filter((url): url is string => {
-            return Boolean(url && url.trim() !== "" && url !== "/placeholder.png");
+          .filter((img): img is MissionImageItem => {
+            return Boolean(img.url && img.url.trim() !== "" && img.url !== "/placeholder.png");
           })
       : [];
 
-    const combined = [primaryUrl, secondaryUrl, ...additionalUrls].filter((url): url is string => {
-      return Boolean(url && url.trim() !== "" && url !== "/placeholder.png");
-    });
+    const combined = [primaryResolved, secondaryResolved, ...additionalResolved].filter(
+      (img): img is MissionImageItem => {
+        return Boolean(img.url && img.url.trim() !== "" && img.url !== "/placeholder.png");
+      }
+    );
 
     if (combined.length > 0) {
       return combined;
@@ -71,10 +78,10 @@ function getMissionImages(imagesData: unknown): string[] {
           item && typeof item === "object" && "image" in item
             ? (item as { image?: Parameters<typeof resolvePayloadImage>[0] }).image
             : (item as Parameters<typeof resolvePayloadImage>[0]);
-        return resolvePayloadImage(imgField, "").url;
+        return resolvePayloadImage(imgField, "");
       })
-      .filter((url): url is string => {
-        return Boolean(url && url.trim() !== "" && url !== "/placeholder.png");
+      .filter((img): img is MissionImageItem => {
+        return Boolean(img.url && img.url.trim() !== "" && img.url !== "/placeholder.png");
       });
   }
 

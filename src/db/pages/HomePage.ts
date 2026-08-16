@@ -98,8 +98,8 @@ export const HomePage: GlobalConfig = {
           type: "group",
           label: "Mission Images",
           fields: [
-            ImageFieldGroup("primary", "Primary Image (Required)"),
-            ImageFieldGroup("secondary", "Secondary Image (Required)"),
+            ImageFieldGroup("primary", "Primary Image", { required: true }),
+            ImageFieldGroup("secondary", "Secondary Image", { required: true }),
             {
               name: "additionalImages",
               label: "Additional Carousel Images (Optional, up to 4 more)",

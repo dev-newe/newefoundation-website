@@ -556,8 +556,8 @@ export interface AppHomepage {
       title: string;
       description: string;
     };
-    images?: {
-      primary?: {
+    images: {
+      primary: {
         /**
          * Select or upload an image from Payload Media Library
          */
@@ -571,7 +571,7 @@ export interface AppHomepage {
          */
         alt?: string | null;
       };
-      secondary?: {
+      secondary: {
         /**
          * Select or upload an image from Payload Media Library
          */
