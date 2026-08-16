@@ -1,104 +1,150 @@
 import SectionWrapper from "@/components/ui/SectionWrapper";
-import { cn } from "@/lib/utils";
 import { AppHomepage } from "@/payload-types";
-import {
-  GraduationCap,
-  Users,
-  FlaskConical,
-  Heart,
-  Target,
-  Compass,
-  HelpCircle,
-  ArrowRight,
-  type LucideIcon,
-} from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import Link from "next/link";
+import { resolvePayloadImage } from "@/services/payload";
+import DiagonalCarousel from "./DiagonalCarousel";
 
-const Mission = () => {
+type MissionProps = {
+  data?: AppHomepage["missionVision"] | null;
+};
+
+const defaultMissionVision = {
+  mission: {
+    title: "Our Mission",
+    description:
+      "To create resilient communities by addressing the root causes of inequality. We believe in grassroots action, empowering local leaders to drive sustainable, generational change from within.",
+    stat: {
+      value: "50k+",
+      label: "LIVES\nIMPACTED\nANNUALLY",
+    },
+  },
+  vision: {
+    title: "Our Vision",
+    description:
+      "A world where geographic and socioeconomic barriers do not dictate a child's future, where communities are self-sustaining, and where compassion drives systemic innovation.",
+  },
+};
+
+function getMissionImages(imagesData: unknown): string[] {
+  if (!imagesData) {
+    return [];
+  }
+
+  // Support group schema with primary, secondary, and additionalImages (up to 4 more)
+  if (typeof imagesData === "object" && !Array.isArray(imagesData)) {
+    const imagesObj = imagesData as {
+      primary?: Parameters<typeof resolvePayloadImage>[0];
+      secondary?: Parameters<typeof resolvePayloadImage>[0];
+      additionalImages?: Array<{ image?: Parameters<typeof resolvePayloadImage>[0] } | unknown>;
+    };
+
+    const primaryUrl = resolvePayloadImage(imagesObj.primary, "").url;
+    const secondaryUrl = resolvePayloadImage(imagesObj.secondary, "").url;
+
+    const additionalUrls = Array.isArray(imagesObj.additionalImages)
+      ? imagesObj.additionalImages
+          .map((item: unknown) => {
+            const imgField =
+              item && typeof item === "object" && "image" in item
+                ? (item as { image?: Parameters<typeof resolvePayloadImage>[0] }).image
+                : (item as Parameters<typeof resolvePayloadImage>[0]);
+            return resolvePayloadImage(imgField, "").url;
+          })
+          .filter((url): url is string => {
+            return Boolean(url && url.trim() !== "" && url !== "/placeholder.png");
+          })
+      : [];
+
+    const combined = [primaryUrl, secondaryUrl, ...additionalUrls].filter((url): url is string => {
+      return Boolean(url && url.trim() !== "" && url !== "/placeholder.png");
+    });
+
+    if (combined.length > 0) {
+      return combined;
+    }
+  }
+
+  // Fallback support if data is stored as a direct array
+  if (Array.isArray(imagesData)) {
+    return imagesData
+      .map((item: unknown) => {
+        const imgField =
+          item && typeof item === "object" && "image" in item
+            ? (item as { image?: Parameters<typeof resolvePayloadImage>[0] }).image
+            : (item as Parameters<typeof resolvePayloadImage>[0]);
+        return resolvePayloadImage(imgField, "").url;
+      })
+      .filter((url): url is string => {
+        return Boolean(url && url.trim() !== "" && url !== "/placeholder.png");
+      });
+  }
+
+  return [];
+}
+
+const Mission = ({ data }: MissionProps) => {
+  const mission = {
+    title: data?.mission?.title || defaultMissionVision.mission.title,
+    description: data?.mission?.description || defaultMissionVision.mission.description,
+    stat: {
+      value: data?.mission?.stat?.value || defaultMissionVision.mission.stat.value,
+      label: data?.mission?.stat?.label || defaultMissionVision.mission.stat.label,
+    },
+  };
+
+  const vision = {
+    title: data?.vision?.title || defaultMissionVision.vision.title,
+    description: data?.vision?.description || defaultMissionVision.vision.description,
+  };
+
+  const missionImages = getMissionImages(data?.images);
+
   return (
-    <div className="bg-background py-20 md:py-24">
-      <SectionWrapper as="section" id="mission" size="wide" className="px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-            {/* Left Side - Mission & Vision */}
-            <div className="flex flex-col gap-6">
-              <Badge variant="accent">Mission & Vision</Badge>
-              <h2 className="text-primary font-serif text-3xl leading-tight font-semibold md:text-4xl">
-                Empowering Communities Through Action
-              </h2>
-              <div className="text-muted-foreground space-y-4 text-sm leading-relaxed md:text-base">
-                <p>
-                  Our mission is to create sustainable and inclusive social change by working
-                  closely with local communities to identify real needs and implement practical,
-                  effective solutions.
-                </p>
-                <p>
-                  We are dedicated to empowering women, providing quality education, and fostering
-                  economic independence through targeted programs and community-driven initiatives.
-                </p>
-              </div>
-            </div>
+    <SectionWrapper
+      as="section"
+      id="mission"
+      size="wide"
+      className="bg-background relative overflow-hidden"
+    >
+      <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10 xl:gap-16">
+        {/* Left Column - Staggered Content */}
+        <div className="flex flex-col justify-between space-y-8 sm:space-y-10 lg:col-span-6">
+          {/* Mission Block - Left Aligned */}
+          <div className="max-w-lg space-y-3 sm:space-y-4">
+            <h2 className="text-primary font-serif text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-[42px] dark:text-emerald-100">
+              {mission.title}
+            </h2>
+            <p className="text-sm leading-relaxed text-[#5d625e] sm:text-base dark:text-stone-300">
+              {mission.description}
+            </p>
+          </div>
 
-            {/* Right Side - Our Work Pillars */}
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="bg-card/50 border-border/50 rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md">
-                <div className="text-primary mb-3 flex items-center gap-2 font-semibold">
-                  <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
-                    <GraduationCap className="h-4 w-4" />
-                  </div>
-                  Education
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Providing academic support, study materials, and mentorship to ensure every child
-                  has access to quality education.
-                </p>
-              </div>
+          {/* Stat Block */}
+          <div className="flex flex-col items-start gap-1 sm:ml-8 lg:ml-12">
+            <span className="text-accent font-serif text-4xl leading-none font-bold tracking-tight sm:text-[44px]">
+              {mission.stat.value}
+            </span>
+            <span className="text-primary font-sans text-[10px] leading-[1.2] font-extrabold tracking-[0.14em] whitespace-pre-line uppercase sm:text-[11px] dark:text-emerald-400">
+              {mission.stat.label}
+            </span>
+          </div>
 
-              <div className="bg-card/50 border-border/50 rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md">
-                <div className="text-primary mb-3 flex items-center gap-2 font-semibold">
-                  <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
-                    <Users className="h-4 w-4" />
-                  </div>
-                  Women Empowerment
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Empowering women through income-generating skills, financial independence, and
-                  self-reliance programs.
-                </p>
-              </div>
-
-              <div className="bg-card/50 border-border/50 rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md">
-                <div className="text-primary mb-3 flex items-center gap-2 font-semibold">
-                  <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
-                    <FlaskConical className="h-4 w-4" />
-                  </div>
-                  Skill Development
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Equipping youth with industry-relevant skills to improve employability and foster
-                  entrepreneurship.
-                </p>
-              </div>
-
-              <div className="bg-card/50 border-border/50 rounded-xl border p-4 shadow-sm transition-shadow hover:shadow-md">
-                <div className="text-primary mb-3 flex items-center gap-2 font-semibold">
-                  <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
-                    <Heart className="h-4 w-4" />
-                  </div>
-                  Community Support
-                </div>
-                <p className="text-muted-foreground text-sm leading-relaxed">
-                  Providing essential support to vulnerable populations through healthcare, relief
-                  efforts, and community development programs.
-                </p>
-              </div>
-            </div>
+          {/* Vision Block - Staggered / Shifted Right */}
+          <div className="max-w-lg space-y-3 border-l-[3px] border-[#9fe3c1] pl-5 sm:ml-14 sm:space-y-4 sm:pl-6 lg:ml-20 dark:border-emerald-400">
+            <h2 className="text-primary font-serif text-3xl leading-tight font-bold tracking-tight sm:text-4xl lg:text-[42px] dark:text-emerald-100">
+              {vision.title}
+            </h2>
+            <p className="text-sm leading-relaxed text-[#5d625e] sm:text-base dark:text-stone-300">
+              {vision.description}
+            </p>
           </div>
         </div>
-      </SectionWrapper>
-    </div>
+
+        {/* Right Column - Diagonal Carousel */}
+        <div className="relative flex flex-col items-center justify-center lg:col-span-6">
+          <DiagonalCarousel images={missionImages} alt="Navjyoti Foundation Mission and Vision" />
+        </div>
+      </div>
+    </SectionWrapper>
   );
 };
 

@@ -15,7 +15,7 @@ export default async function Home() {
     <main>
       <Hero data={homepage?.hero} />
       <About />
-      <Mission />
+      <Mission data={homepage?.missionVision} />
       <OurWork data={homepage?.ourWork} />
       <Team data={homepage?.team} />
       <Partners data={homepage?.ourPartners} />

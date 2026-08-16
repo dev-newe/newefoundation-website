@@ -86,14 +86,26 @@ export const resolvePayloadImage = (
     return { url: fallbackUrl, alt: "" };
   }
 
-  const media = typeof imageField.media === "object" ? imageField.media : undefined;
+  const media =
+    typeof imageField.media === "object" && imageField.media !== null
+      ? imageField.media
+      : undefined;
+
+  const mediaUrl =
+    media && typeof media.url === "string" && media.url.trim() !== "" ? media.url : undefined;
+
+  const stringMedia =
+    typeof imageField.media === "string" && imageField.media.trim() !== ""
+      ? imageField.media
+      : undefined;
+
+  const externalSrc =
+    typeof imageField.src === "string" && imageField.src.trim() !== "" ? imageField.src : undefined;
+
+  const validUrl = mediaUrl || stringMedia || externalSrc || fallbackUrl;
 
   return {
-    url:
-      media?.url ??
-      (typeof imageField.media === "string" ? imageField.media : undefined) ??
-      imageField.src ??
-      fallbackUrl,
-    alt: imageField.alt ?? media?.alt ?? "",
+    url: validUrl,
+    alt: imageField.alt || (media && typeof media.alt === "string" ? media.alt : "") || "",
   };
 };
