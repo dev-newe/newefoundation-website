@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import { Users } from "@/db/collections/Users";
 import { Media } from "@/db/collections/Media";
 import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
+import { ContactFormResponses } from "@/db/collections/ContactFormResponses";
 import { HomePage } from "@/db/pages/HomePage";
 import { ContactPage } from "@/db/pages/Contact";
 import { Navigation } from "@/db/globals/Navigation";
@@ -48,7 +49,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, CloudinaryCleanupJobs],
+  collections: [Users, Media, CloudinaryCleanupJobs, ContactFormResponses],
   globals: [HomePage, ContactPage, Navigation, FooterSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
