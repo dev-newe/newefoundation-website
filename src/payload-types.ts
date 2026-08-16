@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     "cloudinary-cleanup-jobs": CloudinaryCleanupJob;
+    contact_form_responses: ContactFormResponse;
     "payload-kv": PayloadKv;
     "payload-locked-documents": PayloadLockedDocument;
     "payload-preferences": PayloadPreference;
@@ -81,6 +82,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     "cloudinary-cleanup-jobs":
       CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
+    contact_form_responses: ContactFormResponsesSelect<false> | ContactFormResponsesSelect<true>;
     "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
     "payload-locked-documents":
       PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -226,6 +228,34 @@ export interface CloudinaryCleanupJob {
   createdAt: string;
 }
 /**
+ * Responses from the contact form. Read-only for admins.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_form_responses".
+ */
+export interface ContactFormResponse {
+  id: string;
+  /**
+   * Submitter's email address
+   */
+  email: string;
+  /**
+   * Raw form field values as a JSON object
+   */
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  submittedAt: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -260,6 +290,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: "cloudinary-cleanup-jobs";
         value: string | CloudinaryCleanupJob;
+      } | null)
+    | ({
+        relationTo: "contact_form_responses";
+        value: string | ContactFormResponse;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -394,6 +428,17 @@ export interface CloudinaryCleanupJobsSelect<T extends boolean = true> {
   errorDetails?: T;
   status?: T;
   attempts?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_form_responses_select".
+ */
+export interface ContactFormResponsesSelect<T extends boolean = true> {
+  email?: T;
+  data?: T;
+  submittedAt?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -684,7 +729,8 @@ export interface AppContactpage {
       | {
           fieldName: string;
           fieldLabel: string;
-          fieldType: 'text' | 'email' | 'tel' | 'textarea' | 'select' | 'checkbox' | 'radio' | 'file';
+          fieldType:
+            "text" | "email" | "tel" | "textarea" | "select" | "checkbox" | "radio" | "file";
           selectOptions?:
             | {
                 label: string;
@@ -702,12 +748,12 @@ export interface AppContactpage {
             | null;
           fileTypes?:
             | {
-                type: 'pdf' | 'image' | 'document' | 'video' | 'audio' | 'other';
+                type: "pdf" | "image" | "document" | "video" | "audio" | "other";
                 id?: string | null;
               }[]
             | null;
           fieldPlaceholder: string;
-          width?: ('full' | 'half') | null;
+          width?: ("full" | "half") | null;
           regexValidation?: string | null;
           className?: string | null;
           fieldRequired?: boolean | null;
