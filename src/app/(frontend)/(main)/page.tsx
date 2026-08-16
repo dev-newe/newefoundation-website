@@ -10,8 +10,6 @@ import { getGlobal } from "@/services/payload";
 export default async function Home() {
   const homepage = await getGlobal("app_homepage");
 
-  console.log("Homepage data:", homepage); // Debugging line to check the data being fetched
-
   return (
     <main>
       <Hero data={homepage?.hero} />

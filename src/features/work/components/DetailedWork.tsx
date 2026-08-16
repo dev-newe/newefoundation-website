@@ -24,7 +24,7 @@ const DetailedWork = ({
         : [],
   };
 
-  const workImages = detailWorkData.images.filter((image) => image.url);
+  const workImages = detailWorkData.images.filter((image) => image.url).slice(0, 4);
   const imageCount = workImages.length;
 
   return (
