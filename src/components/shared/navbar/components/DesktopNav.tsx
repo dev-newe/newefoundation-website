@@ -33,7 +33,7 @@ const DesktopNav = ({ navItems, ctaButton }: DesktopNavProps) => {
               <div
                 key={item.id || item.label}
                 className="relative"
-                onMouseEnter={() => setOpenDropdown(item.id || item.label)}
+                onClick={() => setOpenDropdown(item.id || item.label)}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
                 {/* Dropdown Trigger */}
@@ -41,7 +41,7 @@ const DesktopNav = ({ navItems, ctaButton }: DesktopNavProps) => {
                   type="button"
                   onClick={() => setOpenDropdown(isOpen ? null : item.id || item.label)}
                   className={cn(
-                    "flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200",
+                    "flex cursor-pointer items-center gap-1.5 rounded-full px-4 py-2 text-base font-semibold transition-all duration-200",
                     isOpen
                       ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-400"
                       : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-200 dark:hover:bg-gray-800 dark:hover:text-white"
@@ -60,11 +60,13 @@ const DesktopNav = ({ navItems, ctaButton }: DesktopNavProps) => {
                 {/* Dropdown Menu Overlay */}
                 <div
                   className={cn(
-                    "absolute top-full left-1/2 z-50 mt-2 -translate-x-1/2 transition-all duration-200 ease-out",
+                    "absolute top-full left-1/2 z-50 mt-2 -translate-x-1/2 py-6 transition-all duration-200 ease-out",
                     isOpen
-                      ? "pointer-events-auto visible translate-y-0 opacity-100"
+                      ? "pointer-events-auto visible -translate-y-6 opacity-100"
                       : "pointer-events-none invisible -translate-y-2 opacity-0"
                   )}
+                  onMouseEnter={() => setOpenDropdown(item.id || item.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
                   <div className="min-w-65 rounded-2xl border border-gray-100 bg-white/95 p-4 shadow-xl backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/95">
                     <div
