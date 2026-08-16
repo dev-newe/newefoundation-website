@@ -9,38 +9,7 @@ type PartnersProps = {
 
 type Partner = NonNullable<NonNullable<AppHomepage["ourPartners"]>["partners"]>[number];
 //TODO: Proper fallbacks
-const defaultPartners: Partner[] = [
-  {
-    id: "showcase-flutter",
-    name: "Flutter",
-    url: "https://www.flutter.dev",
-    logo: {
-      media: undefined,
-      src: "https://cdn.simpleicons.org/flutter",
-      alt: "Flutter logo",
-    },
-  },
-  {
-    id: "showcase-github",
-    name: "GitHub",
-    url: "https://www.github.com",
-    logo: {
-      media: undefined,
-      src: "https://cdn.simpleicons.org/github",
-      alt: "GitHub logo",
-    },
-  },
-  {
-    id: "showcase-gitlab",
-    name: "GitLab",
-    url: "https://www.gitlab.com",
-    logo: {
-      media: undefined,
-      src: "https://cdn.simpleicons.org/gitlab",
-      alt: "GitLab logo",
-    },
-  },
-];
+const defaultPartners: Partner[] = [];
 
 export const Partners = ({ data }: PartnersProps) => {
   const partners = {
@@ -71,9 +40,9 @@ export const Partners = ({ data }: PartnersProps) => {
       </p>
 
       <div className="mt-6 w-full">
-        <Marquee>
+        <Marquee isAccessible>
           {partners.partners.map((partner) => (
-            <PartnerCard key={partner.id ?? partner.name} partner={partner} />
+            <PartnerCard key={partner.id ?? partner.name} partner={partner} isAccessible />
           ))}
         </Marquee>
 
@@ -89,9 +58,10 @@ export const Partners = ({ data }: PartnersProps) => {
 
 type PartnerCardProps = {
   partner: Partner;
+  isAccessible?: boolean;
 };
 
-const PartnerCard = ({ partner }: PartnerCardProps) => {
+const PartnerCard = ({ partner, isAccessible = false }: PartnerCardProps) => {
   const { url, alt } = resolvePayloadImage(partner.logo);
 
   const content = (
@@ -111,7 +81,13 @@ const PartnerCard = ({ partner }: PartnerCardProps) => {
   }
 
   return (
-    <a href={partner.url} target="_blank" rel="noopener noreferrer" className="cursor-pointer">
+    <a
+      href={partner.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      tabIndex={isAccessible ? undefined : -1}
+      className="cursor-pointer"
+    >
       {content}
     </a>
   );
