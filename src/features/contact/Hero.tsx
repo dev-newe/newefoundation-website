@@ -20,7 +20,7 @@ export default function ContactHero({ data }: ContactHeroProps) {
       main:
         typeof data?.title === "object" && data?.title?.main
           ? data?.title?.main
-          : "Together, We can",
+          : "Together, We Can",
       highlight:
         typeof data?.title === "object" && data?.title?.highlight
           ? data?.title?.highlight
@@ -71,7 +71,9 @@ export default function ContactHero({ data }: ContactHeroProps) {
               <span className="text-accent font-geist-sans">{heroData.title.highlight}</span>
             </h1>
 
-            <p className="mt-6 max-w-xl font-serif text-base leading-7 text-white/85 sm:text-lg"></p>
+            <p className="mt-6 max-w-xl font-serif text-base leading-7 text-white/85 sm:text-lg">
+              {heroData.description}
+            </p>
 
             <div className="mt-9 flex items-center gap-4">
               <a
