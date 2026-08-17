@@ -88,23 +88,26 @@ const Map = ({ data }: MapSectionProps) => {
         {title}
       </h2>
 
-      {/* Map Container Frame */}
-      <div className="border-border/60 bg-card relative mt-8 aspect-4/3 min-h-[380px] w-full overflow-hidden rounded-[20px] border shadow-lg sm:aspect-16/9 sm:min-h-[460px] sm:rounded-[28px] md:min-h-[520px]">
-        {/* Google Maps Embed Iframe */}
-        <iframe
-          title="Google Map Location of Serampore HQ"
-          src={embedUrl}
-          className="pointer-events-none h-full w-full cursor-help border-0 dark:brightness-200 dark:invert"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-          allowFullScreen
-        />
+      {/* Main Map & Card Container */}
+      <div className="relative mt-8 flex flex-col gap-6 lg:block">
+        {/* Map Container Frame */}
+        <div className="border-border/60 bg-card relative aspect-4/3 min-h-[340px] w-full overflow-hidden rounded-[20px] border shadow-lg sm:aspect-16/9 sm:min-h-[420px] sm:rounded-[28px] md:min-h-[480px] lg:min-h-[540px]">
+          {/* Google Maps Embed Iframe */}
+          <iframe
+            title="Google Map Location of Serampore HQ"
+            src={embedUrl}
+            className="pointer-events-none h-full w-full cursor-help border-0 dark:brightness-200 dark:invert"
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
 
-        {/* Custom Location Pin Marker */}
-        <MapPinMarker />
+          {/* Custom Location Pin Marker */}
+          <MapPinMarker />
+        </div>
 
-        {/* Floating Office Information Card (Top-Right Overlay) */}
-        <div className="bg-card/95 border-border/80 absolute top-4 right-4 z-20 max-w-[270px] rounded-[16px] border p-4 shadow-xl backdrop-blur-md transition-all duration-300 sm:top-6 sm:right-6 sm:max-w-xs sm:p-5 dark:bg-stone-900/95">
+        {/* Office Information / Directions Card (Below map on <=md, Floating top-right on >=lg) */}
+        <div className="bg-card border-border/80 lg:bg-card/95 z-20 w-full rounded-[16px] border p-5 shadow-md transition-all duration-300 sm:rounded-[20px] sm:p-6 lg:absolute lg:top-6 lg:right-6 lg:max-w-xs lg:p-5 lg:shadow-xl lg:backdrop-blur-md dark:bg-stone-900 lg:dark:bg-stone-900/95">
           <span className="text-muted-foreground font-sans text-[10px] font-extrabold tracking-[0.14em] uppercase dark:text-emerald-400">
             {locationBadge}
           </span>
@@ -137,7 +140,7 @@ const Map = ({ data }: MapSectionProps) => {
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary hover:bg-primary/90 mt-3.5 flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold text-white shadow-xs transition-all hover:scale-[1.005] active:scale-[0.98] dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            className="bg-primary hover:bg-primary/90 mt-3.5 flex w-full items-center justify-center gap-1.5 rounded-lg px-3 py-2.5 text-xs font-semibold text-white shadow-xs transition-all hover:scale-[1.005] active:scale-[0.98] dark:bg-emerald-600 dark:hover:bg-emerald-500"
           >
             <Navigation className="h-3.5 w-3.5" />
             <span>Get Directions</span>
