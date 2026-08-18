@@ -1,9 +1,9 @@
 import type { GlobalConfig } from "payload";
 import { RichTextFieldGroup } from "@/db/schemas/RichTextFieldGroup";
 
-export const TermsPage: GlobalConfig = {
-  slug: "app_terms",
-  label: "Terms and Conditions Page",
+export const PrivacyPage: GlobalConfig = {
+  slug: "app_privacy",
+  label: "Privacy Policy Page",
   access: {
     read: () => true,
   },

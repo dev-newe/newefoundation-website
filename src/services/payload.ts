@@ -8,7 +8,7 @@ import {
   AppNavigation,
   AppFooter,
   AppCta,
-  AppPolicy,
+  AppPrivacy,
   AppTerm,
   Media,
 } from "@/payload-types";
@@ -25,7 +25,7 @@ type GlobalMap = {
   app_navigation: AppNavigation;
   app_footer: AppFooter;
   app_cta: AppCta;
-  app_policy: AppPolicy;
+  app_privacy: AppPrivacy;
   app_terms: AppTerm;
 };
 
