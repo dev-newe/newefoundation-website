@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, useRef, useCallback } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { z } from "zod";
 
 import { Input } from "@/components/ui/input";

@@ -5,7 +5,6 @@ import {
   UnderlineFeature,
   LinkFeature,
   FixedToolbarFeature,
-  EXPERIMENTAL_TableFeature,
 } from "@payloadcms/richtext-lexical";
 import type { Field } from "payload";
 
@@ -16,7 +15,8 @@ export const RichTextFieldGroup = (name: string, label: string): Field => ({
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [
       ...defaultFeatures,
-      EXPERIMENTAL_TableFeature(),
+      //TODO: Table feature is experimental, make a deal
+      //? EXPERIMENTAL_TableFeature(),
       BoldFeature(),
       ItalicFeature(),
       UnderlineFeature(),

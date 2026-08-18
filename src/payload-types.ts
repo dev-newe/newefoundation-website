@@ -96,7 +96,7 @@ export interface Config {
   globals: {
     app_homepage: AppHomepage;
     app_contactpage: AppContactpage;
-    app_policy: AppPolicy;
+    app_privacy: AppPrivacy;
     app_terms: AppTerm;
     app_navigation: AppNavigation;
     app_footer: AppFooter;
@@ -105,7 +105,7 @@ export interface Config {
   globalsSelect: {
     app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
     app_contactpage: AppContactpageSelect<false> | AppContactpageSelect<true>;
-    app_policy: AppPolicySelect<false> | AppPolicySelect<true>;
+    app_privacy: AppPrivacySelect<false> | AppPrivacySelect<true>;
     app_terms: AppTermsSelect<false> | AppTermsSelect<true>;
     app_navigation: AppNavigationSelect<false> | AppNavigationSelect<true>;
     app_footer: AppFooterSelect<false> | AppFooterSelect<true>;
@@ -814,26 +814,33 @@ export interface AppContactpage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app_policy".
+ * via the `definition` "app_privacy".
  */
-export interface AppPolicy {
+export interface AppPrivacy {
   id: string;
-  policyList: {
-    title: string;
-    description: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ("ltr" | "rtl") | null;
-        format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
-        indent: number;
+  title: string;
+  description: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
         version: number;
-      };
-      [k: string]: unknown;
+        [k: string]: unknown;
+      }[];
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  contactCta: {
+    title: string;
+    description: string;
+    button: {
+      label: string;
+      href: string;
     };
   };
   updatedAt?: string | null;
@@ -845,23 +852,29 @@ export interface AppPolicy {
  */
 export interface AppTerm {
   id: string;
-  termsList: {
-    title: string;
-    agreementCheckboxText?: string | null;
-    description: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ("ltr" | "rtl") | null;
-        format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
-        indent: number;
+  title: string;
+  description: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
         version: number;
-      };
-      [k: string]: unknown;
+        [k: string]: unknown;
+      }[];
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  contactCta: {
+    title: string;
+    description: string;
+    button: {
+      label: string;
+      href: string;
     };
   };
   updatedAt?: string | null;
@@ -1292,14 +1305,23 @@ export interface AppContactpageSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "app_policy_select".
+ * via the `definition` "app_privacy_select".
  */
-export interface AppPolicySelect<T extends boolean = true> {
-  policyList?:
+export interface AppPrivacySelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  content?: T;
+  contactCta?:
     | T
     | {
         title?: T;
         description?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;
@@ -1310,12 +1332,20 @@ export interface AppPolicySelect<T extends boolean = true> {
  * via the `definition` "app_terms_select".
  */
 export interface AppTermsSelect<T extends boolean = true> {
-  termsList?:
+  title?: T;
+  description?: T;
+  content?: T;
+  contactCta?:
     | T
     | {
         title?: T;
-        agreementCheckboxText?: T;
         description?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
       };
   updatedAt?: T;
   createdAt?: T;

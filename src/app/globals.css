@@ -671,3 +671,118 @@
 .direction-reverse {
   animation-direction: reverse;
 }
+
+/* --------------------------------------------------------------------------
+   3. RICH TEXT RENDERER STYLES
+   -------------------------------------------------------------------------- */
+.rich-text {
+  font-size: var(--text-base);
+  line-height: 1.75;
+}
+
+.rich-text p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  color: hsl(var(--primary));
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text h1 {
+  font-size: var(--text-3xl);
+}
+
+.rich-text h2 {
+  font-size: var(--text-2xl);
+  border-bottom: 1px solid hsl(var(--border) / 0.6);
+  padding-bottom: 0.5rem;
+}
+
+.rich-text h3 {
+  font-size: var(--text-xl);
+}
+
+.rich-text h4 {
+  font-size: var(--text-lg);
+}
+
+.rich-text a {
+  color: hsl(var(--accent));
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.rich-text a:hover {
+  color: hsl(var(--primary));
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.rich-text ul {
+  list-style-type: disc;
+}
+
+.rich-text ol {
+  list-style-type: decimal;
+}
+
+.rich-text li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.rich-text strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.rich-text em {
+  font-style: italic;
+}
+
+.rich-text u {
+  text-decoration: underline;
+}
+
+.rich-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--text-sm);
+}
+
+.rich-text th,
+.rich-text td {
+  border: 1px solid hsl(var(--border));
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.rich-text th {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.rich-text tr:nth-child(even) {
+  background-color: hsl(var(--background) / 0.4);
+}

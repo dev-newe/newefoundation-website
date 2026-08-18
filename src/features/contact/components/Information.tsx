@@ -6,7 +6,6 @@ type InfoProps = {
 };
 
 const Information = ({ data }: InfoProps) => {
-  console.log({ data });
   const infoData = {
     email: {
       title: data?.email?.title ?? "Email",
