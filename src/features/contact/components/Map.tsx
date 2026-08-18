@@ -1,61 +1,80 @@
 import { Navigation } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
-import MapPinMarker from "./MapPinMarker";
+import MapPinMarker from "@/features/contact/MapPinMarker";
 
 type MapSectionProps = {
   data?: {
-    title?: string | null;
-    locationBadge?: string | null;
-    locationName?: string | null;
-    address?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    googleMapsUrl?: string | null;
-    embedUrl?: string | null;
-  } | null;
+    title?: string;
+    locationBadge?: string;
+    locationName?: string;
+    address?: string;
+    email?: string;
+    phone?: string;
+    googleMapsUrl?: string;
+    embedUrl?: string;
+  };
 };
 
-const formatEmbedUrl = (url: string | null | undefined): string => {
-  const fallback =
-    "https://maps.google.com/maps?ll=22.7514381,88.3315948&t=m&z=17&ie=UTF8&output=embed";
+const DEFAULT_EMBED_URL =
+  "https://maps.google.com/maps?ll=22.7514381,88.3315948&t=m&z=17&ie=UTF8&output=embed";
 
-  if (!url || typeof url !== "string" || url.trim() === "") {
-    return fallback;
+const formatEmbedUrl = (url: string | null | undefined): string => {
+  if (!url?.trim()) {
+    return DEFAULT_EMBED_URL;
   }
 
   let cleanUrl = url.trim();
 
-  // If the user pasted the entire <iframe src="..."> HTML code from Google Maps
+  // Support users pasting the entire <iframe ...> HTML.
   const iframeSrcMatch = cleanUrl.match(/src=["']([^"']+)["']/i);
+
   if (iframeSrcMatch) {
     cleanUrl = iframeSrcMatch[1];
   }
 
-  // If official Google Maps embed URL (/maps/embed) or output=embed with ll=
-  if (
-    cleanUrl.includes("/maps/embed") ||
-    (cleanUrl.includes("output=embed") && cleanUrl.includes("ll="))
-  ) {
-    return cleanUrl;
+  let parsedUrl: URL;
+
+  try {
+    parsedUrl = new URL(cleanUrl);
+  } catch {
+    return DEFAULT_EMBED_URL;
   }
 
-  // If query format with q=lat,lng, convert to ll=lat,lng to suppress default Google red pin
-  if (cleanUrl.includes("output=embed") && cleanUrl.includes("q=")) {
-    return cleanUrl.replace(/q=/, "ll=");
+  // Only allow HTTPS Google Maps hosts.
+  const allowedHosts = new Set(["www.google.com", "maps.google.com"]);
+
+  if (parsedUrl.protocol !== "https:" || !allowedHosts.has(parsedUrl.hostname)) {
+    return DEFAULT_EMBED_URL;
   }
 
-  // Extract coordinates like @22.7514381,88.3315948 or ?q=22.7514381,88.3315948
-  const coordMatch = cleanUrl.match(/[@=](-?\d+\.\d+),(-?\d+\.\d+)/);
-  if (coordMatch) {
-    return `https://maps.google.com/maps?ll=${coordMatch[1]},${coordMatch[2]}&t=m&z=17&ie=UTF8&output=embed`;
+  // Official Google Maps embed URL.
+  if (parsedUrl.pathname === "/maps/embed") {
+    return parsedUrl.toString();
   }
 
-  // Shortlinks (maps.app.goo.gl) cannot be framed directly by browsers (Google refuses to connect)
-  if (cleanUrl.includes("maps.app.goo.gl") || cleanUrl.includes("goo.gl/maps")) {
-    return fallback;
+  // Legacy Google Maps embed URL.
+  if (parsedUrl.pathname === "/maps" && parsedUrl.searchParams.get("output") === "embed") {
+    // q=lat,lng → ll=lat,lng
+    if (parsedUrl.searchParams.has("q")) {
+      parsedUrl.searchParams.set("ll", parsedUrl.searchParams.get("q")!);
+      parsedUrl.searchParams.delete("q");
+    }
+
+    if (parsedUrl.searchParams.has("ll")) {
+      return parsedUrl.toString();
+    }
   }
 
-  return `https://maps.google.com/maps?ll=22.7514381,88.3315948&t=m&z=17&ie=UTF8&output=embed`;
+  // Extract coordinates from Google Maps URLs such as:
+  // https://www.google.com/maps/search/.../@22.7514381,88.3315948,...
+  const coordinateMatch = cleanUrl.match(/@(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+
+  if (coordinateMatch) {
+    return `https://maps.google.com/maps?ll=${coordinateMatch[1]},${coordinateMatch[2]}&t=m&z=17&ie=UTF8&output=embed`;
+  }
+
+  // Anything else gets the safe DEFAULT_EMBED_URL.
+  return DEFAULT_EMBED_URL;
 };
 
 const defaultMapData = {
@@ -67,8 +86,6 @@ const defaultMapData = {
   phone: "+91 9876543210",
   googleMapsUrl:
     "https://www.google.com/maps/search/78%2F89,+G.T.+Road+West,+Simla,+Serampore,+Hooghly,+West+Bengal,+India.+Pincode+-+712203+/@22.7514381,88.3315948,17z/data=!3m1!4b1?entry=ttu&g_ep=EgoyMDI2MDgxMi4wIKXMDSoASAFQAw%3D%3D",
-  defaultEmbedUrl:
-    "https://maps.google.com/maps?ll=22.7514381,88.3315948&t=m&z=17&ie=UTF8&output=embed",
 };
 
 const Map = ({ data }: MapSectionProps) => {
@@ -79,7 +96,7 @@ const Map = ({ data }: MapSectionProps) => {
   const email = data?.email || defaultMapData.email;
   const phone = data?.phone || defaultMapData.phone;
   const googleMapsUrl = data?.googleMapsUrl || defaultMapData.googleMapsUrl;
-  const embedUrl = formatEmbedUrl(data?.embedUrl);
+  const embedUrl = formatEmbedUrl(data?.embedUrl || DEFAULT_EMBED_URL);
 
   return (
     <SectionWrapper as="section" id="map" size="wide">
@@ -96,9 +113,10 @@ const Map = ({ data }: MapSectionProps) => {
           <iframe
             title="Google Map Location of Serampore HQ"
             src={embedUrl}
-            className="pointer-events-none h-full w-full cursor-help border-0 dark:brightness-200 dark:invert"
+            className="h-full w-full border-0 dark:brightness-200 dark:invert"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-scripts allow-same-origin allow-top-navigation-by-user-activation"
             allowFullScreen
           />
 
