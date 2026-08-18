@@ -1,24 +1,16 @@
 import { Navigation } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
 import MapPinMarker from "@/features/contact/MapPinMarker";
+import { AppContactpage } from "@/payload-types";
 
 type MapSectionProps = {
-  data?: {
-    title?: string;
-    locationBadge?: string;
-    locationName?: string;
-    address?: string;
-    email?: string;
-    phone?: string;
-    googleMapsUrl?: string;
-    embedUrl?: string;
-  };
+  data?: AppContactpage["map"];
 };
 
 const DEFAULT_EMBED_URL =
   "https://maps.google.com/maps?ll=22.7514381,88.3315948&t=m&z=17&ie=UTF8&output=embed";
 
-const formatEmbedUrl = (url: string | null | undefined): string => {
+const formatEmbedUrl = (url: string): string => {
   if (!url?.trim()) {
     return DEFAULT_EMBED_URL;
   }
