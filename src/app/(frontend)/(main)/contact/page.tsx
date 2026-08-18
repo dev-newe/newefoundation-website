@@ -15,7 +15,7 @@ const Contact = async () => {
         <Information data={contactpage?.contactInfo} />
         <MessageForm data={contactpage?.contactForm} />
       </div>
-      <Map />
+      <Map data={contactpage?.map} />
       <CTA />
     </main>
   );
