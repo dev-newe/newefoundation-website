@@ -42,8 +42,8 @@ const fallbackFooterData: AppFooter = {
       id: "legal",
       title: "LEGAL & TRANSPARENCY",
       links: [
-        { id: "7", label: "Privacy Policy", href: "/privacy-policy" },
-        { id: "8", label: "Terms of Service", href: "/terms-of-service" },
+        { id: "7", label: "Privacy Policy", href: "/privacy" },
+        { id: "8", label: "Terms of Service", href: "/terms" },
         { id: "9", label: "Annual Reports", href: "/annual-reports" },
       ],
     },
