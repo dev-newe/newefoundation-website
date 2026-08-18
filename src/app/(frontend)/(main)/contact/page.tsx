@@ -7,9 +7,10 @@ import { getGlobal } from "@/services/payload";
 
 const Contact = async () => {
   const contactpage = await getGlobal("app_contactpage");
+
   return (
     <main>
-      <Hero />
+      <Hero data={contactpage?.hero} />
       <div className="flex flex-col gap-8 px-6 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:flex-row lg:px-20">
         <Information data={contactpage?.contactInfo} />
         <MessageForm data={contactpage?.contactForm} />

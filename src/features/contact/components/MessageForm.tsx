@@ -261,7 +261,7 @@ const MessageForm = ({ data: formData }: FormProps) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fields: result.data }),
       });
-      console.log(result.data);
+
       const json = await res.json();
 
       if (res.ok && json.success) {
@@ -376,7 +376,7 @@ const MessageForm = ({ data: formData }: FormProps) => {
   }
 
   return (
-    <div className="border-primary/20 w-full rounded-2xl border bg-white p-8">
+    <div className="border-primary/20 w-full rounded-2xl border bg-white p-8" id="contact-form">
       <h2 className="text-primary mb-7 font-serif text-[18px] font-medium">{title}</h2>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-5">
