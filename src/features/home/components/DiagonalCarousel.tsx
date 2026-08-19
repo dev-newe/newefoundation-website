@@ -133,7 +133,7 @@ export default function DiagonalCarousel({
       onBlur={() => {
         setIsPaused(false);
       }}
-      className={`group/carousel relative flex w-full max-w-lg flex-col items-end pt-4 focus:outline-none lg:max-w-none ${className}`}
+      className={`group/carousel focus-visible:ring-accent relative flex w-full max-w-lg flex-col items-end pt-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 lg:max-w-none ${className}`}
       style={{ perspective: 1200 }}
     >
       {/* Ambient background glows */}

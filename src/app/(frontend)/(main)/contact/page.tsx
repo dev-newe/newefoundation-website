@@ -6,7 +6,10 @@ import MessageForm from "@/features/contact/components/MessageForm";
 import { getGlobal } from "@/services/payload";
 
 const Contact = async () => {
-  const contactpage = await getGlobal("app_contactpage");
+  const [contactpage, ctaData] = await Promise.all([
+    getGlobal("app_contactpage"),
+    getGlobal("app_cta"),
+  ]);
 
   return (
     <main>
@@ -16,7 +19,7 @@ const Contact = async () => {
         <MessageForm data={contactpage?.contactForm} />
       </div>
       <Map data={contactpage?.map} />
-      <CTA />
+      <CTA data={ctaData?.cta} />
     </main>
   );
 };

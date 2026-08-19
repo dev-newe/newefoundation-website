@@ -12,7 +12,7 @@ const Information = ({ data }: InfoProps) => {
       addresses:
         data?.email?.addresses && data?.email?.addresses.length > 0
           ? data?.email?.addresses
-          : [{ address: "service@newefoundation.org" }],
+          : [{ address: "info@newefoundation.org" }],
     },
     office: {
       title: data?.office?.title ?? "Our Office",

@@ -45,13 +45,15 @@ const formatEmbedUrl = (url: string): string => {
   }
 
   // Legacy Google Maps embed URL.
+  const COORDINATE_PAIR = /^\s*(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)\s*$/;
   if (parsedUrl.pathname === "/maps" && parsedUrl.searchParams.get("output") === "embed") {
     // q=lat,lng → ll=lat,lng
-    if (parsedUrl.searchParams.has("q")) {
-      parsedUrl.searchParams.set("ll", parsedUrl.searchParams.get("q")!);
+    const q = parsedUrl.searchParams.get("q");
+    const qCoords = q ? COORDINATE_PAIR.exec(q) : null;
+    if (qCoords) {
+      parsedUrl.searchParams.set("ll", `${qCoords[1]},${qCoords[2]}`);
       parsedUrl.searchParams.delete("q");
     }
-
     if (parsedUrl.searchParams.has("ll")) {
       return parsedUrl.toString();
     }
