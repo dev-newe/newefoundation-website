@@ -10,7 +10,7 @@ type ErrorProps = {
   reset: () => void;
 };
 
-export default function Error({ error, reset }: ErrorProps) {
+export default function Error({ error: _error, reset }: ErrorProps) {
   return (
     <main
       className="px-page py-section flex h-screen flex-col items-center justify-center text-center"
@@ -43,7 +43,7 @@ export default function Error({ error, reset }: ErrorProps) {
           <Link
             href="/"
             className={cn(
-              buttonVariants({ variant: "outline" }),
+              buttonVariants({ variant: "muted" }),
               "h-auto gap-2 rounded-full px-6 py-3 text-sm"
             )}
           >

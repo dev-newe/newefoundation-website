@@ -6,13 +6,11 @@ import dns from "node:dns";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
-import { Users } from "@/db/collections/Users";
-import { Media } from "@/db/collections/Media";
-import { CloudinaryCleanupJobs } from "@/db/collections/CloudinaryCleanupJobs";
-import { HomePage } from "@/db/globals/HomePage";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
 import sharp from "sharp";
+import { GlobalConfigs } from "@/lib/utils/GlobalConfigs";
+import { CollectionConfigs } from "@/lib/utils/CollectionsConfig";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -45,12 +43,17 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, CloudinaryCleanupJobs],
-  globals: [HomePage],
+  collections: CollectionConfigs,
+  globals: GlobalConfigs,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
+    connectOptions: {
+      serverSelectionTimeoutMS: 10000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
+    },
   }),
   email: resendAdapter({
     defaultFromAddress: process.env.EMAIL_FROM,

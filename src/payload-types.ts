@@ -13,53 +13,53 @@
  * via the `definition` "supportedTimezones".
  */
 export type SupportedTimezones =
-  | 'Pacific/Midway'
-  | 'Pacific/Niue'
-  | 'Pacific/Honolulu'
-  | 'Pacific/Rarotonga'
-  | 'America/Anchorage'
-  | 'Pacific/Gambier'
-  | 'America/Los_Angeles'
-  | 'America/Tijuana'
-  | 'America/Denver'
-  | 'America/Phoenix'
-  | 'America/Chicago'
-  | 'America/Guatemala'
-  | 'America/New_York'
-  | 'America/Bogota'
-  | 'America/Caracas'
-  | 'America/Santiago'
-  | 'America/Buenos_Aires'
-  | 'America/Sao_Paulo'
-  | 'Atlantic/South_Georgia'
-  | 'Atlantic/Azores'
-  | 'Atlantic/Cape_Verde'
-  | 'Europe/London'
-  | 'Europe/Berlin'
-  | 'Africa/Lagos'
-  | 'Europe/Athens'
-  | 'Africa/Cairo'
-  | 'Europe/Moscow'
-  | 'Asia/Riyadh'
-  | 'Asia/Dubai'
-  | 'Asia/Baku'
-  | 'Asia/Karachi'
-  | 'Asia/Tashkent'
-  | 'Asia/Calcutta'
-  | 'Asia/Dhaka'
-  | 'Asia/Almaty'
-  | 'Asia/Jakarta'
-  | 'Asia/Bangkok'
-  | 'Asia/Shanghai'
-  | 'Asia/Singapore'
-  | 'Asia/Tokyo'
-  | 'Asia/Seoul'
-  | 'Australia/Brisbane'
-  | 'Australia/Sydney'
-  | 'Pacific/Guam'
-  | 'Pacific/Noumea'
-  | 'Pacific/Auckland'
-  | 'Pacific/Fiji';
+  | "Pacific/Midway"
+  | "Pacific/Niue"
+  | "Pacific/Honolulu"
+  | "Pacific/Rarotonga"
+  | "America/Anchorage"
+  | "Pacific/Gambier"
+  | "America/Los_Angeles"
+  | "America/Tijuana"
+  | "America/Denver"
+  | "America/Phoenix"
+  | "America/Chicago"
+  | "America/Guatemala"
+  | "America/New_York"
+  | "America/Bogota"
+  | "America/Caracas"
+  | "America/Santiago"
+  | "America/Buenos_Aires"
+  | "America/Sao_Paulo"
+  | "Atlantic/South_Georgia"
+  | "Atlantic/Azores"
+  | "Atlantic/Cape_Verde"
+  | "Europe/London"
+  | "Europe/Berlin"
+  | "Africa/Lagos"
+  | "Europe/Athens"
+  | "Africa/Cairo"
+  | "Europe/Moscow"
+  | "Asia/Riyadh"
+  | "Asia/Dubai"
+  | "Asia/Baku"
+  | "Asia/Karachi"
+  | "Asia/Tashkent"
+  | "Asia/Calcutta"
+  | "Asia/Dhaka"
+  | "Asia/Almaty"
+  | "Asia/Jakarta"
+  | "Asia/Bangkok"
+  | "Asia/Shanghai"
+  | "Asia/Singapore"
+  | "Asia/Tokyo"
+  | "Asia/Seoul"
+  | "Australia/Brisbane"
+  | "Australia/Sydney"
+  | "Pacific/Guam"
+  | "Pacific/Noumea"
+  | "Pacific/Auckland"
+  | "Pacific/Fiji";
 
 export interface Config {
   auth: {
@@ -69,21 +69,25 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    'cloudinary-cleanup-jobs': CloudinaryCleanupJob;
-    'payload-kv': PayloadKv;
-    'payload-locked-documents': PayloadLockedDocument;
-    'payload-preferences': PayloadPreference;
-    'payload-migrations': PayloadMigration;
+    "cloudinary-cleanup-jobs": CloudinaryCleanupJob;
+    contact_form_responses: ContactFormResponse;
+    "payload-kv": PayloadKv;
+    "payload-locked-documents": PayloadLockedDocument;
+    "payload-preferences": PayloadPreference;
+    "payload-migrations": PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    'cloudinary-cleanup-jobs': CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
-    'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
-    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
-    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
-    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
+    "cloudinary-cleanup-jobs":
+      CloudinaryCleanupJobsSelect<false> | CloudinaryCleanupJobsSelect<true>;
+    contact_form_responses: ContactFormResponsesSelect<false> | ContactFormResponsesSelect<true>;
+    "payload-kv": PayloadKvSelect<false> | PayloadKvSelect<true>;
+    "payload-locked-documents":
+      PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    "payload-preferences": PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    "payload-migrations": PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: string;
@@ -91,9 +95,21 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     app_homepage: AppHomepage;
+    app_contactpage: AppContactpage;
+    app_privacy: AppPrivacy;
+    app_terms: AppTerm;
+    app_navigation: AppNavigation;
+    app_footer: AppFooter;
+    app_cta: AppCta;
   };
   globalsSelect: {
     app_homepage: AppHomepageSelect<false> | AppHomepageSelect<true>;
+    app_contactpage: AppContactpageSelect<false> | AppContactpageSelect<true>;
+    app_privacy: AppPrivacySelect<false> | AppPrivacySelect<true>;
+    app_terms: AppTermsSelect<false> | AppTermsSelect<true>;
+    app_navigation: AppNavigationSelect<false> | AppNavigationSelect<true>;
+    app_footer: AppFooterSelect<false> | AppFooterSelect<true>;
+    app_cta: AppCtaSelect<false> | AppCtaSelect<true>;
   };
   locale: null;
   widgets: {
@@ -147,7 +163,7 @@ export interface User {
       }[]
     | null;
   password?: string | null;
-  collection: 'users';
+  collection: "users";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -160,7 +176,7 @@ export interface Media {
    */
   alt: string;
   caption?: string | null;
-  type?: ('image' | 'video' | 'audio' | 'document' | 'dataset' | 'other') | null;
+  type?: ("image" | "video" | "audio" | "document" | "dataset" | "other") | null;
   cloudinaryPublicId?: string | null;
   cloudinaryResourceType?: string | null;
   cloudinaryFormat?: string | null;
@@ -212,8 +228,36 @@ export interface CloudinaryCleanupJob {
   resourceType: string;
   filename: string;
   errorDetails?: string | null;
-  status?: ('pending' | 'failed' | 'completed') | null;
+  status?: ("pending" | "failed" | "completed") | null;
   attempts?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Responses from the contact form. Read-only for admins.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_form_responses".
+ */
+export interface ContactFormResponse {
+  id: string;
+  /**
+   * Submitter's email address
+   */
+  email: string;
+  /**
+   * Raw form field values as a JSON object
+   */
+  data:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
+  submittedAt: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -242,20 +286,24 @@ export interface PayloadLockedDocument {
   id: string;
   document?:
     | ({
-        relationTo: 'users';
+        relationTo: "users";
         value: string | User;
       } | null)
     | ({
-        relationTo: 'media';
+        relationTo: "media";
         value: string | Media;
       } | null)
     | ({
-        relationTo: 'cloudinary-cleanup-jobs';
+        relationTo: "cloudinary-cleanup-jobs";
         value: string | CloudinaryCleanupJob;
+      } | null)
+    | ({
+        relationTo: "contact_form_responses";
+        value: string | ContactFormResponse;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: string | User;
   };
   updatedAt: string;
@@ -268,7 +316,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: string;
   user: {
-    relationTo: 'users';
+    relationTo: "users";
     value: string | User;
   };
   key?: string | null;
@@ -391,6 +439,17 @@ export interface CloudinaryCleanupJobsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_form_responses_select".
+ */
+export interface ContactFormResponsesSelect<T extends boolean = true> {
+  email?: T;
+  data?: T;
+  submittedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -435,60 +494,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface AppHomepage {
   id: string;
-  header: {
-    logo?: {
-      /**
-       * Select or upload an image from Payload Media Library
-       */
-      media?: (string | null) | Media;
-      /**
-       * External image URL (used if no Media asset is attached)
-       */
-      src?: string | null;
-      /**
-       * Accessibility alt text
-       */
-      alt?: string | null;
-    };
-    brandName: {
-      text: string;
-    };
-    navItems?:
-      | {
-          label: string;
-          href: string;
-          isDropdown?: boolean | null;
-          groupA?: {
-            title?: string | null;
-            items?:
-              | {
-                  label: string;
-                  href: string;
-                  id?: string | null;
-                }[]
-              | null;
-          };
-          groupB?: {
-            title?: string | null;
-            items?:
-              | {
-                  label: string;
-                  href: string;
-                  id?: string | null;
-                }[]
-              | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-    ctaButton: {
-      label: string;
-      href?: string | null;
-      className?: string | null;
-      icon?: string | null;
-      id?: string | null;
-    };
-  };
   hero: {
     badge: {
       text: string;
@@ -522,16 +527,22 @@ export interface AppHomepage {
       alt?: string | null;
     };
   };
-  aboutCards?:
-    | {
-        icon: string;
-        title: string;
-        description: string;
-        stat: string;
-        highlighted?: boolean | null;
-        id?: string | null;
-      }[]
-    | null;
+  aboutUs: {
+    badge: string;
+    title: string;
+    description: string;
+    sections?:
+      | {
+          icon: string;
+          title: string;
+          description: string;
+          stat: string;
+          highlighted?: boolean | null;
+          href?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
   missionVision: {
     mission: {
       title: string;
@@ -545,8 +556,8 @@ export interface AppHomepage {
       title: string;
       description: string;
     };
-    images?: {
-      primary?: {
+    images: {
+      primary: {
         /**
          * Select or upload an image from Payload Media Library
          */
@@ -560,7 +571,7 @@ export interface AppHomepage {
          */
         alt?: string | null;
       };
-      secondary?: {
+      secondary: {
         /**
          * Select or upload an image from Payload Media Library
          */
@@ -574,7 +585,51 @@ export interface AppHomepage {
          */
         alt?: string | null;
       };
+      additionalImages?:
+        | {
+            image?: {
+              /**
+               * Select or upload an image from Payload Media Library
+               */
+              media?: (string | null) | Media;
+              /**
+               * External image URL (used if no Media asset is attached)
+               */
+              src?: string | null;
+              /**
+               * Accessibility alt text
+               */
+              alt?: string | null;
+            };
+            id?: string | null;
+          }[]
+        | null;
     };
+  };
+  ourPartners: {
+    title: string;
+    description: string;
+    partners?:
+      | {
+          logo?: {
+            /**
+             * Select or upload an image from Payload Media Library
+             */
+            media?: (string | null) | Media;
+            /**
+             * External image URL (used if no Media asset is attached)
+             */
+            src?: string | null;
+            /**
+             * Accessibility alt text
+             */
+            alt?: string | null;
+          };
+          name?: string | null;
+          url?: string | null;
+          id?: string | null;
+        }[]
+      | null;
   };
   ourWork: {
     title: string;
@@ -583,32 +638,26 @@ export interface AppHomepage {
       category: string;
       title: string;
       description: string;
-      image?: {
-        /**
-         * Select or upload an image from Payload Media Library
-         */
-        media?: (string | null) | Media;
-        /**
-         * External image URL (used if no Media asset is attached)
-         */
-        src?: string | null;
-        /**
-         * Accessibility alt text
-         */
-        alt?: string | null;
-      };
+      images?:
+        | {
+            img?: {
+              /**
+               * Select or upload an image from Payload Media Library
+               */
+              media?: (string | null) | Media;
+              /**
+               * External image URL (used if no Media asset is attached)
+               */
+              src?: string | null;
+              /**
+               * Accessibility alt text
+               */
+              alt?: string | null;
+            };
+            id?: string | null;
+          }[]
+        | null;
     };
-    campaigns?:
-      | {
-          title: string;
-          description: string;
-          fundedPercentage: number;
-          raisedAmount: string;
-          targetAmount: string;
-          buttonLabel: string;
-          id?: string | null;
-        }[]
-      | null;
   };
   team: {
     title: string;
@@ -634,6 +683,303 @@ export interface AppHomepage {
         }[]
       | null;
   };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_contactpage".
+ */
+export interface AppContactpage {
+  id: string;
+  hero: {
+    badge: {
+      text: string;
+    };
+    title: {
+      main: string;
+      highlight: string;
+    };
+    description: string;
+    buttons?:
+      | {
+          label: string;
+          href?: string | null;
+          className?: string | null;
+          icon?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    image?: {
+      /**
+       * Select or upload an image from Payload Media Library
+       */
+      media?: (string | null) | Media;
+      /**
+       * External image URL (used if no Media asset is attached)
+       */
+      src?: string | null;
+      /**
+       * Accessibility alt text
+       */
+      alt?: string | null;
+    };
+  };
+  contactInfo: {
+    title: string;
+    office: {
+      title: string;
+      address: string;
+    };
+    phone: {
+      title: string;
+      numbers?:
+        | {
+            countryCode: string;
+            number: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+    email: {
+      title: string;
+      addresses?:
+        | {
+            address: string;
+            id?: string | null;
+          }[]
+        | null;
+    };
+  };
+  contactForm: {
+    title: string;
+    formFields?:
+      | {
+          fieldName: string;
+          fieldLabel: string;
+          fieldType:
+            "text" | "email" | "tel" | "textarea" | "select" | "checkbox" | "radio" | "file";
+          selectOptions?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          isChecked?: boolean | null;
+          radioOptions?:
+            | {
+                label: string;
+                value: string;
+                id?: string | null;
+              }[]
+            | null;
+          fileTypes?:
+            | {
+                type: "pdf" | "image" | "document" | "video" | "audio" | "other";
+                id?: string | null;
+              }[]
+            | null;
+          fieldPlaceholder: string;
+          width?: ("full" | "half") | null;
+          regexValidation?: string | null;
+          className?: string | null;
+          fieldRequired?: boolean | null;
+          id?: string | null;
+        }[]
+      | null;
+    submitButtonText: string;
+  };
+  map: {
+    title: string;
+    locationBadge?: string | null;
+    locationName?: string | null;
+    address?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    /**
+     * Used for the 'Get Directions' button. Paste your Google Maps share link.
+     */
+    googleMapsUrl?: string | null;
+    /**
+     * Used for the on-page map iframe. On Google Maps desktop, click Share > 'Embed a map' > Then Copy the src url of the iframe tag and paste here. Note: Do not paste maps.app.goo.gl shortlinks here.
+     */
+    embedUrl?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_privacy".
+ */
+export interface AppPrivacy {
+  id: string;
+  title: string;
+  description: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  contactCta: {
+    title: string;
+    description: string;
+    button: {
+      label: string;
+      href: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_terms".
+ */
+export interface AppTerm {
+  id: string;
+  title: string;
+  description: string;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ("ltr" | "rtl") | null;
+      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  contactCta: {
+    title: string;
+    description: string;
+    button: {
+      label: string;
+      href: string;
+    };
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_navigation".
+ */
+export interface AppNavigation {
+  id: string;
+  logo?: {
+    /**
+     * Select or upload an image from Payload Media Library
+     */
+    media?: (string | null) | Media;
+    /**
+     * External image URL (used if no Media asset is attached)
+     */
+    src?: string | null;
+    /**
+     * Accessibility alt text
+     */
+    alt?: string | null;
+  };
+  brandName: {
+    text: string;
+  };
+  navItems?:
+    | {
+        label: string;
+        href: string;
+        isDropdown?: boolean | null;
+        groupA?: {
+          title?: string | null;
+          items?:
+            | {
+                label: string;
+                href: string;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        groupB?: {
+          title?: string | null;
+          items?:
+            | {
+                label: string;
+                href: string;
+                id?: string | null;
+              }[]
+            | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  ctaButton: {
+    label: string;
+    href?: string | null;
+    className?: string | null;
+    icon?: string | null;
+    id?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_footer".
+ */
+export interface AppFooter {
+  id: string;
+  brand: {
+    name: string;
+    icon: string;
+    address: string;
+    /**
+     * Direct Maps link for the location (optional)
+     */
+    googleMapsUrl?: string | null;
+    phone: string;
+    email: string;
+  };
+  linkGroups?:
+    | {
+        title: string;
+        links?:
+          | {
+              label: string;
+              href: string;
+              isActive?: boolean | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  copyrightYear?: string | null;
+  copyright: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_cta".
+ */
+export interface AppCta {
+  id: string;
   cta: {
     title: string;
     highlight: string;
@@ -647,30 +993,6 @@ export interface AppHomepage {
         }[]
       | null;
   };
-  footer: {
-    brand: {
-      name: string;
-      icon: string;
-      address: string;
-      phone: string;
-      email: string;
-    };
-    linkGroups?:
-      | {
-          title: string;
-          links?:
-            | {
-                label: string;
-                href: string;
-                isActive?: boolean | null;
-                id?: string | null;
-              }[]
-            | null;
-          id?: string | null;
-        }[]
-      | null;
-    copyright: string;
-  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -679,63 +1001,6 @@ export interface AppHomepage {
  * via the `definition` "app_homepage_select".
  */
 export interface AppHomepageSelect<T extends boolean = true> {
-  header?:
-    | T
-    | {
-        logo?:
-          | T
-          | {
-              media?: T;
-              src?: T;
-              alt?: T;
-            };
-        brandName?:
-          | T
-          | {
-              text?: T;
-            };
-        navItems?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-              isDropdown?: T;
-              groupA?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          label?: T;
-                          href?: T;
-                          id?: T;
-                        };
-                  };
-              groupB?:
-                | T
-                | {
-                    title?: T;
-                    items?:
-                      | T
-                      | {
-                          label?: T;
-                          href?: T;
-                          id?: T;
-                        };
-                  };
-              id?: T;
-            };
-        ctaButton?:
-          | T
-          | {
-              label?: T;
-              href?: T;
-              className?: T;
-              icon?: T;
-              id?: T;
-            };
-      };
   hero?:
     | T
     | {
@@ -768,15 +1033,23 @@ export interface AppHomepageSelect<T extends boolean = true> {
               alt?: T;
             };
       };
-  aboutCards?:
+  aboutUs?:
     | T
     | {
-        icon?: T;
+        badge?: T;
         title?: T;
         description?: T;
-        stat?: T;
-        highlighted?: T;
-        id?: T;
+        sections?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              description?: T;
+              stat?: T;
+              highlighted?: T;
+              href?: T;
+              id?: T;
+            };
       };
   missionVision?:
     | T
@@ -816,6 +1089,38 @@ export interface AppHomepageSelect<T extends boolean = true> {
                     src?: T;
                     alt?: T;
                   };
+              additionalImages?:
+                | T
+                | {
+                    image?:
+                      | T
+                      | {
+                          media?: T;
+                          src?: T;
+                          alt?: T;
+                        };
+                    id?: T;
+                  };
+            };
+      };
+  ourPartners?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        partners?:
+          | T
+          | {
+              logo?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+              name?: T;
+              url?: T;
+              id?: T;
             };
       };
   ourWork?:
@@ -829,24 +1134,18 @@ export interface AppHomepageSelect<T extends boolean = true> {
               category?: T;
               title?: T;
               description?: T;
-              image?:
+              images?:
                 | T
                 | {
-                    media?: T;
-                    src?: T;
-                    alt?: T;
+                    img?:
+                      | T
+                      | {
+                          media?: T;
+                          src?: T;
+                          alt?: T;
+                        };
+                    id?: T;
                   };
-            };
-        campaigns?:
-          | T
-          | {
-              title?: T;
-              description?: T;
-              fundedPercentage?: T;
-              raisedAmount?: T;
-              targetAmount?: T;
-              buttonLabel?: T;
-              id?: T;
             };
       };
   team?:
@@ -868,6 +1167,287 @@ export interface AppHomepageSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_contactpage_select".
+ */
+export interface AppContactpageSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        badge?:
+          | T
+          | {
+              text?: T;
+            };
+        title?:
+          | T
+          | {
+              main?: T;
+              highlight?: T;
+            };
+        description?: T;
+        buttons?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              className?: T;
+              icon?: T;
+              id?: T;
+            };
+        image?:
+          | T
+          | {
+              media?: T;
+              src?: T;
+              alt?: T;
+            };
+      };
+  contactInfo?:
+    | T
+    | {
+        title?: T;
+        office?:
+          | T
+          | {
+              title?: T;
+              address?: T;
+            };
+        phone?:
+          | T
+          | {
+              title?: T;
+              numbers?:
+                | T
+                | {
+                    countryCode?: T;
+                    number?: T;
+                    id?: T;
+                  };
+            };
+        email?:
+          | T
+          | {
+              title?: T;
+              addresses?:
+                | T
+                | {
+                    address?: T;
+                    id?: T;
+                  };
+            };
+      };
+  contactForm?:
+    | T
+    | {
+        title?: T;
+        formFields?:
+          | T
+          | {
+              fieldName?: T;
+              fieldLabel?: T;
+              fieldType?: T;
+              selectOptions?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              isChecked?: T;
+              radioOptions?:
+                | T
+                | {
+                    label?: T;
+                    value?: T;
+                    id?: T;
+                  };
+              fileTypes?:
+                | T
+                | {
+                    type?: T;
+                    id?: T;
+                  };
+              fieldPlaceholder?: T;
+              width?: T;
+              regexValidation?: T;
+              className?: T;
+              fieldRequired?: T;
+              id?: T;
+            };
+        submitButtonText?: T;
+      };
+  map?:
+    | T
+    | {
+        title?: T;
+        locationBadge?: T;
+        locationName?: T;
+        address?: T;
+        email?: T;
+        phone?: T;
+        googleMapsUrl?: T;
+        embedUrl?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_privacy_select".
+ */
+export interface AppPrivacySelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  content?: T;
+  contactCta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_terms_select".
+ */
+export interface AppTermsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  content?: T;
+  contactCta?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        button?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_navigation_select".
+ */
+export interface AppNavigationSelect<T extends boolean = true> {
+  logo?:
+    | T
+    | {
+        media?: T;
+        src?: T;
+        alt?: T;
+      };
+  brandName?:
+    | T
+    | {
+        text?: T;
+      };
+  navItems?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        isDropdown?: T;
+        groupA?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+            };
+        groupB?:
+          | T
+          | {
+              title?: T;
+              items?:
+                | T
+                | {
+                    label?: T;
+                    href?: T;
+                    id?: T;
+                  };
+            };
+        id?: T;
+      };
+  ctaButton?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        className?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_footer_select".
+ */
+export interface AppFooterSelect<T extends boolean = true> {
+  brand?:
+    | T
+    | {
+        name?: T;
+        icon?: T;
+        address?: T;
+        googleMapsUrl?: T;
+        phone?: T;
+        email?: T;
+      };
+  linkGroups?:
+    | T
+    | {
+        title?: T;
+        links?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              isActive?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  copyrightYear?: T;
+  copyright?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "app_cta_select".
+ */
+export interface AppCtaSelect<T extends boolean = true> {
   cta?:
     | T
     | {
@@ -883,34 +1463,6 @@ export interface AppHomepageSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  footer?:
-    | T
-    | {
-        brand?:
-          | T
-          | {
-              name?: T;
-              icon?: T;
-              address?: T;
-              phone?: T;
-              email?: T;
-            };
-        linkGroups?:
-          | T
-          | {
-              title?: T;
-              links?:
-                | T
-                | {
-                    label?: T;
-                    href?: T;
-                    isActive?: T;
-                    id?: T;
-                  };
-              id?: T;
-            };
-        copyright?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -923,7 +1475,7 @@ export interface CollectionsWidget {
   data?: {
     [k: string]: unknown;
   };
-  width: 'full';
+  width: "full";
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -933,7 +1485,6 @@ export interface Auth {
   [k: string]: unknown;
 }
 
-
-declare module 'payload' {
+declare module "payload" {
   export interface GeneratedTypes extends Config {}
 }

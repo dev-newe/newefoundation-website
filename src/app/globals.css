@@ -18,27 +18,23 @@
 
 :root {
   /* ---------- Color Palette ---------- */
-  --background: 40 33% 97%;
-  /* warm cream #F8F4EF */
-  --foreground: 160 15% 12%;
-  /* charcoal */
+  --background: 40 33% 97%; /* Warm Cream (#F8F4EF) - primary page bg */
+  --foreground: 160 15% 12%; /* Deep Charcoal (#1A2420) - readable body text */
 
-  --primary: 158 42% 18%;
-  /* deep forest green */
-  --primary-foreground: 40 33% 97%;
+  --primary: 158 42% 18%; /* Forest Green (#1B4132) */
+  --primary-foreground: var(--background); /* Cream text on green bg */
 
-  --secondary: 40 20% 94%;
-  --secondary-foreground: 160 15% 12%;
+  --secondary: 25 100% 88%; /* Soft Beige (#FFDCC3) */
+  --secondary-foreground: var(--foreground); /* Cream text on green bg */
 
-  --accent: 28 85% 52%;
-  /* warm orange */
-  --accent-foreground: 0 0% 100%;
+  --accent: 28 85% 52%; /* Warm Orange (#F07119) */
+  --accent-foreground: var(--background); /* Cream text on orange button */
 
   --muted: 40 15% 92%;
   --muted-foreground: 160 8% 42%;
 
   --card: 0 0% 100%;
-  --card-foreground: 160 15% 12%;
+  --card-foreground: var(--foreground);
 
   --destructive: 0 72% 51%;
   --destructive-foreground: 0 0% 100%;
@@ -101,7 +97,7 @@
   /* Section vertical padding */
   --section-y-mob: clamp(3rem, 10vw, 4rem);
   --section-y-tab: clamp(4rem, 8vw, 5.5rem);
-  --section-y-dsk: clamp(5rem, 7vw, 7.5rem);
+  --section-y-dsk: clamp(2rem, 5vw, 4rem);
 
   /* Horizontal page padding */
   --page-x-mob: clamp(1rem, 5vw, 1.5rem);
@@ -124,10 +120,9 @@
   --shadow-lg: 0 16px 40px -8px rgb(0 0 0 / 0.1);
 
   /* ---------- Layout ---------- */
-  --container-max: 72rem;
-  /* 1152px */
-  --container-narrow: 42rem;
-  /* for text-heavy sections */
+  --container-wide: 1920px;
+  --container-max: 72rem; /* 1152px */
+  --container-narrow: 42rem; /* for text-heavy sections */
   --header-height: 4.5rem;
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
@@ -173,6 +168,7 @@
   /* Fonts — assigned directly; @theme inline cannot use var() on its own tokens */
   --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-geist-sans: var(--font-geist-sans);
 
   /* Radius — --radius-md maps to the base --radius token */
   --radius-sm: var(--radius-sm);
@@ -262,7 +258,7 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
-    font-family: var(--font-sans);
+    font-family: var(--font-geist-sans);
     font-size: var(--text-base);
     line-height: 1.6;
     @apply bg-background text-foreground;
@@ -570,6 +566,15 @@
   max-width: 65ch;
 }
 
+.dot-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0; /* Behind text, above canvas */
+  background-image: radial-gradient(rgba(255, 255, 255, 0.25) 2.5px, transparent 2.5px);
+  background-size: 40px 40px; /* Control grid spacing */
+}
+
 .dark {
   --background: oklch(0.145 0 0);
 
@@ -632,4 +637,153 @@
   --sidebar-border: oklch(1 0 0 / 10%);
 
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 25s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
+  }
+  .hover-pause {
+    overflow-x: auto !important;
+    scroll-behavior: auto !important;
+  }
+  .hover-pause > div:not(:first-child) {
+    display: none !important;
+  }
+}
+
+.hover-pause:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+.direction-reverse {
+  animation-direction: reverse;
+}
+
+/* --------------------------------------------------------------------------
+   3. RICH TEXT RENDERER STYLES
+   -------------------------------------------------------------------------- */
+.rich-text {
+  font-size: var(--text-base);
+  line-height: 1.75;
+}
+
+.rich-text p {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  color: hsl(var(--primary));
+  font-family: var(--font-sans);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.rich-text h1 {
+  font-size: var(--text-3xl);
+}
+
+.rich-text h2 {
+  font-size: var(--text-2xl);
+  border-bottom: 1px solid hsl(var(--border) / 0.6);
+  padding-bottom: 0.5rem;
+}
+
+.rich-text h3 {
+  font-size: var(--text-xl);
+}
+
+.rich-text h4 {
+  font-size: var(--text-lg);
+}
+
+.rich-text a {
+  color: hsl(var(--accent));
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 500;
+  transition: color 0.15s ease;
+}
+
+.rich-text a:hover {
+  color: hsl(var(--primary));
+}
+
+.rich-text ul,
+.rich-text ol {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.rich-text ul {
+  list-style-type: disc;
+}
+
+.rich-text ol {
+  list-style-type: decimal;
+}
+
+.rich-text li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+.rich-text strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.rich-text em {
+  font-style: italic;
+}
+
+.rich-text u {
+  text-decoration: underline;
+}
+
+.rich-text table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-size: var(--text-sm);
+}
+
+.rich-text th,
+.rich-text td {
+  border: 1px solid hsl(var(--border));
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.rich-text th {
+  background-color: hsl(var(--muted));
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.rich-text tr:nth-child(even) {
+  background-color: hsl(var(--background) / 0.4);
 }
