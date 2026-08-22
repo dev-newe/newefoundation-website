@@ -42,7 +42,9 @@ const Information = ({ data }: InfoProps) => {
           <MapPin className="text-accent mt-0.5 shrink-0" size={23} strokeWidth={2} />
 
           <div>
-            <h3 className="text-[16px] font-medium text-[#272727]">{infoData.office.title}</h3>
+            <h3 className="text-muted-foreground text-[16px] font-medium">
+              {infoData.office.title}
+            </h3>
 
             <p className="text-primary/80 mt-2 max-w-87.5 text-[15px] leading-[1.8]">
               {infoData.office.address}
@@ -55,7 +57,9 @@ const Information = ({ data }: InfoProps) => {
           <Phone className="text-accent mt-0.5 shrink-0" size={22} strokeWidth={2} />
 
           <div>
-            <h3 className="text-[16px] font-medium text-[#272727]">{infoData.phone.title}</h3>
+            <h3 className="text-muted-foreground text-[16px] font-medium">
+              {infoData.phone.title}
+            </h3>
 
             <div className="text-primary/80 mt-2 space-y-1 text-[15px]">
               {infoData.phone.numbers.map((n, i) => (
@@ -72,13 +76,15 @@ const Information = ({ data }: InfoProps) => {
           <Mail className="text-accent mt-0.5 shrink-0" size={22} strokeWidth={2} />
 
           <div>
-            <h3 className="text-[16px] font-medium text-[#272727]">{infoData.email.title}</h3>
+            <h3 className="text-muted-foreground text-[16px] font-medium">
+              {infoData.email.title}
+            </h3>
 
             <div className="text-primary/80 mt-2 space-y-1 text-[15px] whitespace-pre-line">
               {infoData.email.addresses.map((addr, i) => (
                 <a
                   href={`mailto:${addr.address}`}
-                  className="text-primary/80 mt-2 block text-[15px] transition-colors hover:text-[#48675d]"
+                  className="text-primary/80 hover:text-accent mt-2 block text-[15px] transition-colors"
                   key={`${addr.address}-${i}`}
                 >
                   {addr.address}
