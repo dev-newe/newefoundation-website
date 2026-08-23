@@ -660,11 +660,11 @@ export interface AppHomepage {
     };
   };
   team: {
+    badge: string;
     title: string;
-    members?:
+    description: string;
+    directors?:
       | {
-          name: string;
-          role: string;
           image?: {
             /**
              * Select or upload an image from Payload Media Library
@@ -679,6 +679,40 @@ export interface AppHomepage {
              */
             alt?: string | null;
           };
+          name: string;
+          role: string;
+          bio: string;
+          buttonText: string;
+          imagePosition: "left" | "right";
+          drawer: {
+            heading: string;
+            subheading: string;
+            message: string;
+          };
+          id?: string | null;
+        }[]
+      | null;
+    teamDrawerButtonText: string;
+    teamDrawerHeading: string;
+    teamDrawerDescription: string;
+    members?:
+      | {
+          image?: {
+            /**
+             * Select or upload an image from Payload Media Library
+             */
+            media?: (string | null) | Media;
+            /**
+             * External image URL (used if no Media asset is attached)
+             */
+            src?: string | null;
+            /**
+             * Accessibility alt text
+             */
+            alt?: string | null;
+          };
+          name: string;
+          role?: string | null;
           id?: string | null;
         }[]
       | null;
@@ -1151,12 +1185,12 @@ export interface AppHomepageSelect<T extends boolean = true> {
   team?:
     | T
     | {
+        badge?: T;
         title?: T;
-        members?:
+        description?: T;
+        directors?:
           | T
           | {
-              name?: T;
-              role?: T;
               image?:
                 | T
                 | {
@@ -1164,6 +1198,35 @@ export interface AppHomepageSelect<T extends boolean = true> {
                     src?: T;
                     alt?: T;
                   };
+              name?: T;
+              role?: T;
+              bio?: T;
+              buttonText?: T;
+              imagePosition?: T;
+              drawer?:
+                | T
+                | {
+                    heading?: T;
+                    subheading?: T;
+                    message?: T;
+                  };
+              id?: T;
+            };
+        teamDrawerButtonText?: T;
+        teamDrawerHeading?: T;
+        teamDrawerDescription?: T;
+        members?:
+          | T
+          | {
+              image?:
+                | T
+                | {
+                    media?: T;
+                    src?: T;
+                    alt?: T;
+                  };
+              name?: T;
+              role?: T;
               id?: T;
             };
       };

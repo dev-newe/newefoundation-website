@@ -164,15 +164,72 @@ export const HomePage: GlobalConfig = {
       name: "team",
       type: "group",
       fields: [
+        { name: "badge", type: "text", required: true },
         { name: "title", type: "text", required: true },
+        { name: "description", type: "textarea", required: true },
+        {
+          name: "directors",
+          type: "array",
+          labels: {
+            singular: "Director",
+            plural: "Directors",
+          },
+          fields: [
+            ImageFieldGroup("image", "Director Photo"),
+            { name: "name", type: "text", required: true },
+            { name: "role", type: "text", required: true },
+            { name: "bio", type: "textarea", required: true },
+            {
+              name: "buttonText",
+              type: "text",
+              required: true,
+              defaultValue: "Read Director's Message",
+            },
+            {
+              name: "imagePosition",
+              type: "select",
+              options: [
+                { label: "Left", value: "left" },
+                { label: "Right", value: "right" },
+              ],
+              defaultValue: "left",
+              required: true,
+            },
+            {
+              name: "drawer",
+              type: "group",
+              fields: [
+                { name: "heading", type: "text", required: true },
+                { name: "subheading", type: "text", required: true },
+                { name: "message", type: "textarea", required: true },
+              ],
+            },
+          ],
+        },
+        {
+          name: "teamDrawerButtonText",
+          type: "text",
+          required: true,
+          defaultValue: "Meet Our Team",
+        },
+        {
+          name: "teamDrawerHeading",
+          type: "text",
+          required: true,
+          defaultValue: "Meet Our Dedicated Team",
+        },
+        { name: "teamDrawerDescription", type: "textarea", required: true },
         {
           name: "members",
           type: "array",
+          labels: {
+            singular: "Team Member",
+            plural: "Team Members",
+          },
           fields: [
-            // { name: "id", type: "text", required: true },
-            { name: "name", type: "text", required: true },
-            { name: "role", type: "text", required: true },
             ImageFieldGroup("image", "Member Photo"),
+            { name: "name", type: "text", required: true },
+            { name: "role", type: "text", required: false },
           ],
         },
       ],
