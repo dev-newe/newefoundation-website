@@ -57,7 +57,10 @@ const Hero = ({ data }: HeroProps) => {
             </div>
 
             {/* Heading */}
-            <h1 className="text-primary font-geist-sans text-5xl font-semibold xl:text-7xl">
+            <h1
+              className="text-primary font-geist-sans text-5xl font-semibold xl:text-7xl"
+              id="hero-heading"
+            >
               {hero?.title?.main} <span className="text-accent">{hero?.title?.highlight}</span>
             </h1>
 
@@ -72,7 +75,7 @@ const Hero = ({ data }: HeroProps) => {
               <Link href={hero?.buttons?.[0]?.href ?? "#"}>
                 <Button
                   size="lg"
-                  className={cn("h-12", hero?.buttons?.[0]?.className)}
+                  className={cn("h-12 cursor-pointer", hero?.buttons?.[0]?.className)}
                   variant="accent"
                 >
                   {hero?.buttons?.[0]?.label ?? "Become a Hero"}
@@ -86,7 +89,7 @@ const Hero = ({ data }: HeroProps) => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className={cn("h-12", hero?.buttons?.[1]?.className)}
+                  className={cn("h-12 cursor-pointer", hero?.buttons?.[1]?.className)}
                 >
                   {hero?.buttons?.[1]?.label ?? "Our Impact"}
                 </Button>
