@@ -1,79 +1,83 @@
 import SectionWrapper from "@/components/ui/SectionWrapper";
-import { cn } from "@/lib/utils";
 import { AppHomepage } from "@/payload-types";
-import { PayloadImageField, resolvePayloadImage } from "@/services/payload";
-import Image from "next/image";
+import { resolvePayloadImage } from "@/services/payload";
+import { Badge } from "@/components/ui/badge";
+import {
+  DirectorsList,
+  ResolvedDirector,
+  Director,
+} from "@/features/home/components/team/DirectorsList";
+import {
+  TeamDrawer,
+  ResolvedTeamMember,
+  TeamMember,
+} from "@/features/home/components/team/TeamDrawer";
 
-type TeamProps = {
+export type TeamProps = {
   data?: AppHomepage["team"];
 };
 
-type TeamMember = NonNullable<NonNullable<AppHomepage["team"]>["members"]>[number];
-
+const defaultDirectors: Director[] = [];
 const defaultMembers: TeamMember[] = [];
 
 const Team = ({ data }: TeamProps) => {
+  const directorsSource =
+    data?.directors && data.directors.length > 0 ? data.directors : defaultDirectors;
+  const membersSource = data?.members && data.members.length > 0 ? data.members : defaultMembers;
+
   const team = {
-    title: data?.title ?? "Meet the Team Behind the Impact",
-    members: data?.members && data.members.length > 0 ? data.members : defaultMembers,
+    badge: data?.badge ?? "Our People",
+    title: data?.title ?? "Leadership & Team",
+    description:
+      data?.description ??
+      "Meet the visionary leaders and dedicated team behind our ground-level programs.",
+    directors: directorsSource.map((director) => ({
+      ...director,
+      image: resolvePayloadImage(director.image),
+    })) as ResolvedDirector[],
+    members: membersSource.map((member) => ({
+      ...member,
+      image: resolvePayloadImage(member.image),
+    })) as ResolvedTeamMember[],
+    drawerButtonText: data?.teamDrawerButtonText ?? "Meet Our Team",
+    drawerHeading: data?.teamDrawerHeading ?? "Meet Our Dedicated Team",
+    drawerDescription:
+      data?.teamDrawerDescription ??
+      "Our ground staff, educators, and field officers working tirelessly to create sustainable, lasting impact.",
   };
 
   return (
-    <SectionWrapper id="team" as="section" size="wide" className="bg-background">
-      <div className="flex flex-col items-center justify-center">
-        <h2 className="text-fluid-4xl text-foreground text-center font-serif font-bold">
-          {team.title}
-        </h2>
+    <SectionWrapper id="team" size="wide">
+      <div className="flex flex-col items-center">
+        {/* Section Header */}
+        <div className="mb-12 flex flex-col items-center text-center">
+          <Badge variant="accent" className="mb-2">
+            {team.badge}
+          </Badge>
+          <h2 className="text-foreground text-fluid-4xl font-serif font-medium tracking-tight">
+            {team.title}
+          </h2>
+          <p className="text-muted-foreground mt-4 max-w-2xl text-sm leading-relaxed md:text-base">
+            {team.description}
+          </p>
+        </div>
 
-        <div className="mt-12 grid w-full grid-cols-1 justify-items-center gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {team.members.map((member) => (
-            <TeamCard
-              key={member?.id || member?.name}
-              name={member?.name ?? "Team Member"}
-              role={member?.role ?? "Member"}
-              image={member?.image}
-            />
-          ))}
+        {/* Directors List */}
+        <div className="flex w-full flex-col gap-12">
+          <DirectorsList directors={team.directors} />
+        </div>
+
+        {/* Meet Our Team Drawer */}
+        <div className="mt-12 text-center">
+          <TeamDrawer
+            buttonText={team.drawerButtonText}
+            heading={team.drawerHeading}
+            description={team.drawerDescription}
+            members={team.members}
+          />
         </div>
       </div>
     </SectionWrapper>
-  );
-};
-
-interface TeamMemberProps {
-  name?: string;
-  role?: string;
-  image?: PayloadImageField;
-  className?: string;
-}
-
-const TeamCard = ({ name, role, image, className }: TeamMemberProps) => {
-  const { url, alt } = resolvePayloadImage(image);
-
-  return (
-    <div
-      className={cn(
-        "group flex flex-col items-center justify-center p-0 transition-all duration-300",
-        className
-      )}
-    >
-      <div className="border-background bg-muted relative mb-5 aspect-square h-40 w-40 overflow-hidden rounded-full border-4 drop-shadow-md transition-all duration-500">
-        <Image
-          src={url}
-          alt={alt}
-          fill
-          sizes="(max-width: 768px) 160px, 160px"
-          className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
-        />
-      </div>
-
-      <h3 className="text-fluid-lg text-foreground group-hover:text-primary text-center font-serif font-bold transition-colors duration-300">
-        {name}
-      </h3>
-      <p className="text-accent mt-1.5 text-center font-sans text-xs font-bold tracking-wider uppercase">
-        {role}
-      </p>
-    </div>
   );
 };
 
