@@ -27,7 +27,7 @@ const Asia = ({ imageUrl }: AsiaMapProps) => {
       </defs>
 
       <style>
-        {`.country { fill: #d9d9d944; stroke: #6e6d6d44; stroke-width: 0.8; }
+        {`.country { fill: #d9d9d944; stroke: white; stroke-width: 1.5; }
         #india-fill { fill: #d9d9d9; stroke: #7a3300; stroke-width: 1; }`}
       </style>
 
