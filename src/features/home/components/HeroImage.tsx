@@ -12,7 +12,7 @@ const Asia = ({ imageUrl }: AsiaMapProps) => {
       width="100%"
       height="100%"
       preserveAspectRatio="xMidYMid meet"
-      className="-translate-x-10 scale-220 lg:scale-300 xl:-translate-x-20 xl:scale-280"
+      className="-translate-x-20 scale-380 md:scale-300 lg:scale-350"
     >
       <defs>
         <clipPath id="test">

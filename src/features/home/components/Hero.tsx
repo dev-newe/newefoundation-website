@@ -95,11 +95,11 @@ const Hero = ({ data }: HeroProps) => {
           </div>
 
           {/* India visual */}
-          <div className="relative flex max-h-60 w-full items-center justify-center md:max-h-dvh md:min-h-50 lg:min-h-125">
+          <div className="relative mt-20 flex w-full items-center justify-center md:min-h-50 lg:mt-0 lg:min-h-125">
             {/* Subtle background glow */}
             <div className="bg-accent/50 absolute top-[10%] left-[22%] size-40 rounded-full blur-3xl md:top-[25%] md:size-68" />
             <div
-              className="absolute inset-0 z-1 -translate-x-10 scale-220 lg:scale-300 xl:-translate-x-20 xl:scale-280"
+              className="absolute inset-0 z-1 -translate-x-15 scale-380 md:-translate-x-20 md:scale-300 lg:scale-350"
               style={{
                 background: `radial-gradient(ellipse at center, transparent 5%, hsl(var(--background)/0.4) 45%, hsl(var(--background)) 60%, hsl(var(--accent-foreground)) 100%)`,
               }}
