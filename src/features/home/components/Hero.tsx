@@ -1,4 +1,3 @@
-import indiaSvg from "@/assets/svgs/india.svg";
 import { ArrowRight, Heart, HandHeart, LucideIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import { AppHomepage } from "@/payload-types";
 import { resolvePayloadImage } from "@/services/payload";
 import SectionWrapper from "@/components/ui/SectionWrapper";
+import Asia from "./HeroImage";
 
 type HeroProps = {
   data?: AppHomepage["hero"];
@@ -47,7 +47,7 @@ const Hero = ({ data }: HeroProps) => {
       ariaLabelledby="hero-heading"
     >
       <div className="mx-auto flex min-h-170 items-center px-6 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:px-20">
-        <div className="grid w-full items-center gap-12 lg:grid-cols-[1fr_0.85fr] lg:gap-8">
+        <div className="grid w-full items-center gap-12 lg:grid-cols-[1fr_1fr] lg:gap-8">
           {/* Content */}
           <div className="relative z-10">
             {/* Status */}
@@ -95,28 +95,18 @@ const Hero = ({ data }: HeroProps) => {
           </div>
 
           {/* India visual */}
-          <div className="relative flex min-h-97.5 items-center justify-center lg:min-h-125">
+          <div className="relative flex max-h-60 w-full items-center justify-center md:max-h-dvh md:min-h-50 lg:min-h-125">
             {/* Subtle background glow */}
-            <div className="bg-muted-foreground/60 absolute top-[35%] left-[22%] size-48 rounded-full blur-3xl" />
+            <div className="bg-accent/50 absolute top-[10%] left-[22%] size-40 rounded-full blur-3xl md:top-[25%] md:size-68" />
             <div
-              className="h-150 w-full bg-cover bg-center"
+              className="absolute inset-0 z-1 -translate-x-10 scale-220 lg:scale-300 xl:-translate-x-20 xl:scale-280"
               style={{
-                backgroundImage: `url("${encodeURI(heroImage.url)}")`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                maskImage: `url(${indiaSvg.src})`,
-                WebkitMaskImage: `url(${indiaSvg.src})`,
-
-                maskSize: "100% 100%",
-                WebkitMaskSize: "100% 100%",
-
-                maskPosition: "center",
-                WebkitMaskPosition: "center",
-
-                maskRepeat: "no-repeat",
-                WebkitMaskRepeat: "no-repeat",
+                background: `radial-gradient(ellipse at center, transparent 5%, hsl(var(--background)/0.4) 45%, hsl(var(--background)) 60%, hsl(var(--accent-foreground)) 100%)`,
               }}
             />
+            <div className="h-full w-full bg-cover bg-center">
+              <Asia imageUrl={heroImage.url} />
+            </div>
           </div>
         </div>
       </div>
