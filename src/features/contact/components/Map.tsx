@@ -1,6 +1,6 @@
 import { Navigation } from "lucide-react";
 import SectionWrapper from "@/components/ui/SectionWrapper";
-import MapPinMarker from "@/features/contact/MapPinMarker";
+import MapPinMarker from "@/features/contact/map/MapPinMarker";
 import { AppContactpage } from "@/payload-types";
 
 type MapSectionProps = {

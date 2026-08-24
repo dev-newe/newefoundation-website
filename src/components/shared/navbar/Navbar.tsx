@@ -44,7 +44,7 @@ const Navbar = async () => {
         />
 
         {/* Mobile Navigation Toggle & Drawer */}
-        <div className="flex items-center gap-4 md:hidden">
+        <div className="flex items-center gap-4 lg:hidden">
           <MobileNav
             navItems={navData?.navItems || fallbackData.navItems}
             brandName={navData?.brandName || fallbackData.brandName}

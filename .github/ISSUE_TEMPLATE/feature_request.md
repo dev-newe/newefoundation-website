@@ -1,14 +1,14 @@
 ---
-name: Task
-about: Standard Developer Ticket Template
-title: "task: "
+name: Feature Request
+about: Request a new feature or enhancement
+title: "feat: "
 labels: "enhancement"
 assignees: ""
 ---
 
 ## Objective
 
-<!-- Purpose of the ticket in 1-2 sentences -->
+<!-- Purpose of the ticket -->
 
 ## Tasks
 

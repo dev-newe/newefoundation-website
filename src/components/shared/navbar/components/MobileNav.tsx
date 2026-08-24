@@ -78,7 +78,7 @@ const MobileNav = ({ navItems, brandName, logo, ctaButton }: MobileNavProps) => 
         createPortal(
           <div
             className={cn(
-              "fixed inset-0 z-998 transition-opacity duration-300 ease-in-out md:hidden",
+              "fixed inset-0 z-998 transition-opacity duration-300 ease-in-out lg:hidden",
               isOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
             )}
           >
