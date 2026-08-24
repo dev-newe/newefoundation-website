@@ -16,7 +16,7 @@ const DesktopNav = ({ navItems, ctaButton }: DesktopNavProps) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <div className="hidden items-center gap-8 md:flex">
+    <div className="hidden items-center gap-8 lg:flex">
       {/* Primary Navigation Links */}
       <nav className="flex items-center gap-1">
         {navItems?.map((item) => {

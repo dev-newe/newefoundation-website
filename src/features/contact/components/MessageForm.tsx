@@ -323,12 +323,12 @@ const MessageForm = ({ data: formData }: FormProps) => {
           <SelectTrigger className={cn(inputBase, "w-full", errorRing)} id={field.fieldName}>
             <SelectValue placeholder={field.fieldPlaceholder ?? "Select an option"} />
           </SelectTrigger>
-          <SelectContent className="rounded-xl border-0 bg-[#ECEAE3] shadow-lg">
+          <SelectContent className="bg-background rounded-xl border-0 shadow-lg">
             {(field.selectOptions ?? []).map((opt) => (
               <SelectItem
                 key={opt.value}
                 value={opt.value}
-                className="text-[#1F3D2E] focus:bg-[#1F3D2E]/10"
+                className="text-primary focus:bg-primary/10"
               >
                 {opt.label}
               </SelectItem>
@@ -348,11 +348,11 @@ const MessageForm = ({ data: formData }: FormProps) => {
               handleChange(field.fieldName, Boolean(checked));
               setTouched((prev) => ({ ...prev, [field.fieldName]: true }));
             }}
-            className="rounded-md border-[#1F3D2E]/30 data-[state=checked]:border-[#1F3D2E] data-[state=checked]:bg-[#1F3D2E]"
+            className="border-primary/30 data-[state=checked]:border-primary data-[state=checked]:bg-primary rounded-md"
           />
           <label
             htmlFor={field.fieldName}
-            className="cursor-pointer text-sm text-[#4A5C50] select-none"
+            className="text-primary cursor-pointer text-sm select-none"
           >
             {field.fieldPlaceholder ?? field.fieldLabel}
           </label>
@@ -395,9 +395,9 @@ const MessageForm = ({ data: formData }: FormProps) => {
               return (
                 <div key={field.fieldName} className="flex flex-col gap-1.5">
                   {!isCheckbox && (
-                    <Label htmlFor={field.fieldName} className="text-sm font-medium text-[#1F3D2E]">
+                    <Label htmlFor={field.fieldName} className="text-primary text-sm font-medium">
                       {field.fieldLabel}
-                      {field.fieldRequired && <span className="ml-0.5 text-[#1F3D2E]/50">*</span>}
+                      {field.fieldRequired && <span className="text-primary/50 ml-0.5">*</span>}
                     </Label>
                   )}
 
@@ -411,7 +411,7 @@ const MessageForm = ({ data: formData }: FormProps) => {
         ))}
 
         {status === "success" && (
-          <div className="rounded-xl bg-[#1F3D2E]/10 px-4 py-3 text-sm text-[#1F3D2E]">
+          <div className="bg-primary/10 text-primary rounded-xl px-4 py-3 text-sm">
             {serverMessage}
           </div>
         )}
@@ -426,10 +426,10 @@ const MessageForm = ({ data: formData }: FormProps) => {
           disabled={isSubmitting}
           className={cn(
             "mt-1 inline-flex items-center justify-center rounded-full",
-            "bg-[#1F3D2E] px-7 py-2.5 text-sm font-semibold text-white",
+            "bg-primary px-7 py-2.5 text-sm font-semibold text-white",
             "cursor-pointer transition-opacity hover:opacity-90 active:opacity-80",
             "disabled:cursor-not-allowed disabled:opacity-60",
-            "focus-visible:ring-2 focus-visible:ring-[#1F3D2E] focus-visible:ring-offset-2 focus-visible:outline-none"
+            "focus-visible:ring-primary focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           )}
         >
           {isSubmitting ? "Sending…" : submitLabel}
