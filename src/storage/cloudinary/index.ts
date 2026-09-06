@@ -5,26 +5,25 @@
  * - May be fragile
  */
 
-import { v2 as cloudinary } from "cloudinary";
 import type { Adapter } from "@payloadcms/plugin-cloud-storage/types";
+import { v2 as cloudinary } from "cloudinary";
 
-import { getHandleUpload } from "./handleUpload";
-import { getHandleDelete } from "./handleDelete";
 import { getGenerateURL } from "./generateUrl";
+import { getHandleDelete } from "./handleDelete";
+import { getHandleUpload } from "./handleUpload";
 import { getStaticHandler } from "./staticHandler";
 import type { CloudinaryAdapterOptions } from "./types";
 
 export const cloudinaryAdapter = (options: CloudinaryAdapterOptions = {}): Adapter => {
+  const folder = options.folder || process.env.CLOUDINARY_FOLDER || "org-website";
+
   if (
     !process.env.CLOUDINARY_CLOUD_NAME ||
     !process.env.CLOUDINARY_API_KEY ||
-    !process.env.CLOUDINARY_API_SECRET ||
-    !process.env.CLOUDINARY_FOLDER
+    !process.env.CLOUDINARY_API_SECRET
   ) {
     throw new Error("Missing required ENV vars for Cloudinary Adapter");
   }
-
-  const folder = options.folder || process.env.CLOUDINARY_FOLDER || "org-website";
 
   cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,

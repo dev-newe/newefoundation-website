@@ -23,6 +23,7 @@ export const getHandleDelete = ({ folder }: CloudinaryAdapterOptions = {}): Hand
         try {
           await req.payload.create({
             collection: "cloudinary-cleanup-jobs",
+            overrideAccess: true,
             data: {
               publicId,
               resourceType,
