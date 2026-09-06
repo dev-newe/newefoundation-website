@@ -62,8 +62,9 @@ export const getCloudinaryUrl = (
   }
 
   // Check if transformation segment already exists before version (v1234) or public_id
-  const firstSegment = rest.split("/")[0];
-  const hasExistingTransforms = /^[a-z]_[a-z0-9_,-]+/i.test(firstSegment);
+  const firstSegment = rest.split("/")[0] ?? "";
+  const hasExistingTransforms =
+    /^(?:[a-z]{1,3}_[a-z0-9:._-]+)(?:,[a-z]{1,3}_[a-z0-9:._-]+)*$/i.test(firstSegment);
 
   if (hasExistingTransforms) {
     return url;
