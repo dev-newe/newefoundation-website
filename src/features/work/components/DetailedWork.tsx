@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { resolvePayloadImage } from "@/services/payload";
 import { useId } from "react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { MoveUpRight } from "lucide-react";
 
 type FeaturedProps = {
@@ -19,11 +19,9 @@ const DetailedWork = ({
 }: FeaturedProps & { reversed?: boolean; className?: string; id?: string }) => {
   const generatedId = useId();
   const detailWorkData = {
-    title: data?.title ?? "Placeholder Title",
-    description:
-      data?.description ??
-      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever  since 1966, when designers at Letraset\n an since 1966, when designers at Letraset and James Mosley, the librarian at\nDate: 23-9-25",
-    category: data?.category ?? "Placeholder Category",
+    title: data?.title,
+    description: data?.description,
+    category: data?.category,
     partners: data?.partners,
     url: data?.url,
     date: data?.date,
@@ -75,10 +73,16 @@ const DetailedWork = ({
         )}
 
         {detailWorkData?.url && (
-          <Link href={detailWorkData.url} target="_blank" rel="noopener noreferrer">
-            <Button variant="default" size="sm" className="mt-2 w-full cursor-pointer p-5">
-              Read More <MoveUpRight />
-            </Button>
+          <Link
+            href={detailWorkData.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              buttonVariants({ variant: "default", size: "sm" }),
+              "mt-2 h-12 w-full px-6"
+            )}
+          >
+            Read More <MoveUpRight />
           </Link>
         )}
       </div>

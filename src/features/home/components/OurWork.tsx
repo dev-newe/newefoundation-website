@@ -23,7 +23,10 @@ const OurWork = ({ data }: WorkProps) => {
       ariaLabelledby="our-work-heading"
     >
       {/* Section heading */}
-      <h2 className="text-foreground text-fluid-4xl mb-4 text-center font-serif font-medium">
+      <h2
+        className="text-foreground text-fluid-4xl mb-4 text-center font-serif font-medium"
+        id="our-work-heading"
+      >
         {ourWorkData.title}
       </h2>
 
