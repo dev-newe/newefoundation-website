@@ -637,7 +637,15 @@ export interface AppHomepage {
     featuredProject: {
       category: string;
       title: string;
-      description: string;
+      description?: string | null;
+      partners?:
+        | {
+            name: string;
+            id?: string | null;
+          }[]
+        | null;
+      url?: string | null;
+      date?: string | null;
       images?:
         | {
             img?: {
@@ -1168,6 +1176,14 @@ export interface AppHomepageSelect<T extends boolean = true> {
               category?: T;
               title?: T;
               description?: T;
+              partners?:
+                | T
+                | {
+                    name?: T;
+                    id?: T;
+                  };
+              url?: T;
+              date?: T;
               images?:
                 | T
                 | {

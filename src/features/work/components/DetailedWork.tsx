@@ -2,6 +2,10 @@ import { AppHomepage } from "@/payload-types";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { resolvePayloadImage } from "@/services/payload";
+import { useId } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { MoveUpRight } from "lucide-react";
 
 type FeaturedProps = {
   data?: AppHomepage["ourWork"]["featuredProject"];
@@ -11,13 +15,18 @@ const DetailedWork = ({
   data,
   reversed = false,
   className,
-}: FeaturedProps & { reversed?: boolean; className?: string }) => {
+  id, // If used in mapped list, id can be passed optionally, else useId also generates unique id if not passed
+}: FeaturedProps & { reversed?: boolean; className?: string; id?: string }) => {
+  const generatedId = useId();
   const detailWorkData = {
     title: data?.title ?? "Placeholder Title",
     description:
       data?.description ??
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever  since 1966, when designers at Letraset\n an since 1966, when designers at Letraset and James Mosley, the librarian at\nDate: 23-9-25",
     category: data?.category ?? "Placeholder Category",
+    partners: data?.partners,
+    url: data?.url,
+    date: data?.date,
     images:
       data?.images && data.images.length > 0
         ? data.images.map((image) => resolvePayloadImage(image.img, "/navjyoti.png"))
@@ -35,20 +44,43 @@ const DetailedWork = ({
         reversed && "lg:grid-cols-[1fr_1.1fr]",
         className
       )}
-      id="featured-work"
+      id={id || generatedId}
     >
-      <div className={cn("order-1 mt-auto mb-0 p-8", reversed ? "lg:order-1" : "lg:order-2")}>
-        <div className="border-accent/30 bg-accent/10 text-accent mb-4 w-fit rounded-2xl border px-3 py-1 text-sm font-medium">
-          {detailWorkData.category}
-        </div>
+      <div className={cn("order-1 mt-auto mb-0 p-4", reversed ? "lg:order-1" : "lg:order-2")}>
+        {detailWorkData?.category && (
+          <div className="border-accent/30 bg-accent/10 text-accent mb-4 w-fit rounded-2xl border px-3 py-1 text-sm font-medium">
+            {detailWorkData.category}
+          </div>
+        )}
 
         <h3 className="font-serif text-2xl leading-tight font-medium sm:text-3xl">
           {detailWorkData.title}
         </h3>
 
-        <p className="mt-7 text-justify text-base leading-7 whitespace-pre-line sm:text-lg">
+        <div className="">
+          {detailWorkData.date && (
+            <span className="text-primary text-sm">{detailWorkData.date}</span>
+          )}
+        </div>
+
+        <p className="mt-4 line-clamp-7 text-justify leading-tight whitespace-pre-line">
           {detailWorkData.description}
         </p>
+
+        {detailWorkData?.partners && detailWorkData.partners.length > 0 && (
+          <div className="mt-4 flex flex-wrap items-end gap-2">
+            <span className="text-accent text-lg font-medium">PARTNERS:</span>
+            <span>{detailWorkData?.partners?.map((p) => p.name).join(", ")}</span>
+          </div>
+        )}
+
+        {detailWorkData?.url && (
+          <Link href={detailWorkData.url} target="_blank" rel="noopener noreferrer">
+            <Button variant="default" size="sm" className="mt-2 w-full cursor-pointer p-5">
+              Read More <MoveUpRight />
+            </Button>
+          </Link>
+        )}
       </div>
 
       {imageCount === 0 && (
