@@ -8,7 +8,6 @@ type PartnersProps = {
 };
 
 type Partner = NonNullable<NonNullable<AppHomepage["ourPartners"]>["partners"]>[number];
-//TODO: Proper fallbacks
 const defaultPartners: Partner[] = [];
 
 export const Partners = ({ data }: PartnersProps) => {
@@ -20,12 +19,14 @@ export const Partners = ({ data }: PartnersProps) => {
     partners: data?.partners && data.partners.length > 0 ? data.partners : defaultPartners,
   };
 
+  const useMarquee = partners.partners.length > 3;
+
   return (
     <SectionWrapper
       id="partners"
       as="section"
       size="full"
-      className="mx-auto max-w-[2048px]"
+      className="mx-auto max-w-[2048px] overflow-x-hidden"
       ariaLabelledby="partners-heading"
     >
       <h2
@@ -35,22 +36,32 @@ export const Partners = ({ data }: PartnersProps) => {
         {partners.title}
       </h2>
 
-      <p className="text-foreground/60 mx-auto max-w-150 text-center text-sm leading-relaxed sm:text-base">
+      <p className="text-foreground/60 mx-auto max-w-150 px-4 text-center text-sm leading-relaxed sm:text-base">
         {partners.description}
       </p>
 
-      <div className="mt-6 w-full">
-        <Marquee isAccessible>
-          {partners.partners.map((partner) => (
-            <PartnerCard key={partner.id ?? partner.name} partner={partner} isAccessible />
-          ))}
-        </Marquee>
+      <div className="mt-8 w-full">
+        {useMarquee ? (
+          <>
+            <Marquee isAccessible>
+              {partners.partners.map((partner) => (
+                <PartnerCard key={partner.id ?? partner.name} partner={partner} isAccessible />
+              ))}
+            </Marquee>
 
-        <Marquee direction="right">
-          {partners.partners.map((partner) => (
-            <PartnerCard key={partner.id ?? partner.name} partner={partner} />
-          ))}
-        </Marquee>
+            <Marquee direction="right">
+              {partners.partners.map((partner) => (
+                <PartnerCard key={partner.id ?? partner.name} partner={partner} />
+              ))}
+            </Marquee>
+          </>
+        ) : (
+          <div className="flex flex-wrap items-center justify-center gap-8 px-4 sm:gap-12">
+            {partners.partners.map((partner) => (
+              <PartnerCard key={partner.id ?? partner.name} partner={partner} isAccessible />
+            ))}
+          </div>
+        )}
       </div>
     </SectionWrapper>
   );
@@ -65,12 +76,12 @@ const PartnerCard = ({ partner, isAccessible = false }: PartnerCardProps) => {
   const { url, alt } = resolvePayloadImage(partner.logo);
 
   const content = (
-    <div className="flex h-12 w-32 shrink-0 items-center justify-center opacity-65 grayscale transition-all duration-300 select-none hover:opacity-100 hover:grayscale-0">
+    <div className="flex h-20 w-44 shrink-0 items-center justify-center p-2 transition-all duration-300 select-none hover:scale-105 sm:h-24 sm:w-52">
       <img
         src={url}
         alt={alt ?? partner.name}
-        width={128}
-        height={48}
+        width={208}
+        height={96}
         className="max-h-full max-w-full object-contain"
       />
     </div>

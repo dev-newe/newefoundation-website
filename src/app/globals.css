@@ -54,11 +54,11 @@
   --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem);
   --text-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.25rem);
   --text-xl: clamp(1.25rem, 1.15rem + 0.5vw, 1.5rem);
-  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
-  --text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.25rem);
-  --text-4xl: clamp(2.25rem, 1.8rem + 2vw, 3rem);
-  --text-5xl: clamp(2.75rem, 2.1rem + 2.8vw, 3.75rem);
-  --text-6xl: clamp(3.25rem, 2.4rem + 3.5vw, 4.5rem);
+  --text-2xl: clamp(1.35rem, 1.2rem + 1vw, 1.875rem);
+  --text-3xl: clamp(1.6rem, 1.35rem + 1.5vw, 2.25rem);
+  --text-4xl: clamp(1.75rem, 1.4rem + 2vw, 3rem);
+  --text-5xl: clamp(2.15rem, 1.7rem + 2.8vw, 3.75rem);
+  --text-6xl: clamp(2.5rem, 2rem + 3.5vw, 4.5rem);
 
   /* ---------- Spacing (semantic + fluid) ---------- */
   --space-1: 0.25rem;
@@ -252,6 +252,7 @@
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
     @apply font-sans;
   }
 
@@ -261,6 +262,7 @@
     font-family: var(--font-geist-sans);
     font-size: var(--text-base);
     line-height: 1.6;
+    overflow-x: hidden;
     @apply bg-background text-foreground;
   }
 
@@ -275,6 +277,7 @@
     line-height: 1.15;
     letter-spacing: -0.02em;
     color: hsl(var(--foreground));
+    overflow-wrap: break-word;
   }
 
   h1 {
@@ -499,42 +502,6 @@
     padding: var(--space-6);
     /* FIX: added padding — was visually broken without it */
   }
-
-  /* FIX: Added padding to button utilities — they were non-functional without it */
-  /* .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-3) var(--space-6);
-    background-color: hsl(var(--accent));
-    color: hsl(var(--accent-foreground));
-    border-radius: var(--radius-full);
-    font-weight: 600;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-
-  .btn-primary:hover {
-    filter: brightness(1.08);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-3) var(--space-6);
-    background-color: hsl(var(--secondary));
-    color: hsl(var(--foreground));
-    border: 1.5px solid hsl(var(--border));
-    border-radius: var(--radius-full);
-    font-weight: 500;
-    transition: all 0.2s ease;
-    cursor: pointer;
-  }
-
-  .btn-secondary:hover {
-    background-color: hsl(var(--border));
-  } */
 }
 
 /* --------------------------------------------------------------------------

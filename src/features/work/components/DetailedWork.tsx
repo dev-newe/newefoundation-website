@@ -11,6 +11,29 @@ type FeaturedProps = {
   data?: AppHomepage["ourWork"]["featuredProject"];
 };
 
+const renderDescriptionWithLinks = (text?: string | null) => {
+  if (!text) return null;
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+
+  return parts.map((part, index) => {
+    if (part.match(urlRegex)) {
+      return (
+        <a
+          key={index}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline break-all transition-opacity hover:opacity-80"
+        >
+          {part}
+        </a>
+      );
+    }
+    return part;
+  });
+};
+
 const DetailedWork = ({
   data,
   reversed = false,
@@ -37,21 +60,26 @@ const DetailedWork = ({
   return (
     <article
       className={cn(
-        "bg-muted grid items-center gap-8 rounded-lg p-2",
+        "bg-muted grid w-full max-w-full items-center gap-8 overflow-hidden rounded-lg p-2",
         "lg:grid-cols-[1.1fr_1fr] lg:gap-0",
         reversed && "lg:grid-cols-[1fr_1.1fr]",
         className
       )}
       id={id || generatedId}
     >
-      <div className={cn("order-1 mt-auto mb-0 p-4", reversed ? "lg:order-1" : "lg:order-2")}>
+      <div
+        className={cn(
+          "order-1 mt-auto mb-0 min-w-0 p-4",
+          reversed ? "lg:order-1" : "lg:order-2"
+        )}
+      >
         {detailWorkData?.category && (
-          <div className="border-accent/30 bg-accent/10 text-accent mb-4 w-fit rounded-2xl border px-3 py-1 text-sm font-medium">
+          <div className="border-accent/30 bg-accent/10 text-accent mb-4 w-fit max-w-full rounded-2xl border px-3 py-1 text-sm font-medium break-words">
             {detailWorkData.category}
           </div>
         )}
 
-        <h3 className="font-serif text-2xl leading-tight font-medium sm:text-3xl">
+        <h3 className="font-serif text-2xl leading-tight font-medium break-words sm:text-3xl">
           {detailWorkData.title}
         </h3>
 
@@ -61,12 +89,12 @@ const DetailedWork = ({
           )}
         </div>
 
-        <p className="mt-4 line-clamp-7 text-justify leading-tight whitespace-pre-line">
-          {detailWorkData.description}
+        <p className="mt-4 line-clamp-7 text-left leading-tight break-words whitespace-pre-line sm:text-justify">
+          {renderDescriptionWithLinks(detailWorkData.description)}
         </p>
 
         {detailWorkData?.partners && detailWorkData.partners.length > 0 && (
-          <div className="mt-4 flex flex-wrap items-end gap-2">
+          <div className="mt-4 flex flex-wrap items-end gap-2 break-words">
             <span className="text-accent text-lg font-medium">PARTNERS:</span>
             <span>{detailWorkData?.partners?.map((p) => p.name).join(", ")}</span>
           </div>
@@ -90,7 +118,7 @@ const DetailedWork = ({
       {imageCount === 0 && (
         <div
           className={cn(
-            "order-2 min-h-105 rounded-[2rem] border border-white/80 bg-gray-200",
+            "order-2 min-h-105 min-w-0 rounded-[2rem] border border-white/80 bg-gray-200",
             reversed ? "lg:order-2" : "lg:order-1"
           )}
         />
@@ -99,7 +127,7 @@ const DetailedWork = ({
       {imageCount > 0 && (
         <div
           className={cn(
-            "order-2 grid gap-2",
+            "order-2 grid min-w-0 gap-2",
             imageCount === 1 && "grid-cols-1",
             imageCount === 2 && "grid-cols-2",
             imageCount === 3 && "grid-cols-2",
