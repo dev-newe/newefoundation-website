@@ -44,7 +44,7 @@ const DetailedWork = ({
       )}
       id={id || generatedId}
     >
-      <div className={cn("order-1 mt-auto mb-0 p-4", reversed ? "lg:order-1" : "lg:order-2")}>
+      <div className={cn("order-1 mt-auto mb-0 min-w-0 p-4", reversed ? "lg:order-1" : "lg:order-2")}>
         {detailWorkData?.category && (
           <div className="border-accent/30 bg-accent/10 text-accent mb-4 w-fit rounded-2xl border px-3 py-1 text-sm font-medium">
             {detailWorkData.category}
@@ -61,7 +61,7 @@ const DetailedWork = ({
           )}
         </div>
 
-        <p className="mt-4 line-clamp-7 text-justify leading-tight whitespace-pre-line">
+        <p className="mt-4 line-clamp-7 text-justify leading-tight break-words whitespace-pre-line">
           {detailWorkData.description}
         </p>
 
