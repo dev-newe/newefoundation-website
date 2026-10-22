@@ -8,6 +8,7 @@ type PartnersProps = {
 };
 
 type Partner = NonNullable<NonNullable<AppHomepage["ourPartners"]>["partners"]>[number];
+//TODO: Proper fallbacks
 const defaultPartners: Partner[] = [];
 
 export const Partners = ({ data }: PartnersProps) => {
@@ -19,7 +20,7 @@ export const Partners = ({ data }: PartnersProps) => {
     partners: data?.partners && data.partners.length > 0 ? data.partners : defaultPartners,
   };
 
-  const useMarquee = partners.partners.length > 3;
+  const useMarquee = partners.partners.length >= 6;
 
   return (
     <SectionWrapper
