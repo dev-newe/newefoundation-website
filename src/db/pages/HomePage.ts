@@ -148,7 +148,20 @@ export const HomePage: GlobalConfig = {
           fields: [
             { name: "category", type: "text", required: true },
             { name: "title", type: "text", required: true },
-            { name: "description", type: "textarea", required: true },
+            { name: "description", type: "textarea", maxLength: 350 },
+            {
+              name: "partners",
+              type: "array",
+              fields: [
+                {
+                  name: "name",
+                  type: "text",
+                  required: true,
+                },
+              ],
+            },
+            { name: "url", type: "text" },
+            { name: "date", type: "text" },
             {
               name: "images",
               type: "array",

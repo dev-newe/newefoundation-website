@@ -25,10 +25,13 @@ export const getGenerateURL = ({ folder }: CloudinaryAdapterOptions = {}): Gener
     // Fallback: dynamically pick resource_type if data.url is missing
     const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
     const resourceType = mediaData?.cloudinaryResourceType || getResourceTypeFromExt(filename);
+    const format = mediaData?.cloudinaryFormat || path.extname(filename).replace(".", "");
 
-    const assetPath = mediaData?.cloudinaryPublicId || `${folder}/${filename}`;
-    const finalUrl = `https://res.cloudinary.com/${cloudName}/${resourceType}/upload/${assetPath}`;
+    let assetPath = mediaData?.cloudinaryPublicId || `${folder}/${filename}`;
+    if (resourceType !== "raw" && format && !assetPath.endsWith(`.${format}`)) {
+      assetPath = `${assetPath}.${format}`;
+    }
 
-    return finalUrl;
+    return `https://res.cloudinary.com/${cloudName}/${resourceType}/upload/${assetPath}`;
   };
 };

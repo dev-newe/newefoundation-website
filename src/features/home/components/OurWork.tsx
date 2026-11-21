@@ -1,5 +1,6 @@
 import DetailedWork from "@/features/work/components/DetailedWork";
 import { AppHomepage } from "@/payload-types";
+import SectionWrapper from "@/components/ui/SectionWrapper";
 
 type WorkProps = {
   data?: AppHomepage["ourWork"];
@@ -14,23 +15,29 @@ const OurWork = ({ data }: WorkProps) => {
     images: data?.featuredProject?.images ?? [],
   };
   return (
-    <section className="px-4 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:px-20" id="our-work">
-      <div className="">
-        {/* Section heading */}
-        <div className="text-center">
-          <h2 className="text-primary font-serif text-5xl font-medium lg:text-6xl">
-            {ourWorkData.title}
-          </h2>
+    <SectionWrapper
+      id="our-work"
+      as="section"
+      size="full"
+      className="px-4 py-20 sm:px-8 md:px-16 lg:min-h-180 lg:px-20"
+      ariaLabelledby="our-work-heading"
+    >
+      {/* Section heading */}
+      <h2
+        className="text-foreground text-fluid-4xl mb-4 text-center font-serif font-medium"
+        id="our-work-heading"
+      >
+        {ourWorkData.title}
+      </h2>
 
-          <p className="mx-auto mt-2 max-w-xl text-lg">{ourWorkData.description}</p>
-        </div>
-
-        {/* Featured work */}
-        <div className="mt-16 space-y-24">
-          <DetailedWork data={data?.featuredProject} />
-        </div>
+      <p className="text-foreground/60 mx-auto max-w-150 text-center text-sm leading-relaxed sm:text-base">
+        {ourWorkData.description}
+      </p>
+      {/* Featured work */}
+      <div className="mt-16 space-y-24">
+        <DetailedWork data={data?.featuredProject} />
       </div>
-    </section>
+    </SectionWrapper>
   );
 };
 export default OurWork;
