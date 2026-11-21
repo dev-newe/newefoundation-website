@@ -3,6 +3,7 @@ import {
   fill,
   fit,
   limitFit,
+  pad,
   thumbnail as thumbResize,
   scale,
 } from "@cloudinary/url-gen/actions/resize";
@@ -18,11 +19,13 @@ import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
 export interface CloudinaryTransformOptions {
   width?: number;
   height?: number;
-  crop?: "fill" | "fit" | "limit" | "thumb" | "scale" | string;
+  crop?: "fill" | "fit" | "limit" | "thumb" | "scale" | "pad" | string;
   quality?: "auto" | number | string;
   format?: "auto" | "webp" | "avif" | "jpg" | "png" | string;
   /** Only "auto" and "face" are applied (and only for fill/thumb crops). Other values are ignored. */
   gravity?: "auto" | "center" | "face" | string;
+  /** Explicit cloud name to target, overriding environment defaults. */
+  cloudName?: string;
 }
 
 /**
@@ -32,12 +35,24 @@ export interface CloudinaryTransformOptions {
  */
 const CLOUDINARY_DELIVERY_HOST = "res.cloudinary.com";
 
+/**
+ * Normalizes protocol-relative Cloudinary URLs (e.g. //res.cloudinary.com/...)
+ * to full https URLs so URL parsing and hostname detection succeed.
+ */
+export const normalizeCloudinaryUrl = (url: string): string => {
+  if (url.startsWith("//res.cloudinary.com")) {
+    return `https:${url}`;
+  }
+  return url;
+};
+
 export const isCloudinaryUrl = (url: unknown): url is string => {
   if (typeof url !== "string") {
     return false;
   }
   try {
-    return new URL(url).hostname === CLOUDINARY_DELIVERY_HOST;
+    const normalized = normalizeCloudinaryUrl(url.trim());
+    return new URL(normalized).hostname === CLOUDINARY_DELIVERY_HOST;
   } catch {
     return false;
   }
@@ -47,19 +62,19 @@ export interface ParsedCloudinaryUrl {
   cloudName: string;
   resourceType: "image" | "video" | "raw";
   publicId: string;
+  version?: string;
+  existingTransforms?: string[];
 }
 
 /**
- * Cloudinary versions are unix timestamps (10 digits today). Requiring 8+ digits avoids
- * mistaking a folder named "v2" for a version segment.
+ * Cloudinary versions are "v" followed by digits (e.g. "v1", "v2", or a unix timestamp like "v1730000000").
+ * Cloudinary documents that "v" followed by digits is reserved exclusively for version identifiers.
  */
-const VERSION_SEGMENT = /^v\d{8,}$/;
+const VERSION_SEGMENT = /^v\d+$/;
 
 /**
  * Conservative patterns for transformation components. Used ONLY when the URL has no
  * version segment (with a version, everything before it is a transformation, no guessing).
- * Effect/layer keys (e_, l_, u_, t_, a_ ...) are deliberately excluded here because they
- * are indistinguishable from folder names like "e_commerce" without a version marker.
  */
 const TRANSFORM_PART_PATTERNS: RegExp[] = [
   /^(?:w|h|x|y|r|z|o)_(?:-?\d+(?:\.\d+)?|auto)$/,
@@ -69,6 +84,7 @@ const TRANSFORM_PART_PATTERNS: RegExp[] = [
   /^f_(?:auto|webp|avif|jpg|jpeg|png|gif|svg|mp4|webm)$/,
   /^q_(?:auto(?::\w+)?|\d+)$/,
   /^g_(?:auto|face|faces|center|north|south|east|west|north_east|north_west|south_east|south_west)$/,
+  /^t_[a-z0-9_:-]+$/i,
 ];
 
 const isStrictTransformSegment = (segment: string): boolean =>
@@ -89,16 +105,16 @@ const safeDecode = (segment: string): string => {
  * this exists for external/legacy URLs only. Reverse-parsing a Cloudinary URL is
  * inherently ambiguous, so this is a heuristic, not a guarantee.
  *
- * Handles: chained transformation segments, version segments, percent-encoded paths,
- * and raw assets (extension kept). Returns null for non-"upload" delivery types
- * (private/authenticated/fetch) and non-Cloudinary hosts.
+ * Handles: chained transformation segments, version segments (including v1 and timestamps),
+ * scheme-relative URLs, percent-encoded paths, and raw assets (extension kept).
  */
-export const parseCloudinaryUrl = (url: string): ParsedCloudinaryUrl | null => {
-  if (!isCloudinaryUrl(url)) {
+export const parseCloudinaryUrl = (rawUrl: string): ParsedCloudinaryUrl | null => {
+  if (!isCloudinaryUrl(rawUrl)) {
     return null;
   }
 
   try {
+    const url = normalizeCloudinaryUrl(rawUrl.trim());
     const pathParts = new URL(url).pathname.split("/").filter(Boolean);
     const [cloudName, resourceType, deliveryType, ...rest] = pathParts;
 
@@ -110,19 +126,31 @@ export const parseCloudinaryUrl = (url: string): ParsedCloudinaryUrl | null => {
     }
 
     let idParts: string[];
+    let existingTransforms: string[] | undefined;
+    let version: string | undefined;
+
     const versionIdx = rest.findIndex((s) => VERSION_SEGMENT.test(s));
 
     if (versionIdx !== -1) {
+      version = rest[versionIdx].replace(/^v/, "");
+      const rawTransforms = rest.slice(0, versionIdx);
+      if (rawTransforms.length > 0) {
+        existingTransforms = rawTransforms;
+      }
       idParts = rest.slice(versionIdx + 1);
     } else {
       let i = 0;
       while (i < rest.length - 1 && isStrictTransformSegment(rest[i])) {
         i++;
       }
+      const rawTransforms = rest.slice(0, i);
+      if (rawTransforms.length > 0) {
+        existingTransforms = rawTransforms;
+      }
       idParts = rest.slice(i);
     }
 
-    if (idParts.length === 0) {
+    if (!idParts || idParts.length === 0) {
       return null;
     }
 
@@ -138,7 +166,7 @@ export const parseCloudinaryUrl = (url: string): ParsedCloudinaryUrl | null => {
     if (!publicId) {
       return null;
     }
-    return { cloudName, resourceType, publicId };
+    return { cloudName, resourceType, publicId, version, existingTransforms };
   } catch {
     return null;
   }
@@ -148,32 +176,56 @@ export const parseCloudinaryUrl = (url: string): ParsedCloudinaryUrl | null => {
  * Builds a transformed IMAGE delivery URL using @cloudinary/url-gen.
  * Accepts either a publicId (preferred) or a full Cloudinary URL (best-effort).
  *
+ * - Scheme-relative Cloudinary URLs (//res.cloudinary.com/...) are normalized and processed.
  * - Non-Cloudinary URLs, and Cloudinary URLs for video/raw assets, are returned unchanged.
+ * - Existing transformation chains (like named transformation t_hero_crop) are preserved.
  * - Never throws: on any SDK error the original input is returned.
- * - Cloud name for bare publicIds comes from env. NEXT_PUBLIC_* is inlined at build time
- *   and available in client components; the non-prefixed var is server-only.
+ * - Cloud name for bare publicIds comes from options, CLOUDINARY_CLOUD_NAME, or NEXT_PUBLIC_*.
  */
 export const getCloudinaryUrl = (
-  urlOrPublicId: string | undefined | null,
+  rawUrlOrPublicId: string | undefined | null,
   options: CloudinaryTransformOptions = {}
 ): string => {
-  if (!urlOrPublicId || typeof urlOrPublicId !== "string") {
+  if (!rawUrlOrPublicId || typeof rawUrlOrPublicId !== "string") {
     return "";
   }
 
-  const isUrl = /^https?:\/\//i.test(urlOrPublicId);
+  const urlOrPublicId = rawUrlOrPublicId.trim();
+  const normalizedInput = normalizeCloudinaryUrl(urlOrPublicId);
+  const isUrl = /^https?:\/\//i.test(normalizedInput);
 
   let cloudName =
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || process.env.CLOUDINARY_CLOUD_NAME;
+    options.cloudName ||
+    process.env.CLOUDINARY_CLOUD_NAME ||
+    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
   let publicId = urlOrPublicId;
+  let version: string | undefined;
+  let existingTransforms: string[] | undefined;
+
+  const hasRequestedResize = Boolean(
+    options.width ||
+    options.height ||
+    (options.crop && options.crop !== "fill") ||
+    (options.format && options.format !== "auto") ||
+    (options.quality && options.quality !== "auto") ||
+    options.gravity
+  );
 
   if (isUrl) {
-    const parsed = parseCloudinaryUrl(urlOrPublicId);
+    const parsed = parseCloudinaryUrl(normalizedInput);
     if (!parsed || parsed.resourceType !== "image") {
       return urlOrPublicId; // external URL, unsupported delivery type, or video/raw
     }
-    cloudName = parsed.cloudName;
+
+    // If the URL already has transformations and no new resize is requested, preserve it untouched.
+    if (parsed.existingTransforms && parsed.existingTransforms.length > 0 && !hasRequestedResize) {
+      return urlOrPublicId;
+    }
+
+    cloudName = options.cloudName || parsed.cloudName;
     publicId = parsed.publicId;
+    version = parsed.version;
+    existingTransforms = parsed.existingTransforms;
   }
 
   if (!cloudName) {
@@ -187,10 +239,21 @@ export const getCloudinaryUrl = (
   try {
     const cld = new Cloudinary({
       cloud: { cloudName },
-      url: { secure: true },
+      url: { analytics: false, secure: true },
     });
 
     const cldImage = cld.image(publicId);
+
+    if (version) {
+      cldImage.setVersion(version);
+    }
+
+    // Preserve any existing transformations (e.g. named transformations like t_hero_crop)
+    if (existingTransforms && existingTransforms.length > 0) {
+      for (const t of existingTransforms) {
+        cldImage.addTransformation(t);
+      }
+    }
 
     const {
       width,
@@ -202,7 +265,16 @@ export const getCloudinaryUrl = (
     } = options;
 
     if (width || height) {
-      if (crop === "fit") {
+      if (crop === "pad") {
+        const resizeAction = pad();
+        if (width) {
+          resizeAction.width(width);
+        }
+        if (height) {
+          resizeAction.height(height);
+        }
+        cldImage.resize(resizeAction);
+      } else if (crop === "fit") {
         const resizeAction = fit();
         if (width) {
           resizeAction.width(width);

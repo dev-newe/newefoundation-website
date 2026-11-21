@@ -32,7 +32,7 @@ export const getGenerateURL = ({ folder }: CloudinaryAdapterOptions = {}): Gener
 
     // 2. Stored publicId, image: delegate to the shared SDK-based builder.
     if (publicId && resourceType === "image") {
-      const built = getCloudinaryUrl(publicId);
+      const built = getCloudinaryUrl(publicId, { cloudName });
       if (built) {
         return built;
       }

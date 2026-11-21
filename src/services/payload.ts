@@ -1,6 +1,7 @@
 import {
   getCloudinaryUrl,
   isCloudinaryUrl,
+  parseCloudinaryUrl,
   type CloudinaryTransformOptions,
 } from "@/lib/utils/cloudinary";
 import {
@@ -160,14 +161,23 @@ export const resolvePayloadImage = (
     imageField.alt || (mediaObj && typeof mediaObj.alt === "string" ? mediaObj.alt : "") || "";
 
   const storedPublicId = getStoredImagePublicId(mediaObj);
+  const uploadAccountCloudName =
+    mediaObj?.url && isCloudinaryUrl(mediaObj.url)
+      ? parseCloudinaryUrl(mediaObj.url)?.cloudName
+      : undefined;
+
+  const effectiveOptions: CloudinaryTransformOptions = {
+    ...transformOptions,
+    ...(uploadAccountCloudName ? { cloudName: uploadAccountCloudName } : {}),
+  };
 
   if (storedPublicId) {
-    const built = getCloudinaryUrl(storedPublicId, transformOptions);
+    const built = getCloudinaryUrl(storedPublicId, effectiveOptions);
     if (built) {
       finalUrl = built;
     }
   } else if (isCloudinaryUrl(finalUrl)) {
-    finalUrl = getCloudinaryUrl(finalUrl, transformOptions) || finalUrl;
+    finalUrl = getCloudinaryUrl(finalUrl, effectiveOptions) || finalUrl;
   }
 
   return {

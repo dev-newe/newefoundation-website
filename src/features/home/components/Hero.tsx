@@ -34,7 +34,12 @@ const Hero = ({ data }: HeroProps) => {
       "Building an India where every individual has the power to thrive. Navjyoti Education and Women Empowerment foundation works to uplift underprivileged communities through education, skill development, and social awareness.",
     image: data?.image,
   };
-  const heroImage = resolvePayloadImage(hero?.image, "/placeholder.png");
+  const heroImage = resolvePayloadImage(hero?.image, "/placeholder.png", {
+    width: 2345,
+    height: 1290,
+    crop: "fill",
+    gravity: "auto",
+  });
   const iconName = hero?.buttons?.[0]?.icon;
 
   const PrimaryIcon = iconName ? (iconMap[iconName] ?? ArrowRight) : ArrowRight;
