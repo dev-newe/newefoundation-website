@@ -12,9 +12,9 @@ export default async function Home() {
   const [homepage, ctaData] = await Promise.all([getGlobal("app_homepage"), getGlobal("app_cta")]);
 
   return (
-    <main>
+    <main className="w-full overflow-x-hidden">
       <Hero data={homepage?.hero} />
-      <About />
+      <About data={homepage?.aboutUs} />
       <Mission data={homepage?.missionVision} />
       <OurWork data={homepage?.ourWork} />
       <Team data={homepage?.team} />

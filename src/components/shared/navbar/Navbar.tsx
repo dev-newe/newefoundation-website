@@ -29,8 +29,8 @@ const Navbar = async () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 mx-6 my-4 flex items-center justify-center rounded-xl shadow-md">
-      <div className="mx-auto flex w-full items-center justify-between rounded-xl bg-white/60 px-4 py-2.5 shadow-xs backdrop-blur-sm dark:bg-gray-950/80">
+    <header className="sticky top-0 z-50 mx-3 my-3 flex items-center justify-center rounded-xl shadow-md sm:mx-6 sm:my-4">
+      <div className="mx-auto flex w-full min-w-0 items-center justify-between gap-2 rounded-xl bg-white/60 px-3 py-2.5 shadow-xs backdrop-blur-sm sm:px-4 dark:bg-gray-950/80">
         {/* Brand Logo */}
         <BrandLogo
           content={navData?.brandName || fallbackData.brandName}
@@ -44,7 +44,7 @@ const Navbar = async () => {
         />
 
         {/* Mobile Navigation Toggle & Drawer */}
-        <div className="flex items-center gap-4 lg:hidden">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4 lg:hidden">
           <MobileNav
             navItems={navData?.navItems || fallbackData.navItems}
             brandName={navData?.brandName || fallbackData.brandName}
