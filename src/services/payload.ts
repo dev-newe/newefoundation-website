@@ -1,4 +1,8 @@
-import { getCloudinaryUrl, type CloudinaryTransformOptions } from "@/lib/utils/cloudinary";
+import {
+  getCloudinaryUrl,
+  isCloudinaryUrl,
+  type CloudinaryTransformOptions,
+} from "@/lib/utils/cloudinary";
 import {
   AppContactpage,
   AppCta,
@@ -16,7 +20,7 @@ import { cache } from "react";
 
 /**
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
- *   PAYLOAD GLOBAL DATA FETCH
+ *   PAYLOAD GLOBAL DATA FETCH  (unchanged)
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
  */
 
@@ -30,9 +34,6 @@ type GlobalMap = {
   app_terms: AppTerm;
 };
 
-/**
- * Low-level global configuration fetcher from Payload CMS with safe depth & error boundary.
- */
 const fetchGlobalFromPayload = async <T extends keyof GlobalMap>(
   slug: T
 ): Promise<GlobalMap[T]> => {
@@ -47,10 +48,6 @@ const fetchGlobalFromPayload = async <T extends keyof GlobalMap>(
   return data as GlobalMap[T];
 };
 
-/**
- * Next.js Data Cache wrapper - caches database responses across server requests
- * with tag-based revalidation and 60-second background revalidation.
- */
 const getCachedGlobalFetcher = <T extends keyof GlobalMap>(slug: T) => {
   return unstable_cache(async () => fetchGlobalFromPayload(slug), [`payload_global_${slug}`], {
     revalidate: 60,
@@ -58,11 +55,6 @@ const getCachedGlobalFetcher = <T extends keyof GlobalMap>(slug: T) => {
   });
 };
 
-/**
- * Loads the entire global configuration from Payload CMS.
- * Wrapped in Next.js `unstable_cache` (server-wide caching) and React's `cache`
- * (per-request deduplication) to eliminate redundant database queries and prevent timeouts.
- */
 export const getGlobal = cache(
   async <T extends keyof GlobalMap>(slug: T): Promise<GlobalMap[T] | null> => {
     try {
@@ -76,7 +68,7 @@ export const getGlobal = cache(
 
 /**
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
- **   PAYLOAD IMAGE RESOLVE
+ *   PAYLOAD IMAGE RESOLVE
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
  */
 
@@ -89,12 +81,42 @@ export type PayloadImageField = {
 const isValidUrlString = (val: unknown): val is string =>
   typeof val === "string" && /^(\/|https?:\/\/)/.test(val.trim());
 
-export { getCloudinaryUrl, type CloudinaryTransformOptions };
+export { getCloudinaryUrl, isCloudinaryUrl, type CloudinaryTransformOptions };
 
 /**
- * Resolves a Payload CMS image group to a clean, usable image URL and alt text.
- * Handles both populated Media objects, string IDs, external src links, and fallback values.
- * Applies automatic Cloudinary dynamic optimization flags when Cloudinary URLs are resolved.
+ * These fields are written by the Cloudinary adapter's handleUpload. They only exist on
+ * the Media doc if the Media collection declares them as fields (so Payload persists them).
+ */
+type StoredCloudinaryFields = {
+  cloudinaryPublicId?: string | null;
+  cloudinaryResourceType?: string | null;
+};
+
+/**
+ * Returns the stored publicId for IMAGE assets, so we can build delivery URLs directly
+ * from ground truth instead of re-parsing the saved URL.
+ */
+const getStoredImagePublicId = (media: Media | undefined): string | undefined => {
+  if (!media) {
+    return undefined;
+  }
+  const { cloudinaryPublicId, cloudinaryResourceType } = media as unknown as StoredCloudinaryFields;
+  if (!cloudinaryPublicId) {
+    return undefined;
+  }
+  if (cloudinaryResourceType && cloudinaryResourceType !== "image") {
+    return undefined;
+  }
+  return cloudinaryPublicId;
+};
+
+/**
+ * Resolves a Payload CMS image group to a usable image URL and alt text.
+ *
+ * Resolution order for Cloudinary images:
+ *   1. Stored cloudinaryPublicId on a populated Media doc (no URL parsing involved)
+ *   2. A Cloudinary URL string (best-effort parse via getCloudinaryUrl)
+ *   3. Any other URL / the fallback, returned as-is
  */
 export const resolvePayloadImage = (
   imageField: PayloadImageField | undefined,
@@ -102,8 +124,8 @@ export const resolvePayloadImage = (
   transformOptions?: CloudinaryTransformOptions
 ): { url: string; alt: string } => {
   if (!imageField || typeof imageField !== "object") {
-    const finalFallback = fallbackUrl.includes("res.cloudinary.com")
-      ? getCloudinaryUrl(fallbackUrl, transformOptions)
+    const finalFallback = isCloudinaryUrl(fallbackUrl)
+      ? getCloudinaryUrl(fallbackUrl, transformOptions) || fallbackUrl
       : fallbackUrl;
     return { url: finalFallback, alt: "" };
   }
@@ -112,6 +134,16 @@ export const resolvePayloadImage = (
     typeof imageField.media === "object" && imageField.media !== null
       ? imageField.media
       : undefined;
+
+  if (
+    process.env.NODE_ENV !== "production" &&
+    typeof imageField.media === "string" &&
+    !isValidUrlString(imageField.media)
+  ) {
+    console.warn(
+      "[resolvePayloadImage] media is an unpopulated ID string; increase query depth to resolve it."
+    );
+  }
 
   const mediaUrl = isValidUrlString(mediaObj?.url) ? mediaObj!.url.trim() : undefined;
 
@@ -127,8 +159,15 @@ export const resolvePayloadImage = (
   const finalAlt =
     imageField.alt || (mediaObj && typeof mediaObj.alt === "string" ? mediaObj.alt : "") || "";
 
-  if (finalUrl.includes("res.cloudinary.com")) {
-    finalUrl = getCloudinaryUrl(finalUrl, transformOptions);
+  const storedPublicId = getStoredImagePublicId(mediaObj);
+
+  if (storedPublicId) {
+    const built = getCloudinaryUrl(storedPublicId, transformOptions);
+    if (built) {
+      finalUrl = built;
+    }
+  } else if (isCloudinaryUrl(finalUrl)) {
+    finalUrl = getCloudinaryUrl(finalUrl, transformOptions) || finalUrl;
   }
 
   return {
