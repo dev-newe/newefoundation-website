@@ -1,16 +1,15 @@
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import { cloudStoragePlugin } from "@payloadcms/plugin-cloud-storage";
-import path from "path";
+import { lexicalEditor } from "@payloadcms/richtext-lexical";
 import dns from "node:dns";
+import path from "path";
 import { buildConfig } from "payload";
 import { fileURLToPath } from "url";
 
+import { CollectionConfigs } from "@/lib/utils/CollectionsConfig";
+import { GlobalConfigs } from "@/lib/utils/GlobalConfigs";
 import { cloudinaryAdapter } from "@/storage/cloudinary";
 import { resendAdapter } from "@payloadcms/email-resend";
-import sharp from "sharp";
-import { GlobalConfigs } from "@/lib/utils/GlobalConfigs";
-import { CollectionConfigs } from "@/lib/utils/CollectionsConfig";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -36,7 +35,6 @@ if (
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SITE_URL || `https://${process.env.VERCEL_URL}`,
-  sharp,
   admin: {
     user: "users",
     importMap: {

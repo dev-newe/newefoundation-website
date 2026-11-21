@@ -1,17 +1,18 @@
-import { getPayload } from "payload";
-import config from "@payload-config";
-import { cache } from "react";
-import { unstable_cache } from "next/cache";
+import { getCloudinaryUrl, type CloudinaryTransformOptions } from "@/lib/utils/cloudinary";
 import {
-  AppHomepage,
   AppContactpage,
-  AppNavigation,
-  AppFooter,
   AppCta,
+  AppFooter,
+  AppHomepage,
+  AppNavigation,
   AppPrivacy,
   AppTerm,
   Media,
 } from "@/payload-types";
+import config from "@payload-config";
+import { unstable_cache } from "next/cache";
+import { getPayload } from "payload";
+import { cache } from "react";
 
 /**
  * ——————————————————————————————————————————————————————————————————————————————————————————————————
@@ -85,39 +86,53 @@ export type PayloadImageField = {
   alt?: string | null;
 } | null;
 
+const isValidUrlString = (val: unknown): val is string =>
+  typeof val === "string" && /^(\/|https?:\/\/)/.test(val.trim());
+
+export { getCloudinaryUrl, type CloudinaryTransformOptions };
+
 /**
  * Resolves a Payload CMS image group to a clean, usable image URL and alt text.
  * Handles both populated Media objects, string IDs, external src links, and fallback values.
- * This guarantees a valid string URL is returned, preventing Next.js Image component from crashing on empty src.
+ * Applies automatic Cloudinary dynamic optimization flags when Cloudinary URLs are resolved.
  */
 export const resolvePayloadImage = (
   imageField: PayloadImageField | undefined,
-  fallbackUrl: string = "/placeholder.png"
+  fallbackUrl: string = "/placeholder.png",
+  transformOptions?: CloudinaryTransformOptions
 ): { url: string; alt: string } => {
   if (!imageField || typeof imageField !== "object") {
-    return { url: fallbackUrl, alt: "" };
+    const finalFallback = fallbackUrl.includes("res.cloudinary.com")
+      ? getCloudinaryUrl(fallbackUrl, transformOptions)
+      : fallbackUrl;
+    return { url: finalFallback, alt: "" };
   }
 
-  const media =
+  const mediaObj =
     typeof imageField.media === "object" && imageField.media !== null
       ? imageField.media
       : undefined;
 
-  const mediaUrl =
-    media && typeof media.url === "string" && media.url.trim() !== "" ? media.url : undefined;
+  const mediaUrl = isValidUrlString(mediaObj?.url) ? mediaObj!.url.trim() : undefined;
 
-  const stringMedia =
-    typeof imageField.media === "string" && imageField.media.trim() !== ""
-      ? imageField.media
-      : undefined;
+  const stringMedia = isValidUrlString(imageField.media)
+    ? (imageField.media as string).trim()
+    : undefined;
 
-  const externalSrc =
-    typeof imageField.src === "string" && imageField.src.trim() !== "" ? imageField.src : undefined;
+  const externalSrc = isValidUrlString(imageField.src)
+    ? (imageField.src as string).trim()
+    : undefined;
 
-  const validUrl = mediaUrl || stringMedia || externalSrc || fallbackUrl;
+  let finalUrl = mediaUrl || stringMedia || externalSrc || fallbackUrl;
+  const finalAlt =
+    imageField.alt || (mediaObj && typeof mediaObj.alt === "string" ? mediaObj.alt : "") || "";
+
+  if (finalUrl.includes("res.cloudinary.com")) {
+    finalUrl = getCloudinaryUrl(finalUrl, transformOptions);
+  }
 
   return {
-    url: validUrl,
-    alt: imageField.alt || (media && typeof media.alt === "string" ? media.alt : "") || "",
+    url: finalUrl,
+    alt: finalAlt,
   };
 };
